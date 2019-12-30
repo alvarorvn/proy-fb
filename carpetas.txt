@@ -10,3 +10,5 @@
 
 - express 4.17.1: para configuracion del servidor
 - pg 7.16.1: driver de conexion a postgresql
+- cors 2.8.5: para comunicar servidores
+- jsonwebtoken 8.5.1: crear token para usuarios, requerido para solicitudes de clientes al servidor
