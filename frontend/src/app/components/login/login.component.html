@@ -1,0 +1,97 @@
+<div class="signUpInStyle">
+    <div id="header_wrapper">
+        <div id="header">
+            <li id="sitename"><a routerLink="/">Proyecto Facebook</a></li>
+            <form (submit)="login()">
+                <li>Correo electrónico o teléfono<br><input type="text" [(ngModel)]="user.user_email" name="email"></li>
+                <li>Contraseña<br><input type="password" [(ngModel)]="user.user_password" name="password">
+                    <br><a href="" id="forgot_password">¿Has olvidado los datos de la cuenta?</a>
+                </li>
+                <li><input type="submit" name="login" value="Entrar"></li>
+            </form>
+        </div>
+    </div>
+    <div id="wrapper">
+
+        <div id="div1">
+            <p>Facebook te ayuda a comunicarte y compartir con las personas que forman parte de tu vida.</p>
+            <!--<img src="../img/fb_world.png">-->
+        </div>
+
+        <form (submit)="signUp()">
+            <div id="div2">
+                <h1>Registrarte</h1>
+                <p>Es rápido y fácil</p>
+                <li class="two-fields">
+                    <input type="text" [(ngModel)]="user.nombres" name="nombres" placeholder="Nombre" id="firstname">
+                    <input type="text" [(ngModel)]="user.apellidos" name="apellidos" placeholder="Apellidos"
+                        id="surname">
+                </li>
+                <li><input type="text" [(ngModel)]="user.email" name="email"
+                        placeholder="Número de móvil o correo electrónico">
+                </li>
+                <li><input type="password" [(ngModel)]="user.password" name="password" placeholder="Contraseña nueva">
+                </li>
+                <p id="birthday">Fecha de nacimiento</p>
+                <li>
+                    <!--<select>
+            <option>Día</option>
+          </select>
+          <select>
+            <option>Mes</option>
+          </select>
+          <select>
+            <option>Año</option>
+          </select>-->
+                    <input type="date" [(ngModel)]="user.fecha_nac" name="fecha_nac">
+                    <!--<a href="">Why do I need to provide my date of birth?</a>-->
+                </li>
+                <li>
+                    <p id="birthday">Sexo</p>
+                    <label style="margin-right: 20px;">
+                        <input type="radio" [(ngModel)]="user.sexo" value="Mujer" name="sexo-group"><span>Mujer</span>
+                    </label>
+                    <label style="margin-right: 20px;">
+                        <input type="radio" [(ngModel)]="user.sexo" value="Hombre" name="sexo-group"><span>Hombre</span>
+                    </label>
+                    <label>
+                        <input type="radio" [(ngModel)]="user.sexo" value="Otros" name="sexo-group"><span>Otros</span>
+                    </label>
+                </li>
+                <li id="terms">Al hacer clic en Registrarte, aceptas las <a href="">Condiciones</a>, la
+                    <a href="">Política de datos</a>, y la <a href="">Política de cookies</a>. Es posible que te
+                    enviemos
+                    notificaciones por SMS que podrás desactivar cuando quieras.</li>
+                <button type="submit" id="registrate">Registrarte</button>
+                <li id="create_page"><a href="">Crear una página</a> para un personaje público, un grupo de música o un
+                    negocio.
+                </li>
+            </div>
+        </form>
+
+    </div>
+
+    <div id="footer_wrapper">
+        <br>
+        <div id="footer1">
+            Español(España) <a href="">English(US)</a><a href="">Italiano</a><a href="">Français (France)
+            </a><a href="">हिन्दी</a><a href="">ਪੰਜਾਬੀ</a><a href=""> اردو</a><a href="">தமிழ்</a><a href="">বাংলা</a><a
+                href="">मराठी</a><a href="">తెలుగు</a><a href="">ગુજરાતી</a><a href="">ಕನ್ನಡ</a><a href="">മലയാളം</a>
+        </div>
+        <div id="footer2">
+            <a href="">Registrarte</a> <a href="">Entrar</a> <a href="">Messenger</a> <a href="">Facebook Lite</a>
+            <a href="">Watch</a> <a href="">Personas</a> <a href="">Páginas</a> <a href="">Categorías de páginas</a>
+            <a href="">Lugares</a> <a href="">Juegos</a> <a href="">Marketplace</a> <a href="">Grupos</a>
+            <a href="">Instagram</a> <a href="">Local</a> <a href="">Recaudaciones de fondos</a> <a
+                href="">Servicios</a>
+            <a href="">Información</a> <a href="">Crear anuncio</a> <a href="">Crear página</a> <a
+                href="">Desarrolladores</a>
+            <a href="">Empleo</a> <a href="">Privacidad</a> <a href="">Gestión de anuncios</a> <a
+                href="">Condiciones</a> <a href="">Ayuda</a>
+            <p>Facebook © 2019</p>
+        </div>
+
+    </div>
+
+    <router-outlet></router-outlet>
+</div>

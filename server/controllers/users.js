@@ -27,13 +27,13 @@ users.register = async (req, res) => {
 
 // funcion de login - validado
 users.login = async (req, res) => {
-    const { email, password } = req.body;
-    let query = `SELECT * FROM usuarios where user_email = '${email}'`;
+    const { user_email, user_password } = req.body;
+    let query = `SELECT * FROM usuarios where user_email = '${user_email}'`;
     const user = await pool.query(query);
     if (user.rows == 0) return res.status(401).json({ message: "Usuario no registrado" });
-    if (user.rows[0].user_password != password) return res.status(401).json({ message: "Password erroneo" })
+    if (user.rows[0].user_password != user_password) return res.status(401).json({ message: "Password erroneo" })
 
-    const token = jwt.sign({ _id: email }, 'secretKey');
+    const token = jwt.sign({ _id: user_email }, 'secretKey');
 
     res.status(200).json({ token })
 }
