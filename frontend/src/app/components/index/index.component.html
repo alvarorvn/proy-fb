@@ -1,2 +1,5 @@
 <p>index works!</p>
-<button>Publicar</button>
+<form (submit)="publicar()">
+    <input type="text" [(ngModel)]="texto" name="texto" id="texto">
+    <button>Publicar</button>
+</form>

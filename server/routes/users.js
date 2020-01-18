@@ -11,6 +11,10 @@ router.get('/', validate.verifyToken, user.index);
 router.post('/register', user.register);
 // Ruta de inicio de sesion
 router.post('/login', user.login);
+router.post('/publicar', (req, res) => {
+    console.log(req.body);
+    res.json({ resp: "HOLA" });
+});
 
 //exportar objeto
 module.exports = router;

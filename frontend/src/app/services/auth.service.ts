@@ -51,10 +51,13 @@ export class AuthService {
     this.token = token;
   }
 
-  /*getToken(): string {
-    if (!this.token) {
-      this.token = localStorage.getItem('token');
-    }
-    return this.token;
-  }*/
+  publicar(texto){
+    return this.http.post<any>(`${this.URL}/publicar`, texto).pipe(tap(
+      (res: any) => {
+        if (res) {
+          console.log(res);
+        }
+      }
+    ))
+  }
 }
