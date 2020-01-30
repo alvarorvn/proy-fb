@@ -1,5 +1,6 @@
 const { Pool } = require('pg');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
 const users = {};
 
@@ -15,9 +16,11 @@ const pool = new Pool({
 // Funcion de registro de usuario - sin validar
 users.register = async (req, res) => {
     const { nombres, apellidos, email, password, fecha_nac, sexo } = req.body;
+    let salt = bcrypt.genSaltSync(10);
+    let hash = bcrypt.hashSync(password, salt);
     let query = `INSERT INTO usuarios 
                     (user_nombres, user_apellidos, user_email, user_password, user_fecha_nac, user_sexo, user_acc_verify) 
-                    VALUES ('${nombres}','${apellidos}','${email}','${password}','${fecha_nac}','${sexo}','false')`;
+                    VALUES ('${nombres}','${apellidos}','${email}','${hash}','${fecha_nac}','${sexo}','false')`;
     await pool.query(query);
 
     const token = jwt.sign({ _id: email }, 'secretKey')
