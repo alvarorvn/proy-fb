@@ -15,6 +15,5 @@ router.post('/publicar', (req, res) => {
     console.log(req.body);
     res.json({ resp: "HOLA" });
 });
-
 //exportar objeto
 module.exports = router;

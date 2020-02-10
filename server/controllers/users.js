@@ -41,6 +41,13 @@ users.login = async (req, res) => {
     res.status(200).json({ token })
 }
 
+users.buscaruser = async (req, res) => {
+    const { user } = req.body;
+    let query = `SELECT * FROM usuarios where user = '${user}'`;
+    const users = await pool.query(query);
+    if (users.rows == 0) return res.status(401).json({ message: "No hay resultado" });
+    res.status(200).json({users})
+}
 // Funcion de pagina principal
 users.index = (req, res) => {
     res.json({message: "Login"})
