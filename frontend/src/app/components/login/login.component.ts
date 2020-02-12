@@ -9,7 +9,15 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  user = {};
+  user = {
+    usuario_nombres: "",
+    usuario_apellidos: "",
+    usuario_email: "",
+    usuario_password: "",
+    usuario_fechanac: "",
+    usuario_sexo: "",
+    usuario_path_face: ""
+  };
 
   constructor(
     private authService: AuthService,

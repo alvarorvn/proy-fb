@@ -7,10 +7,10 @@ const users = {};
 // Conexion a postgres
 const pool = new Pool({
     host: 'localhost',
-    user: 'postgres',
-    password: '',
+    port: '5432',
     database: 'proyecto_redsocial',
-    port: '5432'
+    user: 'postgres',
+    password: 'admin123'
 })
 
 // Funcion de registro de usuario - sin validar
@@ -22,35 +22,39 @@ users.register = async (req, res) => {
     usuario_acc_verify = false;
     usuario_activo = true;
     usuario_conectado = true;
-    let query = `INSERT INTO usuario 
+
+    try {
+        let query = `SELECT * FROM usuario WHERE usuario_email = '${usuario_email}'`;
+        let result = await pool.query(query);
+
+        if (result.rowCount > 0) return res.json({ message: "Ya existe un usuario registrado con este correo" });
+
+        query = `INSERT INTO usuario
                     (usuario_nombres, usuario_apellidos, usuario_email, usuario_password, usuario_fechanac, usuario_sexo,
                         usuario_acc_verify, usuario_path_face, usuario_activo, usuario_conectado) 
                     VALUES ('${usuario_nombres}','${usuario_apellidos}','${usuario_email}','${hash}','${usuario_fechanac}','${usuario_sexo}
                     ', '${usuario_acc_verify}', '${usuario_path_face}', '${usuario_activo}', '${usuario_conectado}')`;
-    console.log(query);
-    /*await pool.query(query);
+        result = await pool.query(query);
+        const token = jwt.sign({ _id: usuario_email }, 'secretkey');
 
-    const token = jwt.sign({ _id: email }, 'secretKey')
-
-    res.status(200).json({ token })*/
+        res.json({ token })
+    } catch (error) {
+        return res.json({message:"Error al registrar usuario"})
+    }
 }
 
 // funcion de login - validado
 users.login = async (req, res) => {
-    const { user_email, user_password } = req.body;
-    let query = `SELECT * FROM usuarios where user_email = '${user_email}'`;
+    const { usuario_email, usuario_password } = req.body;
+    let query = `SELECT * FROM usuario where usuario_email = '${usuario_email}'`;
     const user = await pool.query(query);
-    if (user.rows == 0) return res.status(401).json({ message: "Usuario no registrado" });
-    if (user.rows[0].user_password != user_password) return res.status(401).json({ message: "Password erroneo" })
+    if (user.rows == 0) return res.json({ message: "Usuario no registrado" });
+    let pass_correct = await bcrypt.compareSync(usuario_password, user.rows[0].usuario_password);
+    if (!pass_correct) return res.json({ message: "Contraseña errónea" })
 
-    const token = jwt.sign({ _id: user_email }, 'secretKey');
+    const token = jwt.sign({ _id: usuario_email }, 'secretkey');
 
-    res.status(200).json({ token })
-}
-
-// Funcion de pagina principal
-users.index = (req, res) => {
-    res.json({ message: "Login" })
+    res.json({ token })
 }
 
 module.exports = users;

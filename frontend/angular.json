@@ -26,7 +26,10 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/public/JS/face-api.js",
+              "src/public/JS/rec-facial.js"
+            ]
           },
           "configurations": {
             "production": {

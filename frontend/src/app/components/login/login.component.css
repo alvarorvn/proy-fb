@@ -95,7 +95,22 @@
     cursor: pointer;
 }
 
+#header form input[type=button] {
+    height: 25px;
+    margin-top: 20px;
+    background-color: #476bb8;
+    color: #fff;
+    border: 1px solid #2b406e;
+    font-weight: bold;
+    font-size: 12px;
+    cursor: pointer;
+}
+
 #header form input[type=submit]:hover {
+    background-color: var(--color_base);
+}
+
+#header form input[type=button]:hover {
     background-color: var(--color_base);
 }
 

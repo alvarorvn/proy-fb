@@ -10,12 +10,14 @@ import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './auth.guard';
 import { IndexComponent } from './components/index/index.component';
 import { TokenInterceptorService } from './services/token-interceptor.service';
+import { RecFacilComponent } from './components/rec-facil/rec-facil.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    IndexComponent
+    IndexComponent,
+    RecFacilComponent
   ],
   imports: [
     BrowserModule,
