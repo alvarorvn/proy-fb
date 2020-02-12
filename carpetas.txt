@@ -1,5 +1,5 @@
 - frontend: tener todo lo relacionado a interfaz de usuario
-- server: todaslas configuraciones del servidor
+- server: todas las configuraciones del servidor
     - controller: carpeta que maneja la logica del servidor
     - src: carpeta que contiene el archivo base del servidor
     - routes: carpeta que gestiona las rutas que maneja el servidor
