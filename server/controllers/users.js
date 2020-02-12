@@ -8,24 +8,31 @@ const users = {};
 const pool = new Pool({
     host: 'localhost',
     user: 'postgres',
-    password: 'admin123',
-    database: 'proy-fb',
+    password: '',
+    database: 'proyecto_redsocial',
     port: '5432'
 })
 
 // Funcion de registro de usuario - sin validar
 users.register = async (req, res) => {
-    const { nombres, apellidos, email, password, fecha_nac, sexo } = req.body;
+    const { usuario_nombres, usuario_apellidos, usuario_email, usuario_password, usuario_fechanac, usuario_sexo, usuario_path_face } = req.body;
+    let usuario_acc_verify, usuario_activo, usuario_conectado;
     let salt = bcrypt.genSaltSync(10);
-    let hash = bcrypt.hashSync(password, salt);
-    let query = `INSERT INTO usuarios 
-                    (user_nombres, user_apellidos, user_email, user_password, user_fecha_nac, user_sexo, user_acc_verify) 
-                    VALUES ('${nombres}','${apellidos}','${email}','${hash}','${fecha_nac}','${sexo}','false')`;
-    await pool.query(query);
+    let hash = bcrypt.hashSync(usuario_password, salt);
+    usuario_acc_verify = false;
+    usuario_activo = true;
+    usuario_conectado = true;
+    let query = `INSERT INTO usuario 
+                    (usuario_nombres, usuario_apellidos, usuario_email, usuario_password, usuario_fechanac, usuario_sexo,
+                        usuario_acc_verify, usuario_path_face, usuario_activo, usuario_conectado) 
+                    VALUES ('${usuario_nombres}','${usuario_apellidos}','${usuario_email}','${hash}','${usuario_fechanac}','${usuario_sexo}
+                    ', '${usuario_acc_verify}', '${usuario_path_face}', '${usuario_activo}', '${usuario_conectado}')`;
+    console.log(query);
+    /*await pool.query(query);
 
     const token = jwt.sign({ _id: email }, 'secretKey')
 
-    res.status(200).json({ token })
+    res.status(200).json({ token })*/
 }
 
 // funcion de login - validado
@@ -43,7 +50,7 @@ users.login = async (req, res) => {
 
 // Funcion de pagina principal
 users.index = (req, res) => {
-    res.json({message: "Login"})
+    res.json({ message: "Login" })
 }
 
 module.exports = users;
