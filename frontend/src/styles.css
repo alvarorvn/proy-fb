@@ -3,3 +3,36 @@ body {
     margin: 0 auto;
     padding: 0;
 }
+
+.contenedor {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+}
+
+.subcontenedor {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.image-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.image-container {
+    border: 1px solid lightgrey;
+    width: 160px;
+    padding: 15px;
+    margin: 15px;
+}
+
+.subcontenedor .image-list .image-container img {
+    width: 150px;
+}

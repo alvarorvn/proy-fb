@@ -10,5 +10,7 @@ router.post('/register', user.register);
 // Ruta de inicio de sesion
 router.post('/login', user.login);
 
+router.get('/', user.getUsuario);
+
 //exportar objeto
 module.exports = router;

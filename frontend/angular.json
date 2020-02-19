@@ -27,8 +27,8 @@
               "src/styles.css"
             ],
             "scripts": [
-              "src/public/JS/face-api.js",
-              "src/public/JS/rec-facial.js"
+              "node_modules/jquery/dist/jquery.min.js",
+              "src/public/JS/face-api.js"
             ]
           },
           "configurations": {

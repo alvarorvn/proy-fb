@@ -3,8 +3,8 @@
         <div id="header">
             <li id="sitename"><a routerLink="/">Proyecto Facebook</a></li>
             <form>
-                <li>Correo electrónico<br><input type="text" [(ngModel)]="user.usuario_email" name="usuario_email"></li>
-                <li>Contraseña<br><input type="password" [(ngModel)]="user.usuario_password" name="usuario_password">
+                <li>Correo electrónico<br><input type="text" [(ngModel)]="userl.usuariol_email" name="usuariol_email"></li>
+                <li>Contraseña<br><input type="password" [(ngModel)]="userl.usuariol_password" name="usuariol_password">
                     <br><a href="" id="forgot_password">¿Has olvidado los datos de la cuenta?</a>
                 </li>
                 <li><input type="submit" name="login" value="Entrar" (click)="login()"></li>
@@ -16,54 +16,46 @@
 
         <div id="div1">
             <p>Facebook te ayuda a comunicarte y compartir con las personas que forman parte de tu vida.</p>
-            <!--<img src="../img/fb_world.png">-->
+            <img src="../../../assets/img/fb_world.png" width="600px"/>
         </div>
 
-        <form (submit)="signUp()">
+        <form>
             <div id="div2">
                 <h1>Registrarte</h1>
                 <p>Es rápido y fácil</p>
                 <li class="two-fields">
-                    <input type="text" [(ngModel)]="user.nombres" name="nombres" placeholder="Nombre" id="firstname">
-                    <input type="text" [(ngModel)]="user.apellidos" name="apellidos" placeholder="Apellidos"
+                    <input type="text" [(ngModel)]="user.usuario_nombres" name="usuario_nombres" placeholder="Nombre" id="firstname">
+                    <input type="text" [(ngModel)]="user.usuario_apellidos" name="usuario_apellidos" placeholder="Apellidos"
                         id="surname">
                 </li>
-                <li><input type="text" [(ngModel)]="user.email" name="email"
-                        placeholder="Número de móvil o correo electrónico">
+                <li><input type="text" [(ngModel)]="user.usuario_email" name="usuario_email"
+                        placeholder="Correo electrónico">
                 </li>
-                <li><input type="password" [(ngModel)]="user.password" name="password" placeholder="Contraseña nueva">
+                <li><input type="password" [(ngModel)]="user.usuario_password" name="usuario_password" placeholder="Contraseña">
                 </li>
                 <p id="birthday">Fecha de nacimiento</p>
                 <li>
-                    <!--<select>
-            <option>Día</option>
-          </select>
-          <select>
-            <option>Mes</option>
-          </select>
-          <select>
-            <option>Año</option>
-          </select>-->
-                    <input type="date" [(ngModel)]="user.fecha_nac" name="fecha_nac">
+                    <input type="date" [(ngModel)]="user.usuario_fechanac" name="usuario_fechanac">
                     <!--<a href="">Why do I need to provide my date of birth?</a>-->
+                </li>
+                <p id="birthday">Subir imagen para reconocimiento facial</p>
+                <li>
+                    <input type="file" name="fileUpload" (change)="onFileChange($event)">
                 </li>
                 <li>
                     <p id="birthday">Sexo</p>
                     <label style="margin-right: 20px;">
-                        <input type="radio" [(ngModel)]="user.sexo" value="Mujer" name="sexo-group"><span>Mujer</span>
+                        <input type="radio" [(ngModel)]="user.usuario_sexo" value="Mujer" name="sexo-group"><span>Mujer</span>
                     </label>
                     <label style="margin-right: 20px;">
-                        <input type="radio" [(ngModel)]="user.sexo" value="Hombre" name="sexo-group"><span>Hombre</span>
-                    </label>
-                    <label>
-                        <input type="radio" [(ngModel)]="user.sexo" value="Otros" name="sexo-group"><span>Otros</span>
-                    </label>
+                        <input type="radio" [(ngModel)]="user.usuario_sexo" value="Hombre" name="sexo-group"><span>Hombre</span>
+                    </label>    
                 </li>
                 <li id="terms">Al hacer clic en Registrarte, aceptas las <a href="">Condiciones</a>, la
                     <a href="">Política de datos</a>, y la <a href="">Política de cookies</a>. Es posible que te
                     enviemos
                     notificaciones por SMS que podrás desactivar cuando quieras.</li>
-                <button type="submit" id="registrate">Registrarte</button>
+                <button id="registrate" (click)="registrar()">Registrarte</button>
                 <li id="create_page"><a href="">Crear una página</a> para un personaje público, un grupo de música o un
                     negocio.
                 </li>

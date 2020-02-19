@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-login',
@@ -8,6 +9,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+
+  fileUpload;
+  image;
 
   user = {
     usuario_nombres: "",
@@ -19,18 +23,29 @@ export class LoginComponent implements OnInit {
     usuario_path_face: ""
   };
 
+  userl = {
+    usuariol_email: "",
+    usuariol_password: ""
+  };
+
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit() {
   }
 
-  signUp() {
-    this.authService.signUp(this.user).subscribe(
+  registrar() {
+    const formData = new FormData();
+    formData.append('file', this.fileUpload);
+    for (var u in this.user) {
+      formData.append(u, this.user[u]);
+    }
+    this.authService.signUp(formData).subscribe(
       res => {
-        //console.log(res);
+        console.log(res);
       },
       err => {
         console.log(err);
@@ -38,14 +53,18 @@ export class LoginComponent implements OnInit {
     )
   }
 
-  login() {
-    this.authService.login(this.user).subscribe(
-      res => {
-        this.router.navigate(['/'])
-      },
-      err => {
-        console.log(err);
+  /*getUsers() {
+    this.authService.getUsers().subscribe(
+      res => { 
+        this.user = res;
+        this.image = this.sanitizer.bypassSecurityTrustResourceUrl(`data:image/png;base64, ${res.base64str}`);
       }
+      ,
+      err => { }
     )
+  }*/
+
+  onFileChange(e) {
+    this.fileUpload = e.target.files[0];
   }
 }

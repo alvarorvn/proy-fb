@@ -14,16 +14,8 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  signUp(user): Observable<any> {
-
-    //return this.http.post<any>(this.URL + '/register', user);
-    return this.http.post<any>(`${this.URL}/register`, user).pipe(tap(
-      (res: any) => {
-        if (res) {
-          this.saveToken(res.token);
-        }
-      }
-    ))
+  signUp(user) {
+    return this.http.post<any>(`${this.URL}/register`, user);
   }
 
   login(user) {
@@ -35,6 +27,10 @@ export class AuthService {
         }
       }
     ))
+  }
+
+  getUsers() {
+    return this.http.get<any>(this.URL);
   }
 
   loggedIn() {
@@ -51,7 +47,7 @@ export class AuthService {
     this.token = token;
   }
 
-  publicar(texto){
+  publicar(texto) {
     return this.http.post<any>(`${this.URL}/publicar`, texto).pipe(tap(
       (res: any) => {
         if (res) {
