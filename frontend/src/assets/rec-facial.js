@@ -1,4 +1,5 @@
-async function recFacial() {
+async function recFacial(router) {
+    console.log(router);
     const imageList = document.querySelector('#ListaImagenes');
     const videoContainer = document.getElementById("video");
     const video = await navigator.mediaDevices.getUserMedia({
@@ -32,8 +33,6 @@ async function recFacial() {
                 [faceDescriptor.detection.descriptor]
             )
         )))
-
-        console.log(imageDescriptors);
 
     }
 
@@ -79,24 +78,24 @@ async function recFacial() {
 
         //if(!faceMatcher || !descriptor) return;
         const match = faceMatcher.findBestMatch(detection.descriptor);
-        console.log(match);
-        /*[...imageList.children].forEach(image => {
+        [...imageList.children].forEach(image => {
             if (image.id.indexOf(match._label) > -1) {
                 $.ajax({
                     type: "POST",
                     data: { id: match._label },
-                    url: "procesos/regLogin/login_recFac.php",
-                    success: function (r) {
-                        if (r == 1) {
-                            window.location = "vistas/inicio.php";
-                        }
+                    url: "http://localhost:3000/recFacial",
+                    success: function (res) {
+                        localStorage.setItem('token', res.token);
+                        router['navigate'](['/']);
+                        clearInterval(proc);
                     }
                 });
+
             }
-        })*/
+        })
     }
 
-    setInterval(processFace, 1000);
+    var proc = setInterval(processFace, 1000);
 
     syncImages();
 }

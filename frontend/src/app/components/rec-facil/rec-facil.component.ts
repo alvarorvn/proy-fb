@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router'
 
 declare var recFacial: any;
 
@@ -9,10 +10,10 @@ declare var recFacial: any;
 })
 export class RecFacilComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
-    recFacial();
+    recFacial(this.router);
   }  
 
 }

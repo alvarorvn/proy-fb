@@ -45,7 +45,11 @@ export class LoginComponent implements OnInit {
     }
     this.authService.signUp(formData).subscribe(
       res => {
-        console.log(res);
+        if (res.tipo == 'error') {
+          console.log(res.message);
+        } else {
+          this.clearForm();
+        }
       },
       err => {
         console.log(err);
@@ -63,6 +67,17 @@ export class LoginComponent implements OnInit {
       err => { }
     )
   }*/
+
+  clearForm() {
+    this.user.usuario_nombres = null;
+    this.user.usuario_apellidos = null;
+    this.user.usuario_email = null;
+    this.user.usuario_password = null;
+    this.user.usuario_fechanac = null;
+    this.user.usuario_sexo = null;
+    this.user.usuario_path_face = null;
+    this.fileUpload = null
+  }
 
   onFileChange(e) {
     this.fileUpload = e.target.files[0];

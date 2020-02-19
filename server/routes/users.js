@@ -9,8 +9,10 @@ const router = Router();
 router.post('/register', user.register);
 // Ruta de inicio de sesion
 router.post('/login', user.login);
-
+// Ruta para obtener usuarios
 router.get('/', user.getUsuario);
+//Ruta que inicia sesion con reconocimiento facial
+router.post('/recFacial', user.recFacialLogin);
 
 //exportar objeto
 module.exports = router;

@@ -30,7 +30,7 @@ async function register(req, res) {
         let query = `SELECT * FROM usuario WHERE usuario_email = '${usuario_email}'`;
         let result = await pool.query(query);
 
-        if (result.rowCount > 0) return res.json({ message: "Ya existe un usuario registrado con este correo" });
+        if (result.rowCount > 0) return res.json({ message: "Ya existe un usuario registrado con este correo", tipo: 'error' });
 
         query = `INSERT INTO usuario
                     (usuario_nombres, usuario_apellidos, usuario_email, usuario_password, usuario_fechanac, usuario_sexo,
@@ -42,7 +42,6 @@ async function register(req, res) {
 
         res.json({ token })
     } catch (error) {
-        console.log(error);
         return res.json({ message: "Error al registrar usuario" })
     }
 }
@@ -64,7 +63,7 @@ async function login(req, res) {
 async function getUsuario(req, res) {
     let query = `SELECT * FROM usuario`;
     let result = await pool.query(query);
-    if (result.rows == 0) return res.json({ message: "No hay usuarios registrados" });
+    if (result.rows == 0) return res.json({ message: "No hay usuarios registrados", result: [] });
     result.rows.forEach(usuario => {
         var base64str = base64_encode(usuario.usuario_path_face);
         usuario.base64str = base64str;
@@ -80,8 +79,19 @@ function base64_encode(file) {
     return Buffer.from(bitmap).toString('base64');
 }
 
+async function recFacialLogin(req, res) {
+    const { id } = req.body;
+    let query = `SELECT * FROM usuario where usuario_id = '${id}'`;
+    const result = await pool.query(query);
+    if (result.rows[0]) {
+        const token = jwt.sign({ _id: result.rows[0].usuario_email }, 'secretkey');
+        return res.json({ token, user: result.rows[0] })
+    }
+}
+
 module.exports = {
     login,
     register,
-    getUsuario
+    getUsuario,
+    recFacialLogin
 };
