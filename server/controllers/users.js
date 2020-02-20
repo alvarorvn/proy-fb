@@ -51,13 +51,13 @@ async function login(req, res) {
     const { usuario_email, usuario_password } = req.body;
     let query = `SELECT * FROM usuario where usuario_email = '${usuario_email}'`;
     const user = await pool.query(query);
-    if (user.rows == 0) return res.json({ message: "Usuario no registrado" });
+    if (user.rows == 0) return res.json({ message: "Usuario no registrado", tipo: "error" });
     let pass_correct = await bcrypt.compareSync(usuario_password, user.rows[0].usuario_password);
-    if (!pass_correct) return res.json({ message: "Contraseña errónea" })
+    if (!pass_correct) return res.json({ message: "Contraseña errónea", tipo: "error" })
 
     const token = jwt.sign({ _id: usuario_email }, 'secretkey');
 
-    res.json({ token })
+    res.json({ token, user: user.rows[0] })
 }
 
 async function getUsuario(req, res) {

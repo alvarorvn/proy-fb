@@ -1,5 +1,4 @@
 async function recFacial(router) {
-    console.log(router);
     const imageList = document.querySelector('#ListaImagenes');
     const videoContainer = document.getElementById("video");
     const video = await navigator.mediaDevices.getUserMedia({
@@ -75,6 +74,7 @@ async function recFacial(router) {
             .withFaceLandmarks()
             .withFaceDescriptor()
         if (detection === undefined) return;
+        console.log(detection);
 
         //if(!faceMatcher || !descriptor) return;
         const match = faceMatcher.findBestMatch(detection.descriptor);
@@ -86,9 +86,15 @@ async function recFacial(router) {
                     url: "http://localhost:3000/recFacial",
                     success: function (res) {
                         localStorage.setItem('token', res.token);
-                        localStorage.setItem('id', res.user.usuario_id)
-                        router.navigate([`${res.user.usuario_id}`]);
+                        localStorage.setItem('id', res.user.usuario_id);
                         clearInterval(proc);
+                        router.navigate([`${res.user.usuario_id}`]);
+                        let video = document.getElementById("video");
+                        let rec = document.getElementById("recFacial");
+                        let lista = document.getElementById("lista");
+                        rec.remove();
+                        lista.remove();
+                        if (video != null) video.remove();
                     }
                 });
 

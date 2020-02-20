@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators/';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { Router } from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -12,21 +13,16 @@ export class AuthService {
   authSubject = new BehaviorSubject(false);
   private token: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient, private router: Router
+  ) { }
 
   signUp(user) {
     return this.http.post<any>(`${this.URL}/register`, user);
   }
 
   login(user) {
-    //return this.http.post<any>(this.URL + '/login', user);
-    return this.http.post<any>(`${this.URL}/login`, user).pipe(tap(
-      (res: any) => {
-        if (res) {
-          this.saveToken(res.token);
-        }
-      }
-    ))
+    return this.http.post<any>(this.URL + '/login', user);
   }
 
   getUsers() {
@@ -42,17 +38,14 @@ export class AuthService {
     return token;
   }
 
-  getId(){
+  getId() {
     let id = localStorage.getItem('id');
     return id;
   }
 
-  verifyUser(){
-    
-  }
-
-  private saveToken(token: string): void {
-    localStorage.setItem('token', token);
-    this.token = token;
+  logout() {
+    localStorage.removeItem('id');
+    localStorage.removeItem('token');
+    this.router.navigate(['/']);
   }
 }

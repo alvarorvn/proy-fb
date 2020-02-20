@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: 'app-login',
@@ -24,17 +25,30 @@ export class LoginComponent implements OnInit {
   };
 
   userl = {
-    usuariol_email: "",
-    usuariol_password: ""
+    usuario_email: "",
+    usuario_password: ""
   };
 
   constructor(
     private authService: AuthService,
     private router: Router,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {
+  }
+
+  login() {
+    this.authService.login(this.userl).subscribe(res => {
+      if (res.tipo === 'error') {
+        this.toastr.error(res.message, "Error");
+      } else {
+        localStorage.setItem('token', res.token);
+        localStorage.setItem('id', res.user.usuario_id)
+        this.router.navigate([`${res.user.usuario_id}`])
+      }
+    });
   }
 
   registrar() {
