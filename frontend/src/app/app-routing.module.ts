@@ -6,6 +6,11 @@ import { IndexComponent } from './components/index/index.component';
 import { RecFacilComponent } from './components/rec-facil/rec-facil.component';
 
 import { AuthGuard, AuthGuard2 } from './auth.guard'
+import {ListPagesComponent} from "./components/pages/list-pages/list-pages.component";
+import {AddPagesComponent} from "./components/pages/add-pages/add-pages.component";
+import {EditPagesComponent} from "./components/pages/edit-pages/edit-pages.component";
+import {ViewPagesComponent} from "./components/pages/view-pages/view-pages.component";
+import {RolesPageComponent} from "./components/pages/roles-page/roles-page.component";
 
 const routes: Routes = [
   {
@@ -22,6 +27,27 @@ const routes: Routes = [
     path: 'recfacial',
     component: RecFacilComponent
   },
+  // pages
+  {
+    path: 'pages',
+    component: ListPagesComponent
+  },
+  {
+    path: 'pages/add',
+    component: AddPagesComponent
+  },
+  {
+    path: 'pages/:id/edit',
+    component: EditPagesComponent
+  },
+  {
+    path: 'pages/roles/:id',
+    component: RolesPageComponent
+  },
+  {
+    path: 'page/:id',
+    component: ViewPagesComponent
+  }
 ];
 
 @NgModule({

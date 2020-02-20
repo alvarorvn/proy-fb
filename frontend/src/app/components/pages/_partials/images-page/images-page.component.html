@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="row" *ngIf="images && images.length > 0">
+    <div class="col-md-6 mt-2 d-flex align-items-center" *ngFor="let i of images">
+      <div class="box">
+        <div class="box-body">
+          <a href="{{ url}}/page/img/publication/{{ i.pub_pathMult}}" class="img-pub">
+            <img src="{{ url}}/page/img/publication/{{ i.pub_pathMult}}" width="100%">
+            <div class="img-extra-info">
+              <small>{{ i.pub_fechahora | amParseZone  | amTimeAgo }}</small>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="images && images.length<=0" class="p-4 text-centerf">
+    Aun no hay imágenes en esta página
+  </div>
+
+</div>

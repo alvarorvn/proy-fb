@@ -1,0 +1,23 @@
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-12">
+      <ul *ngIf="followers && followers.length > 0" class="followers-list">
+        <li *ngFor="let f of followers"><a href="#">✔ {{ f.usuario }}</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="row mt-2" *ngIf="followers && followers.length > 0">
+    <div class="col-4 offset-4 py-2">
+      <button class="btn btn-block btn-primary" (click)="getFollowers(true)" *ngIf="showMore">Ver más</button>
+    </div>
+
+
+  </div>
+
+  <div *ngIf="followers && followers.length<=0" class="p-4 text-centerf">
+    Esta página aun no tiene seguidores
+  </div>
+
+</div>

@@ -1,0 +1,45 @@
+<form class="box" #publicationForm="ngForm" (ngSubmit)="addPublication(publicationForm)" enctype="multipart/form-data">
+  <div class="box-body mt-4">
+    <div class="publicatiom-form">
+
+      <textarea name="text"
+                #text="ngModel"
+                [(ngModel)]="publication.text"
+                required
+                placeholder="¿Qué hay de nuevo?"
+                id="text" cols="30" rows="2"></textarea>
+    </div>
+    <div id="images" class="images mt-2">
+      <img [src]="imgUrl" alt="" *ngIf="imgUrl" height="100px">
+      <video [src]="videoUrl" *ngIf="videoUrl" height="200" controls></video> <br/>
+    </div>
+  </div>
+  <div class="box-footer d-flex align-items-center justify-content-between">
+    <div>
+      <label class="input-file mr-4" *ngIf="!videoUrl && !videoFile">
+        <b class="text-init" style="cursor: pointer"><i class="fa fa-camera-retro"></i> Foto    </b>
+        <input type="file"
+               name="image"
+               #image="ngModel"
+               (change)="previewImage($event)"
+               [(ngModel)]="publication.image"
+               accept='image/*'
+               class="fileInput d-none">
+      </label>
+      <label class="input-file" *ngIf="!imgUrl && !imgFile">
+        <b class="text-init" style="cursor: pointer"><i class="fa fa-video"></i> Video    </b>
+        <input type="file"
+               name="video"
+               #video="ngModel"
+               (change)="onSelectFile($event)"
+               [(ngModel)]="publication.video"
+               accept='video/mp4'
+               class="fileInput d-none">
+      </label>
+    </div>
+    <div>
+      <button class="btn text-danger btn-sm mr-2" type="button" (click)="resetForm(publicationForm)">Cancelar</button>
+      <button class="btn btn-success btn-sm" type="submit">Publicar</button>
+    </div>
+  </div>
+</form>

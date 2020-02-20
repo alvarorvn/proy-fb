@@ -1,0 +1,67 @@
+<div class="container">
+  <div class="row">
+    <div class="col mt-3">
+      <alert></alert>
+      <div class="card" *ngIf="isAdmin">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5>Administrar Roles</h5>
+          <div>
+            <a [routerLink]="['/page', pageId]" class="btn"><i class="fa fa-arrow-left"></i>&nbsp;Ver Página</a>
+          </div>
+        </div>
+        <div class="card-body">
+          <p><b>Asignar un Nuevo Rol</b></p>
+          <form #formSearchUser="ngForm" (ngSubmit)="searchUser(formSearchUser)">
+            <div class="form-inline">
+              <input type="text"
+                     [(ngModel)]="search"
+                     class="form-control flex-grow-1" name="user" id="user" placeholder="Escribe un nombre para iniciar la busqueda">
+              <button type="submit" class="btn btn-primary">Buscar</button>
+            </div>
+          </form>
+
+          <br>
+
+          <table class="table">
+            <tbody>
+            <tr *ngFor="let u of users">
+              <td>
+                <form (ngSubmit)="assignRol(u)">
+                  <div class="form-row">
+                    <div class="col-md-5">
+                      <input type="text" readonly value="{{ u.usuario }}" class="form-control">
+                    </div>
+                    <div class="col-md-5">
+                      <select class="form-control" name="selected_rol" id="selected_rol" [(ngModel)]="selectedRol">
+                        <option disabled value="">Seleccione...</option>
+                        <option *ngFor="let r of roles" value="{{ r }}">{{ r.toUpperCase() }}</option>
+                      </select>
+                    </div>
+                    <div class="col-md-2">
+                      <button type="submit" class="btn btn-success btn-block">Asignar</button>
+                    </div>
+                  </div>
+
+                </form>
+
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3">
+                <small class="text-muted my-2">
+                  EL rol <b>EDITOR</b> Puede gestionar publicaciones, el rol <b>ADMIN</b> tiene todos los permisos en la página
+                </small>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+
+          <br>
+          <p><b>Roles Asignados</b></p>
+          <app-list-roles [pageId]="pageId" [rolesList]="rolesList" (rolEmitter)="getRolesList()"></app-list-roles>
+
+        </div>
+      </div>
+      </div>
+  </div>
+</div>

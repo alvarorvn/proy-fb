@@ -1,0 +1,14 @@
+.followers-list {
+  padding: 0;
+  margin-top: 1rem;
+  list-style: none;
+}
+
+.followers-list li a {
+  display: block;
+  padding: .4rem;
+  margin-bottom: 5px;
+  text-decoration: none;
+  color: #1a252f;
+  font-weight: 500;
+}
