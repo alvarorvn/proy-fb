@@ -86,7 +86,8 @@ async function recFacial(router) {
                     url: "http://localhost:3000/recFacial",
                     success: function (res) {
                         localStorage.setItem('token', res.token);
-                        router['navigate'](['/']);
+                        localStorage.setItem('id', res.user.usuario_id)
+                        router.navigate([`${res.user.usuario_id}`]);
                         clearInterval(proc);
                     }
                 });

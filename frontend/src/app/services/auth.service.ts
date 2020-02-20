@@ -42,18 +42,17 @@ export class AuthService {
     return token;
   }
 
+  getId(){
+    let id = localStorage.getItem('id');
+    return id;
+  }
+
+  verifyUser(){
+    
+  }
+
   private saveToken(token: string): void {
     localStorage.setItem('token', token);
     this.token = token;
-  }
-
-  publicar(texto) {
-    return this.http.post<any>(`${this.URL}/publicar`, texto).pipe(tap(
-      (res: any) => {
-        if (res) {
-          console.log(res);
-        }
-      }
-    ))
   }
 }

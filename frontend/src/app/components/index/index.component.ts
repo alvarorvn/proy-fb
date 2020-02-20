@@ -17,15 +17,4 @@ export class IndexComponent implements OnInit {
 
   texto: string = '';
 
-  publicar() {
-    this.authService.publicar({ saludo: this.texto }).subscribe(
-      res => {
-        console.log(res);
-      },
-      err => {
-        console.log(err);
-      }
-    );
-  }
-
 }
