@@ -10,9 +10,11 @@ router.post('/register', user.register);
 // Ruta de inicio de sesion
 router.post('/login', user.login);
 // Ruta para obtener usuarios
-router.get('/', user.getUsuario);
+router.get('/', user.getUsuarios);
 //Ruta que inicia sesion con reconocimiento facial
 router.post('/recFacial', user.recFacialLogin);
+//Ruta para obtener un usuario
+router.post('/', user.getUsuario);
 
 //exportar objeto
 module.exports = router;

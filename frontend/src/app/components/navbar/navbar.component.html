@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" routerLink="/{{userLogin.usuario_id}}">
             <img src="../assets/img/logo.png" class="fb-logo" width="30px" style="padding-bottom: 2px;">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -13,14 +13,14 @@
                 <form class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2 input-search" type="search" placeholder="Search"
                         aria-label="Search">
-                    <button class="btn btn-light btn-search btn-sm" type="submit">
+                    <button class="btn btn-light btn-search btn-sm" type="submit" >
                         <i class="fas fa-search"></i>
                     </button>
                 </form>
             </ul>
             <ul class="nav navbar-nav">
                 <li>
-                    <a class="nav-link dp-name" href="#">
+                    <a class="nav-link dp-name" routerLink="/{{userLogin.usuario_id}}/biografia">
                         <img src="../assets/img/user_pred.jfif" class="nav-dp">
                         <span>Alvaro</span>
                     </a>

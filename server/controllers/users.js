@@ -60,7 +60,7 @@ async function login(req, res) {
     res.json({ token, user: user.rows[0] })
 }
 
-async function getUsuario(req, res) {
+async function getUsuarios(req, res) {
     let query = `SELECT * FROM usuario`;
     let result = await pool.query(query);
     if (result.rows == 0) return res.json({ message: "No hay usuarios registrados", result: [] });
@@ -89,9 +89,22 @@ async function recFacialLogin(req, res) {
     }
 }
 
+async function getUsuario(req, res) {
+    const { usuario_id } = req.body;
+    let query = `SELECT * FROM usuario WHERE usuario_id=${usuario_id}`;
+    let result = await pool.query(query);
+    if (result.rows == 0) return res.json({ message: "No hay usuarios registrados", tipo: 'error', result: [] });
+    result.rows.forEach(usuario => {
+        var base64str = base64_encode(usuario.usuario_path_face);
+        usuario.base64str = base64str;
+        usuario.image_name = path.basename(usuario.usuario_path_face);
+    });
+    res.json(result.rows[0]);
+}
+
 module.exports = {
     login,
     register,
-    getUsuario,
+    getUsuarios, getUsuario,
     recFacialLogin
 };
