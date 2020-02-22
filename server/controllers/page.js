@@ -154,11 +154,11 @@ pages.destroy = async (req, res) => {
 
     await pool.query('BEGIN');
 
-    const deleteOwners = await pool.query('Delete from pagina_owners where pagina_id = '+page_id);
-    if(deleteOwners.rowCount <=0){
-        await pool.query('ROLLBACK');
-        return error(res, 'No se puedo eliminar los roles, página no eliminada');
-    }
+    await pool.query('Delete from pagina_owners where pagina_id = '+page_id);
+
+    await pool.query('Delete from pagina_seguidores where pagina_id = '+page_id);
+
+    await pool.query('Delete from publicacion where pagina_id = '+page_id );
 
     const deletePage = await pool.query('Delete from paginas where pagina_id = '+page_id);
     if(deletePage.rowCount <=0){
