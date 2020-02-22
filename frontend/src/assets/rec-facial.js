@@ -87,6 +87,7 @@ async function recFacial(router, ngZone) {
                     success: function (res) {
                         localStorage.setItem('token', res.token);
                         localStorage.setItem('id', res.user.usuario_id);
+                        clearInterval(proc);
                         ngZone.run(() => router.navigate([`${res.user.usuario_id}`]));
                     }
                 });
