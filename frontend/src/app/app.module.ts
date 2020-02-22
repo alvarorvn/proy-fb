@@ -15,6 +15,8 @@ import { IndexComponent } from './components/index/index.component';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { RecFacilComponent } from './components/rec-facil/rec-facil.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { PostsComponent } from './components/posts/posts.component';
+import { CreatePostComponent } from './components/create-post/create-post.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     LoginComponent,
     IndexComponent,
     RecFacilComponent,
-    NavbarComponent
+    NavbarComponent,
+    PostsComponent,
+    CreatePostComponent
   ],
   imports: [
     BrowserModule,

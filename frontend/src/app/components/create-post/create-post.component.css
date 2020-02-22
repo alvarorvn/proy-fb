@@ -1,0 +1,14 @@
+.create-post {
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+}
+
+.line-bottom {
+    border-bottom: 1px solid #dddddd;
+    padding: 15px;
+}
+
+img.mediana {
+    width: 40px;
+    height: 40px;
+  }

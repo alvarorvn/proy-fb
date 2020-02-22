@@ -1,0 +1,35 @@
+img.pequenia {
+  width: 24px;
+  height: 24px;
+}
+img.mediana {
+  width: 40px;
+  height: 40px;
+}
+img.reac {
+  width: 120px;
+  height: 40px;
+}
+
+.acciones {
+    display: flex;
+    justify-content: space-around;
+}
+
+.post {
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+}
+
+.post-header {
+    border-bottom: 1px solid #dddddd;
+    padding: 15px;
+}
+
+.post-body {
+    padding: 15px;
+}
+
+.post-footer {
+    border-top: 1px solid #dddddd;
+}
