@@ -319,7 +319,22 @@ body {
     font-weight: bold;
 }
 
-@media screen and (min-width: 200px) and (max-width: 780px) {
+/* TRATANDO DE OPTIMIZAR PARA TABLETS */
+
+@media screen and (min-width: 768px) and (max-width: 1320px) {
+    .input-search {
+        width: 240 !important;
+        margin-left: -0.5rem !important;
+        height: 31px !important;
+    }
+    .nav-icons span {
+        display: inline !important;
+    }
+}
+
+/* TRATANDO DE OPTIMIZAR PARA DISPOSITIVOS MOVILES */
+
+@media screen and (min-width: 200px) and (max-width: 575px) {
     .input-search {
         width: 320px !important;
         margin-left: -0.5rem !important;
@@ -328,4 +343,103 @@ body {
     .nav-icons span {
         display: inline;
     }
+    .jumbotron {
+        height: 300px !important;
+        background-position: center !important;
+        background-attachment: fixed !important;
+        border-radius: 0% !important;
+    }
+    .dp {
+        position: absolute !important;
+        margin-top: 16.5em !important;
+    }
+    .dp-img {
+        width: 130px !important;
+        height: 130px !important;
+        border-radius: 50% !important;
+    }
+    .f-buttons {
+        position: absolute !important;
+        margin-top: -4.5em !important;
+        right: 0.5em !important;
+    }
+}
+
+@media screen and (min-width: 575px) and (max-width: 780px) {
+    .jumbotron {
+        height: 300px !important;
+        background-position: center !important;
+        background-attachment: fixed !important;
+        border-radius: 0% !important;
+    }
+    .dp {
+        position: absolute !important;
+        margin-top: 16.5em !important;
+    }
+    .dp-img {
+        width: 130px !important;
+        height: 130px !important;
+        border-radius: 50% !important;
+    }
+}
+
+.dp-img {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    border: 7px solid #fff;
+}
+
+.dp-img:hover {
+    /*border: 4px solid #ffb300;*/
+    cursor: pointer;
+}
+
+.jumbotron {
+    height: 520px;
+    border-radius: 0%;
+    padding: 0px;
+}
+
+.jumbotron .jb-img {
+    width: 100%;
+    height: auto;
+    position: relative;
+}
+
+@supports(object-fit: cover) {
+    .jumbotron .jb-img {
+        height: 100%;
+        object-fit: cover;
+        object-position: center center;
+    }
+}
+
+.dp {
+    position: absolute;
+    margin-top: 28.5em;
+    top: 0;
+    display: inline-block;
+}
+
+.dp a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.8em;
+    margin-left: 1.2rem;
+}
+
+.f-buttons {
+    position: absolute;
+    margin-top: -2.5em;
+    right: 3em;
+}
+
+.dp-profile-name:hover .dp-profile-name:focus {
+    text-decoration: none;
+    color: #eee;
+}
+
+.dp-profile-name i {
+    font-size: 1.5rem !important;
 }

@@ -1,4 +1,72 @@
 <app-navbar></app-navbar>
-<div class="container-fluid" style="background-color: aqua; height:500px; margin-top: 44px;">
-    Hola
+<div style="margin-top: 44px;">
+    <ng-container *ngIf="userLogin.image_portada; else portadaDefault">
+        <div class="jumbotron">
+            <img [src]=getSantizeUrl(userLogin.image_portada) class="jb-img">
+            <div class="container-fluid">
+                <div class="dp">
+                    <ng-container *ngIf="userLogin.image_perfil; else fotoDefault">
+                        <img [src]=getSantizeUrl(userLogin.image_rec_facial) class="dp-img">
+                    </ng-container>
+                    <ng-template #fotoDefault>
+                        <img src="../assets/img/user_pred.jfif" class="dp-img">
+                    </ng-template>
+                    <a routerLink="/{{userLogin.usuario_id}}/biografia"
+                        class="dp-profile-name">{{userLogin.usuario_nombres}} <i class="fas fa-check"></i></a>
+                </div>
+                <div class="f-buttons pull-right">
+                    <button class="btn btn-light btn-sm">
+                        <i class="fas fa-user-plus"></i> Agregar amigos
+                    </button>
+                    <button class="btn btn-light btn-sm">
+                        <i class="fas fa-user-clock"></i> Solicitud enviada
+                    </button>
+                    <button class="btn btn-light btn-sm">
+                        <i class="fas fa-check"></i> Amigos
+                    </button>                    
+                    <button class="btn btn-light btn-sm">
+                        <i class="fas fa-check"></i> Siguiendo
+                    </button>
+                    <button class="btn btn-light btn-sm">
+                        <i class="fab fa-facebook-messenger"></i> Enviar mensaje
+                    </button>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <ng-template #portadaDefault>
+        <div class="jumbotron">
+            <img src="../../../assets/img/portada_default.jpg" class="jb-img">
+            <div class="container-fluid">
+                <div class="dp">
+                    <ng-container *ngIf="userLogin.image_perfil; else fotoDefault">
+                        <img [src]=getSantizeUrl(userLogin.image_rec_facial) class="dp-img">
+                    </ng-container>
+                    <ng-template #fotoDefault>
+                        <img src="../assets/img/user_pred.jfif" class="dp-img">
+                    </ng-template>
+                    <a routerLink="/{{userLogin.usuario_id}}/biografia"
+                        class="dp-profile-name">{{userLogin.usuario_nombres}} <i class="fas fa-check"></i></a>
+                </div>
+                <div class="f-buttons pull-right">
+                    <button class="btn btn-light btn-sm">
+                        <i class="fas fa-user-plus"></i> Agregar amigos
+                    </button>
+                    <button class="btn btn-light btn-sm">
+                        <i class="fas fa-user-clock"></i> Solicitud enviada
+                    </button>
+                    <button class="btn btn-light btn-sm">
+                        <i class="fas fa-check"></i> Amigos
+                    </button>                    
+                    <button class="btn btn-light btn-sm">
+                        <i class="fas fa-check"></i> Siguiendo
+                    </button>
+                    <button class="btn btn-light btn-sm">
+                        <i class="fab fa-facebook-messenger"></i> Enviar mensaje
+                    </button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
 </div>
