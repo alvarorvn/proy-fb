@@ -12,4 +12,8 @@ export class CreatePostComponent implements OnInit {
   ngOnInit() {
   }
 
-}
+  toPost() {
+    
+  }
+
+}//end class

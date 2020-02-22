@@ -1,4 +1,4 @@
-async function recFacial(router) {
+async function recFacial(router, ngZone) {
     const imageList = document.querySelector('#ListaImagenes');
     const videoContainer = document.getElementById("video");
     const video = await navigator.mediaDevices.getUserMedia({
@@ -42,7 +42,7 @@ async function recFacial(router) {
             users.forEach(user => {
                 let obj = {};
                 obj.id = user.usuario_id;
-                obj.image = user.base64str;
+                obj.image = user.image_rec_facial;
                 obj.name = user.image_name;
                 list_images.push(obj);
             });
@@ -88,16 +88,9 @@ async function recFacial(router) {
                         localStorage.setItem('token', res.token);
                         localStorage.setItem('id', res.user.usuario_id);
                         clearInterval(proc);
-                        router.navigate([`${res.user.usuario_id}`]);
-                        let video = document.getElementById("video");
-                        let rec = document.getElementById("recFacial");
-                        let lista = document.getElementById("lista");
-                        rec.remove();
-                        lista.remove();
-                        if (video != null) video.remove();
+                        ngZone.run(() => router.navigate([`${res.user.usuario_id}`]));
                     }
                 });
-
             }
         })
     }

@@ -17,6 +17,7 @@ import { RecFacilComponent } from './components/rec-facil/rec-facil.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { PostsComponent } from './components/posts/posts.component';
 import { CreatePostComponent } from './components/create-post/create-post.component';
+import { BiografiaComponent } from './components/biografia/biografia.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { CreatePostComponent } from './components/create-post/create-post.compon
     RecFacilComponent,
     NavbarComponent,
     PostsComponent,
-    CreatePostComponent
+    CreatePostComponent,
+    BiografiaComponent
   ],
   imports: [
     BrowserModule,

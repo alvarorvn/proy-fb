@@ -56,7 +56,7 @@ export class VerifyUser implements CanActivate {
   ) { }
 
   canActivate(route: ActivatedRouteSnapshot): boolean {
-    if (this.authService.getId() === null || this.authService.getToken() === null || this.authService.getToken() === null) {
+    if (this.authService.getId() == null || this.authService.getToken() == null || this.authService.getToken() == null) {
       this.router.navigate([``]);
       return false;
     }
