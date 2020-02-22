@@ -13,7 +13,7 @@
                 <form class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2 input-search" type="search" placeholder="Search"
                         aria-label="Search">
-                    <button class="btn btn-light btn-search btn-sm" type="submit" >
+                    <button class="btn btn-light btn-search btn-sm" type="submit">
                         <i class="fas fa-search"></i>
                     </button>
                 </form>
@@ -21,8 +21,14 @@
             <ul class="nav navbar-nav">
                 <li>
                     <a class="nav-link dp-name" routerLink="/{{userLogin.usuario_id}}/biografia">
-                        <img src="../assets/img/user_pred.jfif" class="nav-dp">
-                        <span>Alvaro</span>
+                        <ng-container *ngIf="userLogin.image_perfil; else fotoDefault">
+                            <img [src]=getSantizeUrl(userLogin.image_rec_facial)
+                                class="nav-dp">
+                        </ng-container>
+                        <ng-template #fotoDefault>
+                            <img src="../assets/img/user_pred.jfif" class="nav-dp">
+                        </ng-template>
+                        <span>{{userLogin.usuario_nombres}}</span>
                     </a>
                 </li>
                 <li>

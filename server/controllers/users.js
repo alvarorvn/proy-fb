@@ -38,6 +38,14 @@ async function register(req, res) {
                     VALUES ('${usuario_nombres}','${usuario_apellidos}','${usuario_email}','${hash}','${usuario_fechanac}','${usuario_sexo}',
                     '${usuario_acc_verify}', '${usuario_path_face}', '${usuario_activo}', '${usuario_conectado}')`;
         result = await pool.query(query);
+        query = `SELECT * FROM usuario where usuario_email = '${usuario_email}'`;
+        result = await pool.query(query);
+        query = `INSERT INTO perfil_usuario
+                    (perfil_path_foto, perfil_path_portada, perfil_interes, perfil_religion, perfil_informacion,
+                        usuario_id)
+                    VALUES ('','','','','','${result.rows[0].usuario_id}')`;
+        await pool.query(query);
+
         const token = jwt.sign({ _id: usuario_email }, 'secretkey');
 
         res.json({ token })
@@ -65,9 +73,11 @@ async function getUsuarios(req, res) {
     let result = await pool.query(query);
     if (result.rows == 0) return res.json({ message: "No hay usuarios registrados", result: [] });
     result.rows.forEach(usuario => {
-        var base64str = base64_encode(usuario.usuario_path_face);
-        usuario.base64str = base64str;
-        usuario.image_name = path.basename(usuario.usuario_path_face);
+        if (usuario.usuario_path_face != "") {
+            var base64str = base64_encode(usuario.usuario_path_face);
+            usuario.image_rec_facial = base64str;
+            usuario.image_rec_facial_name = path.basename(usuario.usuario_path_face);
+        }
     });
     res.json(result.rows);
 }
@@ -91,13 +101,26 @@ async function recFacialLogin(req, res) {
 
 async function getUsuario(req, res) {
     const { usuario_id } = req.body;
-    let query = `SELECT * FROM usuario WHERE usuario_id=${usuario_id}`;
+    let query = `SELECT * FROM usuario as usu, perfil_usuario as perfil 
+                    WHERE usu.usuario_id=${usuario_id} AND usu.usuario_id = perfil.usuario_id`;
     let result = await pool.query(query);
     if (result.rows == 0) return res.json({ message: "No hay usuarios registrados", tipo: 'error', result: [] });
     result.rows.forEach(usuario => {
-        var base64str = base64_encode(usuario.usuario_path_face);
-        usuario.base64str = base64str;
-        usuario.image_name = path.basename(usuario.usuario_path_face);
+        if (usuario.usuario_path_face != "") {
+            var base64str = base64_encode(usuario.usuario_path_face);
+            usuario.image_rec_facial = base64str;
+            usuario.image_rec_facial_name = path.basename(usuario.usuario_path_face);
+        }
+        if (usuario.perfil_path_foto != "") {
+            var base64str = base64_encode(usuario.perfil_path_foto);
+            usuario.image_perfil = base64str;
+            usuario.image_perfil_name = path.basename(usuario.perfil_path_foto);
+        }
+        if (usuario.perfil_path_portada != "") {
+            var base64str = base64_encode(usuario.perfil_path_portada);
+            usuario.image_portada = base64str;
+            usuario.image_portada_name = path.basename(usuario.perfil_path_portada);
+        }
     });
     res.json(result.rows[0]);
 }

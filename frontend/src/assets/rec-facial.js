@@ -74,7 +74,6 @@ async function recFacial(router) {
             .withFaceLandmarks()
             .withFaceDescriptor()
         if (detection === undefined) return;
-        console.log(detection);
 
         //if(!faceMatcher || !descriptor) return;
         const match = faceMatcher.findBestMatch(detection.descriptor);
