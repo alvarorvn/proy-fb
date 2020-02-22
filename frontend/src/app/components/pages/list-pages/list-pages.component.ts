@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {PageService} from "../../../services/page.service";
 import {AlertService} from "../../../services/alert.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-list-pages',
@@ -11,7 +12,12 @@ export class ListPagesComponent implements OnInit {
 
   public pages: any;
   public url: string;
-  constructor(public pageService: PageService, public alertService: AlertService) { }
+  public userId;
+  constructor(public pageService: PageService,
+              public router: ActivatedRoute,
+              public alertService: AlertService) {
+    this.userId = router.snapshot.paramMap.get('iduser');
+  }
 
   ngOnInit() {
     this.url = this.pageService.url;

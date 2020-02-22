@@ -18,8 +18,10 @@ export class ViewPagesComponent implements OnInit {
   public isFollowed: boolean;
   public followNum: number;
   public followers: any;
+  public userId;
 
   constructor(private router: ActivatedRoute, private pageService: PageService) {
+    this.userId = router.snapshot.paramMap.get('iduser');
     this.pageId = this.router.snapshot.paramMap.get('id');
     this.url = pageService.url;
     this.followers = {};

@@ -17,12 +17,14 @@ export class EditPagesComponent implements OnInit {
   public categorias: any;
   public url: string;
   public isAdmin: boolean;
+  public userId;
   constructor(private router: ActivatedRoute, private pageService: PageService,
               private alertService: AlertService) {
     this.page = {};
     this.categorias = this.pageService.categorias;
     this.url = pageService.url;
     this.isAdmin = false;
+    this.userId = router.snapshot.paramMap.get('iduser');
   }
 
   ngOnInit() {

@@ -2,7 +2,7 @@
   <div class="card mt-3">
     <div class="card-header d-flex align-items-center justify-content-between">
       <h4>Páginas</h4>
-      <a routerLink="/pages/add" class="btn">
+      <a routerLink="/{{ userId }}/pages/add" class="btn">
         <i class="fa fa-plus"></i>
         Nueva
       </a>
@@ -15,11 +15,11 @@
           <div class="card mb-2">
             <div class="card-body">
               <img src="{{ url }}/page/img/logos/{{p.pagina_logo}}" alt="image" width="50px" class="rounded-circle">
-              <a [routerLink]="['/page', p.pagina_id]" class="d-block pt-1 px-1">{{ p.pagina_nombre }}</a>
+              <a [routerLink]="['/'+userId, 'page', p.pagina_id]" class="d-block pt-1 px-1">{{ p.pagina_nombre }}</a>
               <small class="text-muted d-block mb-2">{{ p.pagina_categoria }}</small>
               <div>
                 <button class="btn btn-sm btn-danger mr-2" (click)="removePage(p.pagina_id)"><i class="fa fa-trash"></i></button>
-                <a [routerLink]="['/pages', p.pagina_id, 'edit']" class="btn btn-sm btn-success"><i class="fa fa-pen"></i></a>
+                <a [routerLink]="['/'+userId,'pages', p.pagina_id, 'edit']" class="btn btn-sm btn-success"><i class="fa fa-pen"></i></a>
               </div>
             </div>
           </div>

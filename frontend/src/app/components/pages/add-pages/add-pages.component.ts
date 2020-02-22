@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {PageService} from '../../../services/page.service';
 import {NgForm} from '@angular/forms';
 import {AlertService} from '../../../services/alert.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-add-pages',
@@ -10,10 +10,12 @@ import {Router} from '@angular/router';
   styleUrls: ['./add-pages.component.css']
 })
 export class AddPagesComponent implements OnInit {
-
+  public userId;
   constructor(private pageService: PageService,
               private alertService: AlertService,
-              public router: Router) { }
+              public router: Router, route: ActivatedRoute) {
+    this.userId = route.snapshot.paramMap.get('iduser');
+  }
 
   public categorias = this.pageService.categorias;
   public page: any;
@@ -62,7 +64,7 @@ export class AddPagesComponent implements OnInit {
         formAddPage.reset();
         this.logo = null;
         this.portada = null;
-        this.router.navigate(['/pages']);
+        this.router.navigate([`/${this.userId}/pages`]);
       }
     }, err => {
         if (err.error) {

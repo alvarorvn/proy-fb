@@ -21,9 +21,9 @@
 
             </div>
             <div *ngIf="isAdmin">
-              <button class="btn btn-block btn-primary" routerLink="/pages/{{ pageId }}/edit">Editar Pagina</button>
+              <button class="btn btn-block btn-primary" routerLink="/{{ userId}}/pages/{{ pageId }}/edit">Editar Pagina</button>
             </div>
-            <a *ngIf="isAdmin" [routerLink]="['/pages/roles', pageId]" class="btn btn-block btn-danger">Administrar Roles</a>
+            <a *ngIf="isAdmin" [routerLink]="['/'+userId,'pages', 'roles', pageId]" class="btn btn-block btn-danger">Administrar Roles</a>
           </div>
 
         </div>

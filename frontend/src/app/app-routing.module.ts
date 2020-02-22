@@ -29,23 +29,23 @@ const routes: Routes = [
   },
   // pages
   {
-    path: 'pages',
+    path: ':iduser/pages',
     component: ListPagesComponent
   },
   {
-    path: 'pages/add',
+    path: ':iduser/pages/add',
     component: AddPagesComponent
   },
   {
-    path: 'pages/:id/edit',
+    path: ':iduser/pages/:id/edit',
     component: EditPagesComponent
   },
   {
-    path: 'pages/roles/:id',
+    path: ':iduser/pages/roles/:id',
     component: RolesPageComponent
   },
   {
-    path: 'page/:id',
+    path: ':iduser/page/:id',
     component: ViewPagesComponent
   }
 ];

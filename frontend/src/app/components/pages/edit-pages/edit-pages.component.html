@@ -75,11 +75,11 @@
             <input type="submit" class="btn btn-block btn-primary" value="Actualizar" />
           </div>
           <div class="col-md-3">
-            <a [routerLink]="['/pages']" class="btn btn-block btn-danger">Ver Todas</a>
+            <a [routerLink]="['/'+userId, 'pages']" class="btn btn-block btn-danger">Ver Todas</a>
           </div>
 
           <div class="col-md-3">
-            <a [routerLink]="['/page', pageId]" class="btn btn-block btn-success">Ver Página</a>
+            <a [routerLink]="['/'+userId, 'page', pageId]" class="btn btn-block btn-success">Ver Página</a>
           </div>
         </div>
 

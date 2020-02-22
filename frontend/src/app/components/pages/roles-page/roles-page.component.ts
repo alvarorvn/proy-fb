@@ -18,10 +18,12 @@ export class RolesPageComponent implements OnInit {
   public isAdmin: boolean;
   public page: any;
   public rolesList: any;
+  public userId;
 
   constructor(private router: ActivatedRoute,
               private alert: AlertService,
               public pageService: PageService) {
+    this.userId = router.snapshot.paramMap.get('iduser');
     this.search = '';
     this.users = [];
     this.isAdmin = false;
