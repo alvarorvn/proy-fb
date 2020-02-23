@@ -1,14 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs/operators/';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { Router } from "@angular/router";
-
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class VerchatsService {
 
   URL: string = 'http://localhost:3000';
   authSubject = new BehaviorSubject(false);

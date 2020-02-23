@@ -57,8 +57,10 @@ export class LoginComponent implements OnInit {
     for (var u in this.user) {
       formData.append(u, this.user[u]);
     }
+    console.log(formData);
     this.authService.signUp(formData).subscribe(
       res => {
+        
         if (res.tipo == 'error') {
           console.log(res.message);
         } else {
