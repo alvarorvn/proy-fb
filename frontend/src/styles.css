@@ -1,4 +1,8 @@
 @import "~@fortawesome/fontawesome-free/css/all.css";
+:root {
+    --color_base: #3B5998;
+}
+
 /* TOAST */
 
 /* based on angular-toastr css https://github.com/Foxandxss/angular-toastr/blob/cb508fe6801d6b288d3afc525bb40fee1b101650/dist/angular-toastr.css */
@@ -237,6 +241,7 @@ body {
     width: 100%;
     margin: 0 auto;
     padding: 0;
+    background: #e9ebee;
 }
 
 .contenedor {
@@ -363,6 +368,15 @@ body {
         margin-top: -4.5em !important;
         right: 0.5em !important;
     }
+    .timeline-nav .nav {
+        margin-left: 12rem !important;
+    }
+    .img-thumbnail {
+        width: 120px !important;
+        height: 120px !important;
+        margin-right: 5px !important;
+        margin-left: 3px !important;
+    }
 }
 
 @media screen and (min-width: 575px) and (max-width: 780px) {
@@ -380,6 +394,9 @@ body {
         width: 130px !important;
         height: 130px !important;
         border-radius: 50% !important;
+    }
+    .timeline-nav .nav {
+        margin-left: 15rem !important;
     }
 }
 
@@ -420,6 +437,7 @@ body {
     margin-top: 28.5em;
     top: 0;
     display: inline-block;
+    margin-left: 1.5em;
 }
 
 .dp a {
@@ -443,3 +461,121 @@ body {
 .dp-profile-name i {
     font-size: 1.5rem !important;
 }
+
+.timeline-nav {
+    background: #fff !important;
+    margin-top: -2em;
+    padding: .5rem;
+    border-bottom: 1px solid #eee;
+}
+
+.timeline-nav .nav {
+    margin-left: 20rem;
+}
+
+.row .container-fluid {
+    padding: 2em 2em 0em 2em !important;
+}
+
+.card {
+    /*margin-left: 2.5em;*/
+    color: #333;
+    font-family: sans-serif;
+}
+
+.img-thumbnail {
+    width: 100px;
+    height: 100px;
+    margin-right: 5px;
+    margin-left: 3px;
+}
+
+/* AMIGOS */
+
+.card-img-top {
+    height: 100px;
+    margin: auto !important;
+    padding: 0 !important;
+}
+
+.friend-card-text {
+    text-align: center;
+    font-size: 15px;
+}
+
+/* AMIGOS */
+
+/* POSTS */
+
+img.media-object {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+/*.media-name .media-body {
+    margin-top: .4em;
+}*/
+
+.post {
+    background: #fff;
+    border: 1px solid rgba(33, 33, 33, .33);
+    padding: 1em;
+}
+
+.post-content img {
+    width: 100%;
+    cursor: pointer;
+    padding: .4em;
+}
+
+.post-content img:hover {
+    opacity: .8;
+}
+
+.colorbase {
+    color: var(--color_base);
+}
+
+.fc-react {
+    background: #fff;
+    padding: 0;
+}
+
+.fc-react btn {
+    border: none;
+    padding: .2rem .5rem;
+    margin: .2rem .5rem;
+}
+
+.f-tu {
+    background: #3b5998;
+    color: #fff;
+    border-radius: 50%;
+    padding: .5em;
+}
+
+textarea {
+    width: 100%;
+    overflow: hidden;
+    padding: .4em;
+    /*display: inline-block;*/
+}
+
+.textarea-camera{
+    margin-left: -2em;
+    margin-top: .5em;
+    position: absolute;
+    z-index: 22;
+}
+
+.post-content p {
+    margin-top: .4rem;
+}
+
+.fc-engage {
+    background: #eee;
+}
+
+/* POSTS */
