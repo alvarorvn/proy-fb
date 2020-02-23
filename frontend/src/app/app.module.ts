@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
 
 
 import { LoginComponent } from './components/login/login.component';
@@ -37,6 +38,7 @@ import { BiografiaComponent } from './components/biografia/biografia.component';
       positionClass: 'toast-bottom-right',
       preventDuplicates: true
     }),
+    TextareaAutosizeModule
   ],
   providers: [
     AuthGuard,

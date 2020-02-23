@@ -14,7 +14,7 @@
                     <a routerLink="/{{userLogin.usuario_id}}/biografia"
                         class="dp-profile-name">{{userLogin.usuario_nombres}} <i class="fas fa-check"></i></a>
                 </div>
-                <div class="f-buttons pull-right">
+                <!--<div class="f-buttons pull-right">
                     <button class="btn btn-light btn-sm">
                         <i class="fas fa-user-plus"></i> Agregar amigos
                     </button>
@@ -23,14 +23,14 @@
                     </button>
                     <button class="btn btn-light btn-sm">
                         <i class="fas fa-check"></i> Amigos
-                    </button>                    
+                    </button>
                     <button class="btn btn-light btn-sm">
                         <i class="fas fa-check"></i> Siguiendo
                     </button>
                     <button class="btn btn-light btn-sm">
                         <i class="fab fa-facebook-messenger"></i> Enviar mensaje
                     </button>
-                </div>
+                </div>-->
             </div>
         </div>
     </ng-container>
@@ -48,7 +48,7 @@
                     <a routerLink="/{{userLogin.usuario_id}}/biografia"
                         class="dp-profile-name">{{userLogin.usuario_nombres}} <i class="fas fa-check"></i></a>
                 </div>
-                <div class="f-buttons pull-right">
+                <!--<div class="f-buttons pull-right">
                     <button class="btn btn-light btn-sm">
                         <i class="fas fa-user-plus"></i> Agregar amigos
                     </button>
@@ -57,16 +57,178 @@
                     </button>
                     <button class="btn btn-light btn-sm">
                         <i class="fas fa-check"></i> Amigos
-                    </button>                    
+                    </button>
                     <button class="btn btn-light btn-sm">
                         <i class="fas fa-check"></i> Siguiendo
                     </button>
                     <button class="btn btn-light btn-sm">
                         <i class="fab fa-facebook-messenger"></i> Enviar mensaje
                     </button>
+                </div>-->
+            </div>
+        </div> <!-- FINAL JUMBOTRON -->
+    </ng-template>
+
+    <div class="timeline-nav">
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/{{userLogin.usuario_id}}/biografia"
+                    routerLinkActive="active">Biografía</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="" routerLinkActive="active">Información</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="" routerLinkActive="active">Amigos <span
+                        class="label label-primary">26K</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="" routerLinkActive="active">Fotos</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                    aria-expanded="false">Más</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#" routerLinkActive="active">Action</a>
+                    <a class="dropdown-item" href="#" routerLinkActive="active">Another action</a>
+                    <a class="dropdown-item" href="#" routerLinkActive="active">Something else here</a>
+                </div>
+            </li>
+        </ul>
+    </div> <!-- FINALIZA EL TIMELINE -->
+
+    <div class="row">
+        <div class="col-lg-4 col-md-12 col-12 col-sm-12">
+            <div class="container-fluid">
+                <div class="col-md-10 col sm-10">
+                    <div class="card border-secondary">
+                        <div class="card-header">
+                            <i class="fas fa-globe-americas"></i> Detalles
+                        </div>
+                        <div class="card-body text-secondary">
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of
+                                the
+                                card's content.</p>
+                            <button class="btn btn-block btn-outline-secondary">Editar descripción</button>
+                            <div class="dropdown-divider"></div>
+                            <i class="fas fa-home"></i> Vive en
+                            <br>
+                            <i class="fas fa-user-check"></i> seguidores
+                            <button class="btn btn-block btn-outline-secondary" style="margin-top: 10px;">Editar
+                                detalles</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="col-md-10 col sm-10">
+                    <div class="card border-secondary">
+                        <div class="card-header">
+                            <i class="fas fa-images"></i> Fotos
+                        </div>
+                        <div class="card-body text-secondary">
+                            <img src="..." class="img-thumbnail">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class=" col-md-10 col sm-10">
+                    <div class="card border-secondary">
+                        <div class="card-header">
+                            <i class="fas fa-users"></i> Amigos
+                        </div>
+                        <div class="card-body text-secondary">
+                            <div class="row row-cols-3 row-cols-md-4 row-cols-lg-2 row-cols-xl-3"
+                                style="margin-right: 0; margin-left: 0;">
+                                <div class="card">
+                                    <a href="" class="card-text friend-card-text">
+                                        <img src="..." class="card-img-top">
+                                        Username
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </ng-template>
 
+        <!-- POST -->
+        <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
+            <div class="container-fluid">
+                <div class="col-md-10 col sm-10">
+                    <div class="post">
+                        <div class="media media-name">
+                            <a href=""><img src="..." class="media-object"></a>
+                            <div class="media-body">
+
+                                <div class="dropdown" style="position: absolute; right: 2em;">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button"
+                                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="#">Editar publicación</a>
+                                        <a class="dropdown-item" href="#">Something else here</a>
+                                    </div>
+                                </div>
+
+                                <h5 class="media-heading" style="margin-bottom: 0;">
+                                    <a href="" class="colorbase" style="font-size: 19px;">Username</a>
+                                </h5>
+                                <p>
+                                    <a href="" style="font-size: 14px; color: #555;">
+                                        <i class="fas fa-globe-americas"></i> 12 horas atras
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="post-content">
+                            <p>
+                                Descripcion
+                            </p>
+                            <img src="...">
+
+                            <div class="card card-body bg-light fc-react">
+                                <div class="fc-engage" style="padding: 5px;">
+                                    <div class="container">
+                                        <i class="far fa-thumbs-up f-tu"></i><a href=""> #</a> de reacciones
+                                    </div>
+
+                                    <div class="btn-toolbar" role="toolbar" aria-label="face-reacts">
+                                        <div class="btn-group" role="group" aria-label="...">
+                                            <button type="button" class="btn btn-light" style="background: #eee;">
+                                                <i class="far fa-thumbs-up"></i> Like
+                                            </button>
+                                            <button type="button" class="btn btn-light" style="background: #eee;">
+                                                <i class="far fa-comment-alt"></i> Comentar
+                                            </button>
+                                            <button type="button" class="btn btn-light" style="background: #eee;">
+                                                <i class="far fa-share-square"></i> Compartir
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="media media-comment">
+                                        <div class="media-left">
+                                            <a href=""><img src="..."
+                                                    style="width: 40px; height: 40px; border-radius: 50%;"></a>
+                                        </div>
+                                        <div class="media-body">
+                                            <textarea autosize placeholder="Escribe un comentario"></textarea>
+                                            <a href="" style="color: grey;" class="textarea-camera"><i
+                                                    class="fas fa-camera"></i></a>
+                                        </div>
+                                    </div>
+                                </div> <!-- ENGAGE -->
+                            </div> <!-- COMENTARIOS, LIKES Y COMPARTIR -->
+                        </div> <!-- POST CONTENT -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
