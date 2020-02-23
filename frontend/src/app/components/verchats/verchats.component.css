@@ -2,6 +2,7 @@
 body {
     width: 100%;
     height: 100%;
+    background: #fff;
     margin: 0;
     position: relative;
 }
@@ -23,11 +24,13 @@ body {
 .form-user {
     display: flex;
     flex-direction: column;
+    background: #fff;
     justify-content: center;
     align-items: center;
 }
 
 .input-user {
+    background: #fff;
     text-align: center;
     margin-top: 10px;
     border: none;
@@ -36,11 +39,13 @@ body {
     font-size: 20px;
     outline: none;
 }
-
+.contenedor-absol{
+    background: #fff repeat;
+}
 .message-input {
+    background: #fff;
     color: #8d050e;
     text-align: center;
-    background: rgb(166, 218, 241);
 }
 
 .content-img-profile-login {
@@ -98,6 +103,7 @@ body {
 }
 
 .content-messages {
+    background: #fff;
     width: 70%;
     height: 90%;
 }
@@ -164,6 +170,7 @@ body {
 
 .content-messages {
     display: flex;
+    background: #fff;
     bottom:0px;
     right:0px;
     flex-wrap: wrap;
@@ -171,6 +178,7 @@ body {
 
 .message-group {
     position: relative;
+    background: #fff;
     margin-top: 10px;
     padding-left: 9%;
     padding-right: 9%;
@@ -205,6 +213,7 @@ body {
     width: 10px;
     height: 10px;
     position: absolute;
+    background: #fff;
     top: 0;
     left: 0;
     border-right: 10px solid #fff;
@@ -215,6 +224,7 @@ body {
 
 .user-message {
     color: #000;
+    background: #fff;
     font-weight: bold;
     font-size: 12.8px;
     line-height: 22px;
@@ -222,6 +232,7 @@ body {
 }
 
 .text-message {
+    background: #fff;
     word-break: break-all;
     display: block;
     display: flex;
@@ -229,11 +240,11 @@ body {
 }
 
 .messages {
-    width: 70%;
+    width: 100%;
     height: 100%;
     padding: 1em 0;
     overflow: auto;
-    background: url('./../../../public/imgs/images.png') repeat;
+    background: #fff;
 }
 
 .item-user {
