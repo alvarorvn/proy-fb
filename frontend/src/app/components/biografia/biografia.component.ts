@@ -3,6 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { AuthService } from '../../services/auth.service';
 import { BiografiaService } from '../../services/biografia.service';
 import { Router } from '@angular/router';
+import { ToastrService } from "ngx-toastr";
 
 declare var jQuery: any;
 
@@ -13,18 +14,32 @@ declare var jQuery: any;
 })
 export class BiografiaComponent implements OnInit {
 
+  // Objetos
+  userLogin = {};
+  empleo = {
+    empleo_empresa: "",
+    empleo_puesto: "",
+    empleo_detalle: "",
+    empleo_fechainicio: "",
+    empleo_fechafin: "",
+    perfilusu_id: ""
+  };
+
   fileUpload;
   portadaUpload;
-  userLogin = {};
+
+  // Lista de cosas
   seguidores: Array<Object> = [];
   seguidos: Array<Object> = [];
   amigos: Array<Object> = [];
+  empleos: Array<Object> = [];
 
   constructor(
     private authService: AuthService,
     private sanitizer: DomSanitizer,
     private biogService: BiografiaService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {
   }
 
@@ -37,6 +52,7 @@ export class BiografiaComponent implements OnInit {
     this.getSeguidos();
     setTimeout(() => {
       this.JqueryFunciones();
+      this.getEmpleos();
     }, 500);
   }
 
@@ -112,10 +128,49 @@ export class BiografiaComponent implements OnInit {
     this.updatePortadaPhoto();
   }
 
+  openForm() {
+    this.JqueryFunciones();
+  }
+
+  guardarEmpleo() {
+    this.empleo.perfilusu_id = this.userLogin['perfilusu_id'];
+    this.biogService.addEmpleo(this.empleo).subscribe(res => {
+      if (res.tipo == 'error') {
+        this.toastr.error(res.message, "Error");
+      } else {
+        this.toastr.success(res.message, "Éxito");
+      }
+    })
+  }
+
+  getEmpleos() {
+    this.biogService.getEmpleos(this.userLogin['perfilusu_id']).subscribe(res => {
+      if (res.tipo == 'error') {
+        this.empleos = res.result;
+      } else {
+        this.empleos = res;
+      }
+    })
+  }
+
+  clearFormEmpleo() {
+    this.empleo = {
+      empleo_empresa: "",
+      empleo_puesto: "",
+      empleo_detalle: "",
+      empleo_fechainicio: "",
+      empleo_fechafin: "",
+      perfilusu_id: ""
+    };
+  }
 
   JqueryFunciones() {
     (function ($) {
       $(document).ready(function () {
+
+        $('#formEmpleo').hide();
+
+        // Cambio de navs
         $('#enlamigos').on('click', () => {
           // NAV ITEMS
           $('#nvbio').removeClass('active');
@@ -131,6 +186,19 @@ export class BiografiaComponent implements OnInit {
           $('#allamigos').removeClass('active');
           $('#seguidores').addClass('active');
         })
+
+        //Mostrar formulario de emplo
+        $('#btnAddEmpl').on('click', () => {
+          $('#formEmpleo').show();
+          $('#btnAddEmpl').hide();
+        })
+
+        //Ocultar formulario de emplo
+        $('#cancelFormEmpleo').on('click', () => {
+          $('#formEmpleo').hide();
+          $('#btnAddEmpl').show();
+        })
+
       });
     })(jQuery);
   }

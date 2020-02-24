@@ -235,7 +235,7 @@
                                     <div class="col-4">
                                         <ul class="nav flex-column nav-pills" aria-orientation="vertical">
                                             <li class="nav-item">
-                                                <a class="nav-link" role="tab" data-toggle="tab"
+                                                <a class="nav-link active" role="tab" data-toggle="tab"
                                                     href="#formacion">Formación y empleo
                                                 </a>
                                             </li>
@@ -260,11 +260,124 @@
                                     <div class="col-8">
                                         <div class="tab-content">
 
-                                            <div role="tabpanel" class="tab-pane" id="formacion">
+                                            <!-- FORMACION Y EMPLEO -->
+                                            <div role="tabpanel" class="tab-pane active" id="formacion">
                                                 <div class="container-fluid" style="padding: 0em 1em !important;">
-                                                    <div
-                                                        class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-3">
-                                                        2
+                                                    <div class="container-fluid">
+                                                        <div>
+                                                            Empleo
+                                                            <hr>
+                                                            <button class="btn btn-outline-secondary btn-sm btn-block"
+                                                                id="btnAddEmpl">Agregar empleo
+                                                            </button>
+
+                                                            <div style="margin-top: 20px;">
+                                                                <ng-container *ngIf="empleos.length > 0">
+                                                                    <div *ngFor="let emp of empleos"
+                                                                        style="font-size: 12px;">
+                                                                        <div class="row">
+                                                                            <div class="col-10">
+                                                                                {{emp.empleo_empresa}} <br>
+                                                                                {{emp.empleo_puesto}} - De
+                                                                                {{emp.empleo_fechainicio}}
+                                                                                a {{emp.empleo_fechafin}}
+                                                                                <br>
+                                                                                {{emp.empleo_detalle}}
+                                                                            </div>
+                                                                            <div class="col-2">
+                                                                                <button
+                                                                                    class="btn btn-outline-secondary btn-sm"
+                                                                                    style="margin-right: 10px;">
+                                                                                    <i class="fas fa-edit"></i>
+                                                                                </button>
+                                                                                <button
+                                                                                    class="btn btn-outline-secondary btn-sm"
+                                                                                    (click)="deleteEmpleo(emp.empleo_id)">
+                                                                                    <i class="fas fa-trash-alt"></i>
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                        <hr>
+                                                                    </div>
+
+                                                                </ng-container>
+                                                            </div>
+
+                                                            <div id="formEmpleo">
+                                                                <form style="padding: 25px; padding-bottom: 0px;">
+                                                                    <div class="form-group row">
+                                                                        <label
+                                                                            class="col-sm-2 col-form-label">Empresa</label>
+                                                                        <div class="col-sm-10">
+                                                                            <input type="text"
+                                                                                [(ngModel)]="empleo.empleo_empresa"
+                                                                                style="border: 1px solid #bbb;"
+                                                                                name="empleo_empresa"
+                                                                                class="form-control-plaintext form-control-sm">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <label
+                                                                            class="col-sm-2 col-form-label">Puesto</label>
+                                                                        <div class="col-sm-10">
+                                                                            <input type="text"
+                                                                                [(ngModel)]="empleo.empleo_puesto"
+                                                                                style="border: 1px solid #bbb;"
+                                                                                name="empleo_puesto"
+                                                                                class="form-control-plaintext form-control-sm">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <label
+                                                                            class="col-sm-2 col-form-label">Detalle</label>
+                                                                        <div class="col-sm-10">
+                                                                            <textarea autosize
+                                                                                [(ngModel)]="empleo.empleo_detalle"
+                                                                                name="empleo_detalle"></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class=" row">
+                                                                        <div class="col">
+                                                                            <div class="form-group row">
+                                                                                <label
+                                                                                    class="col-sm-4 col-form-label">Fecha
+                                                                                    Inicio</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <input type="date"
+                                                                                        [(ngModel)]="empleo.empleo_fechainicio"
+                                                                                        (ngModelChange)="empleo.empleo_fechainicio = $event"
+                                                                                        class="form-control"
+                                                                                        name="empleo_fechainicio">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <div class="form-group row">
+                                                                                <label
+                                                                                    class="col-sm-4 col-form-label">Fecha
+                                                                                    fin</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <input type="date"
+                                                                                        [(ngModel)]="empleo.empleo_fechafin"
+                                                                                        (ngModelChange)="empleo.empleo_fechafin = $event"
+                                                                                        class="form-control"
+                                                                                        name="empleo_fechafin">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row"
+                                                                        style="padding-bottom: 5px; justify-content: center;">
+                                                                        <button class="btn btn-outline-secondary btn-sm"
+                                                                            style="margin-right: 10px;"
+                                                                            (click)="guardarEmpleo()">Guardar</button>
+                                                                        <button class="btn btn-outline-secondary btn-sm"
+                                                                            id="cancelFormEmpleo"
+                                                                            (click)="clearFormEmpleo()">Cancelar</button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -324,14 +437,15 @@
                                 <ul class="nav nav-pills" style="margin-top: 10px; margin-bottom: -13px;">
                                     <li class="nav-item">
                                         <a class="nav-link active" role="tab" data-toggle="tab" href="#allamigos"
-                                            id="nvallamigos">Amigos</a>
+                                            id="nvallamigos">Amigos {{amigos.length}}</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" role="tab" data-toggle="tab" href="#seguidores"
-                                            id="nvseguidores">Seguidores</a>
+                                            id="nvseguidores">Seguidores {{seguidores.length}}</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" role="tab" data-toggle="tab" href="#seguidos">Seguidos</a>
+                                        <a class="nav-link" role="tab" data-toggle="tab" href="#seguidos">Seguidos
+                                            {{seguidos.length}}</a>
                                     </li>
                                 </ul>
                             </div>
@@ -358,7 +472,8 @@
                                                             <img src="../assets/img/user_pred_mujer.jpg">
                                                         </ng-template>
                                                     </ng-template>
-                                                    <a href="">{{amigo.usuario_nombres}} {{amigo.usuario_apellidos}}</a>
+                                                    <a href="">{{amigo.usuario_nombres}}
+                                                        {{amigo.usuario_apellidos}}</a>
                                                     <div class="dropdown">
                                                         <button class="btn btn-outline-secondary dropdown-toggle"
                                                             type="button" id="dropdownMenuButton" data-toggle="dropdown"
@@ -419,7 +534,8 @@
                                                             <img src="../assets/img/user_pred_mujer.jpg">
                                                         </ng-template>
                                                     </ng-template>
-                                                    <a href="">{{seguido.usuario_nombres}} {{seguido.usuario_apellidos}}</a>
+                                                    <a href="">{{seguido.usuario_nombres}}
+                                                        {{seguido.usuario_apellidos}}</a>
                                                     <!--<button class="btn btn-outline-secondary">
                                                         <i class="fas fa-check"></i> Seguir
                                                     </button>-->

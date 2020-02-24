@@ -33,4 +33,12 @@ export class BiografiaService {
   updatePortadaPhoto(photo) {
     return this.http.post<any>(`${this.URL}/${this.authService.getId()}/update-portada-photo`, photo);
   }
+
+  addEmpleo(empleo) {
+    return this.http.post<any>(`${this.URL}/${this.authService.getId()}/biografia/add-empleo`, empleo);
+  }
+
+  getEmpleos(perfil_id) {
+    return this.http.get<any>(`${this.URL}/${this.authService.getId()}/biografia/${perfil_id}/get-empleo`);
+  }
 }
