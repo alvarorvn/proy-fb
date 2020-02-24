@@ -1,4 +1,4 @@
-<div class="container-fluid"> 
+<div class="container-fluid">
     <div class="create-post">
         <div class="line-bottom post-header">
             <span>Crear publicación</span>
@@ -14,7 +14,7 @@
         </div>
         <!-- <div><button (click)="toPost()" type="submit" class="btn btn-secondary col-12">Publicar</button></div> -->
     </div>
-</div> 
+</div>
 
 <div id="modal" class="modali">
     <div class="container-fluid">
@@ -34,7 +34,9 @@
             <div><button (click)="toPost()" type="submit" class="btn btn-secondary col-12">Publicar</button></div>
         </div>
     </div>
-</div> 
+</div>
+
 
 <app-posts *ngFor='let post of posts' [pub_texto]='post.pub_texto' [pub_id]='post.pub_id'></app-posts>
-
+<!--<ng-container *ngIf="posts.results != 0">
+</ng-container>-->

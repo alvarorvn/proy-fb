@@ -12,25 +12,32 @@ var helpers = require('../../../assets/helpers.js');
 })
 export class CreatePostComponent implements OnInit {
 
-  private pub_texto:string;
+  private pub_texto: string;
 
   userLogin = {};
   posts: Post[];
   userId = this.authService.getId();
 
-  constructor(private authService: AuthService, private createPostService: CreatePostService) { 
+  constructor(private authService: AuthService, private createPostService: CreatePostService) {
     createPostService.getPostsUser(this.userId).subscribe(res => {
-      this.posts = res;
+      if (res['message']) {
+        this.posts = res['result'];
+      } else {
+        this.posts = res;
+      }
     });
   }
 
   ngOnInit() {
+    /*setTimeout(() => {
+      console.log(this.posts['result']);
+    }, 1000);*/
   }
 
   // Add post
   toPost() {
     console.log(this.pub_texto, this.userId);
-    this.createPostService.savepost({"pub_texto": this.pub_texto, "usuario_id": this.userId}).subscribe(res => {
+    this.createPostService.savepost({ "pub_texto": this.pub_texto, "usuario_id": this.userId }).subscribe(res => {
       this.posts.push(res);
       this.closeModal();
       this.pub_texto = '';
@@ -65,20 +72,21 @@ export class CreatePostComponent implements OnInit {
     })
   }
 
-  showModal () {
+  showModal() {
     var modali = document.getElementById('modal');
-    modali.style.display='block';
+    modali.style.display = 'block';
     modali.addEventListener('click', e => {
-      if(e.target === modali) {
-        modali.style.display='none';}
+      if (e.target === modali) {
+        modali.style.display = 'none';
+      }
     });
   }
 
-  closeModal () {
+  closeModal() {
     var modali = document.getElementById('modal');
-    modali.style.display='none';
+    modali.style.display = 'none';
   }
 
-  
+
 
 }//end class

@@ -15,6 +15,14 @@ export class BiografiaService {
   ) { }
 
   getSeguidores() {
+    return this.http.get<any>(`${this.URL}/${this.authService.getId()}/seguidores`);
+  }
+
+  getAmigos() {
+    return this.http.get<any>(`${this.URL}/${this.authService.getId()}/amigos`);
+  }
+
+  getSeguidos() {
     return this.http.get<any>(`${this.URL}/${this.authService.getId()}/seguidos`);
   }
 

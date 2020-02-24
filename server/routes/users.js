@@ -16,7 +16,11 @@ router.post('/recFacial', user.recFacialLogin);
 // Ruta para obtener un usuario
 router.post('/', validate.verifyToken, user.getUsuario);
 // Ruta para obtener seguidores de usuario logueado
+router.get('/:id/seguidores', validate.verifyToken, user.getSeguidores);
+// Ruta para obtener seguidos de usuario logueado
 router.get('/:id/seguidos', validate.verifyToken, user.getSeguidos);
+// Ruta para obtener amigos de usuario logueado
+router.get('/:id/amigos', validate.verifyToken, user.getAmigos);
 // Ruta para editar foto de perfil
 router.post('/:id/update-perfil-photo', validate.verifyToken, user.updatePerfilPhoto);
 // Ruta para editar portada
