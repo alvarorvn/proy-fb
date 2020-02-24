@@ -1,0 +1,42 @@
+<app-navbar></app-navbar>
+<div class="contenedor-absol" style="margin-top: 44px;">
+    <div id="content-menu" class="content-menu"></div>
+    <div class="div-sf">
+        <div class="search-box">
+            <input class="input-search1" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-light btn-search" type="submit">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+        <div class="container-chat">
+            <div class="container-usser-list">
+                <div class="title-chat">
+                    <div class="content-img-profile">
+                        <img class="img-profile" id="img-profile-me" alt="">
+                    </div>
+                    <span id="me"></span>
+                </div>
+                <div class="content-users-list">
+                    <ul class="list" id="users-list"></ul>
+                </div>
+            </div>
+            <div class="content-messages">
+                <div class="messages" id="messages-content"></div>
+                <div class="content-inputs">
+                    <input type="file" name="file" id="file-message" class="input-file">
+                    <label for="file-message" class="btn-file">
+                        <i class="far fa-images"></i>
+                    </label>
+                    <input type="file" name="file-attached" id="file-attached" class="input-file">
+                    <label for="file-attached" class="btn-file">
+                        <i class="fas fa-paperclip"></i>
+                    </label>
+                    <textarea name="" id="message" placeholder="Escriba un mensaje..." class="input-message"></textarea>
+                    <button id="btnSend" class="btn btn-send">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

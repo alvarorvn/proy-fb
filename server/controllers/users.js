@@ -11,12 +11,13 @@ const pool = new Pool({
     port: '5432',
     database: 'proyecto_redsocial',
     user: 'postgres',
-    password: 'admin123'
+    password: 'root'
 })
 
 // Funcion de registro de usuario - sin validar
 async function register(req, res) {
     const { usuario_nombres, usuario_apellidos, usuario_email, usuario_password, usuario_fechanac, usuario_sexo } = req.body;
+    console.log(req.body);
     let usuario_path_face = `faces/${req.file.originalname}`;
     let usuario_acc_verify, usuario_activo, usuario_conectado;
     let salt = bcrypt.genSaltSync(10);

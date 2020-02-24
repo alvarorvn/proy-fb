@@ -17,6 +17,7 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
 import { RecFacilComponent } from './components/rec-facil/rec-facil.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { BiografiaComponent } from './components/biografia/biografia.component';
+import { VerchatsComponent } from './components/verchats/verchats.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { BiografiaComponent } from './components/biografia/biografia.component';
     IndexComponent,
     RecFacilComponent,
     NavbarComponent,
-    BiografiaComponent
+    BiografiaComponent,
+    VerchatsComponent
   ],
   imports: [
     BrowserModule,
