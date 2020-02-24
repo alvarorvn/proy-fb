@@ -21,4 +21,8 @@ export class BiografiaService {
   updatePerfilPhoto(photo) {
     return this.http.post<any>(`${this.URL}/${this.authService.getId()}/update-perfil-photo`, photo);
   }
+
+  updatePortadaPhoto(photo) {
+    return this.http.post<any>(`${this.URL}/${this.authService.getId()}/update-portada-photo`, photo);
+  }
 }

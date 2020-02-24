@@ -19,6 +19,8 @@ router.post('/', validate.verifyToken, user.getUsuario);
 router.get('/:id/seguidos', validate.verifyToken, user.getSeguidos);
 // Ruta para editar foto de perfil
 router.post('/:id/update-perfil-photo', validate.verifyToken, user.updatePerfilPhoto);
+// Ruta para editar portada
+router.post('/:id/update-portada-photo', validate.verifyToken, user.updatePortadaPhoto);
 
 //exportar objeto
 module.exports = router;

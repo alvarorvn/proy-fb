@@ -16,22 +16,28 @@
                             <img src="../assets/img/user_pred_mujer.jpg" class="dp-img">
                         </ng-template>
                     </ng-template>
+                    <label class="custom-file-upload portada-change">
+                        <input type="file" (change)="onPortadaChange($event)" />
+                        <i class="fas fa-camera" style="color: #B4BDBA;"></i>
+                        <span class="tooltiptextPortada">Actualizar Portada</span>
+                    </label>
                     <a routerLink="/{{userLogin.usuario_id}}/biografia"
-                        class="dp-profile-name">{{userLogin.usuario_nombres}} <i class="fas fa-check"></i></a>
+                        class="dp-profile-name">{{userLogin.usuario_nombres}}</a>
                     <label class="custom-file-upload perfil-change">
-                        <input type="file" />
+                        <input type="file" (change)="onFileChange($event)" />
                         <i class="fas fa-camera"></i>
                         <span class="tooltiptext">Actualizar foto</span>
                     </label>
                 </div>
-                <!--<div class="f-buttons pull-right">
+                <div class="f-buttons">
                     <button class="btn btn-light btn-sm">
-                        <i class="fas fa-user-plus"></i> Agregar amigos
+                        Actualizar información
                     </button>
-                    <button class="btn btn-light btn-sm">
-                        <i class="fas fa-user-clock"></i> Solicitud enviada
+                    <br>
+                    <button class="btn btn-light btn-sm" style="margin-left: -8px; margin-top: 5px;">
+                        <i class="fas fa-list"></i> Registro de actividad
                     </button>
-                    <button class="btn btn-light btn-sm">
+                    <!--<button class="btn btn-light btn-sm">
                         <i class="fas fa-check"></i> Amigos
                     </button>
                     <button class="btn btn-light btn-sm">
@@ -39,8 +45,8 @@
                     </button>
                     <button class="btn btn-light btn-sm">
                         <i class="fab fa-facebook-messenger"></i> Enviar mensaje
-                    </button>
-                </div>-->
+                    </button>-->
+                </div>
             </div>
         </div>
     </ng-container>
@@ -60,8 +66,13 @@
                             <img src="../assets/img/user_pred_mujer.jpg" class="dp-img">
                         </ng-template>
                     </ng-template>
+                    <label class="custom-file-upload portada-change">
+                        <input type="file" (change)="onPortadaChange($event)" />
+                        <i class="fas fa-camera" style="color: #B4BDBA;"></i>
+                        <span class="tooltiptextPortada">Actualizar Portada</span>
+                    </label>
                     <a routerLink="/{{userLogin.usuario_id}}/biografia"
-                        class="dp-profile-name">{{userLogin.usuario_nombres}} <i class="fas fa-check"></i>
+                        class="dp-profile-name">{{userLogin.usuario_nombres}}
                     </a>
                     <label class="custom-file-upload perfil-change">
                         <input type="file" (change)="onFileChange($event)" />
@@ -69,14 +80,14 @@
                         <span class="tooltiptext">Actualizar foto</span>
                     </label>
                 </div>
-                <!--<div class="f-buttons pull-right">
+                <div class="f-buttons pull-right">
                     <button class="btn btn-light btn-sm">
-                        <i class="fas fa-user-plus"></i> Agregar amigos
+                        Actualizar información
                     </button>
-                    <button class="btn btn-light btn-sm">
-                        <i class="fas fa-user-clock"></i> Solicitud enviada
+                    <button class="btn btn-light btn-sm" style="margin-left: 10px;">
+                        <i class="fas fa-list"></i> Registro de actividad
                     </button>
-                    <button class="btn btn-light btn-sm">
+                    <!--<button class="btn btn-light btn-sm">
                         <i class="fas fa-check"></i> Amigos
                     </button>
                     <button class="btn btn-light btn-sm">
@@ -84,8 +95,8 @@
                     </button>
                     <button class="btn btn-light btn-sm">
                         <i class="fab fa-facebook-messenger"></i> Enviar mensaje
-                    </button>
-                </div>-->
+                    </button>-->
+                </div>
             </div>
         </div> <!-- FINAL JUMBOTRON -->
     </ng-template>
@@ -305,16 +316,97 @@
         <!-- INFORMACION -->
         <div role="tabpanel" class="tab-pane" id="informacion">
             <div class="row">
-                informacion
+                <div class="col-lg-1 col-md-12 col-12 col-sm-12"> </div>
+
+                <div class="col-lg-10 col-md-12 col-12 col-sm-12">
+                    <div class="container-fluid">
+                        <div class="card border-secondary">
+                            <div class="card-header">
+                                <i class="fas fa-user"></i> Información
+                            </div>
+                            <div class="card-body text-secondary">
+                                <div class="row">
+
+                                    <!-- BARRA DE NAVEGACION DE INFORMACION -->
+                                    <div class="col-4">
+                                        <ul class="nav flex-column nav-pills" aria-orientation="vertical">
+                                            <li class="nav-item">
+                                                <a class="nav-link" role="tab" data-toggle="tab"
+                                                    href="#formacion">Formación y empleo
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" role="tab" data-toggle="tab"
+                                                    href="#infobasica">Información básica y de contacto</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" role="tab" data-toggle="tab" href="#familia">
+                                                    Familia y relaciones
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" role="tab" data-toggle="tab" href="#sobreti">
+                                                    Información sobre ti
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- CONTENIDOS DE TABS DE INFORMACION -->
+                                    <div class="col-8">
+                                        <div class="tab-content">
+
+                                            <div role="tabpanel" class="tab-pane" id="formacion">
+                                                <div class="container-fluid" style="padding: 0em 1em !important;">
+                                                    <div
+                                                        class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-3">
+                                                        2
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div role="tabpanel" class="tab-pane" id="infobasica">
+                                                <div class="container-fluid" style="padding: 0em 1em !important;">
+                                                    <div
+                                                        class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-3">
+                                                        3
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div role="tabpanel" class="tab-pane" id="familia">
+                                                <div class="container-fluid" style="padding: 0em 1em !important;">
+                                                    <div
+                                                        class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-3">
+                                                        4
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div role="tabpanel" class="tab-pane" id="sobreti">
+                                                <div class="container-fluid" style="padding: 0em 1em !important;">
+                                                    <div
+                                                        class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-3">
+                                                        5
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-1 col-md-12 col-12 col-sm-12"> </div>
             </div>
         </div>
 
         <!-- AMIGOS -->
         <div role="tabpanel" class="tab-pane" id="amigos" style="margin-top: 45px;">
             <div class="row">
-                <div class="col-lg-1 col-md-12 col-12 col-sm-12">
-
-                </div>
+                <div class="col-lg-1 col-md-12 col-12 col-sm-12"> </div>
 
                 <div class="col-lg-10 col-md-12 col-12 col-sm-12">
                     <div class="container-fluid">
@@ -402,9 +494,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-1 col-md-12 col-12 col-sm-12">
-
-                </div>
+                <div class="col-lg-1 col-md-12 col-12 col-sm-12"> </div>
             </div>
         </div>
 

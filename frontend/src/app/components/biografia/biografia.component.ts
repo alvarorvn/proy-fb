@@ -2,9 +2,7 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AuthService } from '../../services/auth.service';
 import { BiografiaService } from '../../services/biografia.service';
-import { Router, ActivatedRoute } from '@angular/router';
-
-//import { NavbarComponent } from "../navbar/navbar.component";
+import { Router } from '@angular/router';
 
 declare var jQuery: any;
 
@@ -16,6 +14,7 @@ declare var jQuery: any;
 export class BiografiaComponent implements OnInit {
 
   fileUpload;
+  portadaUpload;
   userLogin = {};
   seguidores: Array<Object> = []
 
@@ -23,9 +22,7 @@ export class BiografiaComponent implements OnInit {
     private authService: AuthService,
     private sanitizer: DomSanitizer,
     private biogService: BiografiaService,
-    private router: Router/*,
-    private navbarC: NavbarComponent*/,
-    private route: ActivatedRoute
+    private router: Router
   ) {
   }
 
@@ -65,8 +62,16 @@ export class BiografiaComponent implements OnInit {
     const formData = new FormData();
     formData.append('file', this.fileUpload);
     this.biogService.updatePerfilPhoto(formData).subscribe(res => {
-      //this.router.navigate([`${this.authService.getId()}/biografia`], { relativeTo: this.route });
-      //this.ngOnInit();
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+      this.router.onSameUrlNavigation = 'reload';
+      this.router.navigate([`${this.authService.getId()}/biografia`]);
+    })
+  }
+
+  updatePortadaPhoto() {
+    const formData = new FormData();
+    formData.append('file', this.portadaUpload);
+    this.biogService.updatePortadaPhoto(formData).subscribe(res => {
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
       this.router.onSameUrlNavigation = 'reload';
       this.router.navigate([`${this.authService.getId()}/biografia`]);
@@ -77,6 +82,12 @@ export class BiografiaComponent implements OnInit {
     this.fileUpload = e.target.files[0];
     this.updatePerfilPhoto();
   }
+
+  onPortadaChange(e) {
+    this.portadaUpload = e.target.files[0];
+    this.updatePortadaPhoto();
+  }
+
 
   JqueryFunciones() {
     (function ($) {

@@ -317,6 +317,8 @@ body {
     width: 25px;
     height: 25px;
     border-radius: 50%;
+    object-fit: contain;
+    background-color: #eee;
 }
 
 .dp-name span {
@@ -362,6 +364,8 @@ body {
         width: 130px !important;
         height: 130px !important;
         border-radius: 50% !important;
+        object-fit: contain !important;
+        background-color: #eee !important;
     }
     .f-buttons {
         position: absolute !important;
@@ -397,6 +401,11 @@ body {
         margin-top: 0px !important;
         font-size: 12px !important;
     }
+    .portada-change {
+        position: absolute !important;
+        left: -2em !important;
+        top: -13em !important;
+    }
 }
 
 @media screen and (min-width: 575px) and (max-width: 780px) {
@@ -414,6 +423,8 @@ body {
         width: 130px !important;
         height: 130px !important;
         border-radius: 50% !important;
+        object-fit: contain !important;
+        background-color: #eee !important;
     }
     .timeline-nav .nav {
         margin-left: 15rem !important;
@@ -438,6 +449,11 @@ body {
         margin-top: 0px !important;
         font-size: 12px !important;
     }
+    .portada-change {
+        position: absolute !important;
+        left: -2em !important;
+        top: -13em !important;
+    }
 }
 
 /* BIOGRAFIA */
@@ -447,6 +463,8 @@ body {
     height: 180px;
     border-radius: 50%;
     border: 7px solid #fff;
+    object-fit: contain;
+    background-color: #eee;
 }
 
 .dp-img:hover {
@@ -466,7 +484,7 @@ body {
     position: relative;
 }
 
-@supports(object-fit: cover) {
+@supports(object-fit: contain) {
     .jumbotron .jb-img {
         height: 100%;
         object-fit: cover;
@@ -491,7 +509,7 @@ body {
 
 .f-buttons {
     position: absolute;
-    margin-top: -2.5em;
+    margin-top: -6em;
     right: 3em;
 }
 
@@ -540,6 +558,12 @@ body {
     top: 4.8em;
 }
 
+.portada-change {
+    position: absolute;
+    left: -2em;
+    top: -25em;
+}
+
 .custom-file-upload:hover input[type="file"] {
     display: none;
     position: relative;
@@ -562,7 +586,27 @@ body {
     font-size: 15px;
 }
 
+.custom-file-upload .tooltiptextPortada {
+    visibility: hidden;
+    width: 140px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    margin-left: 5px;
+    margin-top: -3px;
+    font-size: 15px;
+}
+
 .custom-file-upload:hover .tooltiptext {
+    visibility: visible;
+}
+
+.custom-file-upload:hover .tooltiptextPortada {
     visibility: visible;
 }
 
@@ -679,50 +723,51 @@ textarea {
 
 /* AMIGOS, SEGUIDOS Y SEGUIDORES */
 
-.tarjeta-amigos{
+.tarjeta-amigos {
     border: 1px solid #ddd;
     height: 110px;
     position: relative;
 }
 
-.tarjeta-seguidores{
+.tarjeta-seguidores {
     border: 1px solid #ddd;
     height: 110px;
     position: relative;
 }
 
-.tarjeta-amigos img{
+.tarjeta-amigos img {
     width: 30%;
     height: 100%;
 }
 
-.tarjeta-seguidores img{
+.tarjeta-seguidores img {
     width: 30%;
     height: 100%;
+    object-fit: contain;
 }
 
-.tarjeta-amigos a{
+.tarjeta-amigos a {
     margin-left: 10px;
     color: var(--color_base);
 }
 
-.tarjeta-seguidores a{
+.tarjeta-seguidores a {
     margin-left: 10px;
     color: var(--color_base);
 }
 
-.tarjeta-amigos .dropdown{
+.tarjeta-amigos .dropdown {
     position: absolute;
     top: 0.5em;
     right: 0.5em;
 }
 
-.tarjeta-amigos .dropdown button{
+.tarjeta-amigos .dropdown button {
     font-size: 15px;
     padding: 0em .4em;
 }
 
-.tarjeta-seguidores button{
+.tarjeta-seguidores button {
     position: absolute;
     top: 0.5em;
     right: 0.5em;

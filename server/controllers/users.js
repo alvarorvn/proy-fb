@@ -160,10 +160,28 @@ async function updatePerfilPhoto(req, res) {
     }
 }
 
+async function updatePortadaPhoto(req, res) {
+    const { id } = req.params;
+    let perfil_path_portada = `faces/${req.file.originalname}`
+
+    try {
+        let query = `SELECT * FROM usuario WHERE usuario_id = ${id}`;
+        let result = await pool.query(query);
+        if (result.rowCount == 0) return res.json({ message: "No existe el usuario a actualizar", tipo: 'error' });
+        query = `UPDATE perfil_usuario set perfil_path_portada = '${perfil_path_portada}'
+                    WHERE usuario_id = ${id}`;
+        await pool.query(query);
+        return res.json({ message: "Portada actualizada" });
+    } catch (error) {
+        console.log(error);
+        return res.json({ message: "Error al actualizar portada" });
+    }
+}
+
 module.exports = {
     login,
     register,
     getUsuarios, getUsuario, getSeguidos,
     recFacialLogin,
-    updatePerfilPhoto
+    updatePerfilPhoto, updatePortadaPhoto
 };
