@@ -4,8 +4,9 @@ const app = express();
 const multer = require('multer');
 const path = require('path');
 
-const user_routes = require('../routes/users.js');
-const posts_routes = require('../routes/posts.js');
+const user_routes = require('../routes/users');
+const posts_routes = require('../routes/posts');
+const biografia_routes = require('../routes/biografia');
 
 app.set('port', 3000 || process.env.PORT);
 
@@ -31,6 +32,7 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use('/', user_routes);
 app.use('/', posts_routes);
+app.use('/:iduser/biografia', biografia_routes);
 
 // Start server
 app.listen(app.get('port'), () => {
