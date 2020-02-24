@@ -11,7 +11,7 @@ const pool = new Pool({
     port: '5432',
     database: 'proyecto_redsocial',
     user: 'postgres',
-    password: 'admin123'
+    password: 'root'
 })
 
 // Funcion de registro de usuario - sin validar
