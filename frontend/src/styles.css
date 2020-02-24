@@ -377,6 +377,26 @@ body {
         margin-right: 5px !important;
         margin-left: 3px !important;
     }
+    .perfil-change {
+        position: absolute !important;
+        left: 0em !important;
+        top: 3em !important;
+    }
+    .custom-file-upload .tooltiptext {
+        visibility: hidden;
+        width: 90px !important;
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        /* Position the tooltip */
+        position: absolute;
+        z-index: 1;
+        margin-left: 5px;
+        margin-top: 0px !important;
+        font-size: 12px !important;
+    }
 }
 
 @media screen and (min-width: 575px) and (max-width: 780px) {
@@ -398,7 +418,29 @@ body {
     .timeline-nav .nav {
         margin-left: 15rem !important;
     }
+    .perfil-change {
+        position: absolute !important;
+        left: 0em !important;
+        top: 3em !important;
+    }
+    .custom-file-upload .tooltiptext {
+        visibility: hidden;
+        width: 90px !important;
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        /* Position the tooltip */
+        position: absolute;
+        z-index: 1;
+        margin-left: 5px;
+        margin-top: 0px !important;
+        font-size: 12px !important;
+    }
 }
+
+/* BIOGRAFIA */
 
 .dp-img {
     width: 180px;
@@ -465,7 +507,6 @@ body {
 .timeline-nav {
     background: #fff !important;
     margin-top: -2em;
-    padding: .5rem;
     border-bottom: 1px solid #eee;
 }
 
@@ -473,9 +514,59 @@ body {
     margin-left: 20rem;
 }
 
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff !important;
+    background-color: var(--color_base) !important;
+    border-radius: 0%;
+}
+
 .row .container-fluid {
     padding: 2em 2em 0em 2em !important;
 }
+
+.custom-file-upload {
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.custom-file-upload input[type="file"] {
+    display: none;
+}
+
+.perfil-change {
+    position: absolute;
+    left: 0.5em;
+    top: 4.8em;
+}
+
+.custom-file-upload:hover input[type="file"] {
+    display: none;
+    position: relative;
+    border-bottom: 1px dotted black;
+}
+
+.custom-file-upload .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    margin-left: 5px;
+    margin-top: -3px;
+    font-size: 15px;
+}
+
+.custom-file-upload:hover .tooltiptext {
+    visibility: visible;
+}
+
+/* BIOGRAFIA */
 
 .card {
     /*margin-left: 2.5em;*/
@@ -514,6 +605,12 @@ img.media-object {
     margin-right: 15px;
 }
 
+.comment-foto {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
 /*.media-name .media-body {
     margin-top: .4em;
 }*/
@@ -525,7 +622,7 @@ img.media-object {
 }
 
 .post-content img {
-    width: 100%;
+    /*width: 100%;*/
     cursor: pointer;
     padding: .4em;
 }
@@ -563,7 +660,7 @@ textarea {
     /*display: inline-block;*/
 }
 
-.textarea-camera{
+.textarea-camera {
     margin-left: -2em;
     margin-top: .5em;
     position: absolute;
@@ -579,3 +676,58 @@ textarea {
 }
 
 /* POSTS */
+
+/* AMIGOS, SEGUIDOS Y SEGUIDORES */
+
+.tarjeta-amigos{
+    border: 1px solid #ddd;
+    height: 110px;
+    position: relative;
+}
+
+.tarjeta-seguidores{
+    border: 1px solid #ddd;
+    height: 110px;
+    position: relative;
+}
+
+.tarjeta-amigos img{
+    width: 30%;
+    height: 100%;
+}
+
+.tarjeta-seguidores img{
+    width: 30%;
+    height: 100%;
+}
+
+.tarjeta-amigos a{
+    margin-left: 10px;
+    color: var(--color_base);
+}
+
+.tarjeta-seguidores a{
+    margin-left: 10px;
+    color: var(--color_base);
+}
+
+.tarjeta-amigos .dropdown{
+    position: absolute;
+    top: 0.5em;
+    right: 0.5em;
+}
+
+.tarjeta-amigos .dropdown button{
+    font-size: 15px;
+    padding: 0em .4em;
+}
+
+.tarjeta-seguidores button{
+    position: absolute;
+    top: 0.5em;
+    right: 0.5em;
+    font-size: 15px;
+    padding: 0em .4em;
+}
+
+/* AMIGOS,  SEGUIDOS Y SEGUIDORES */

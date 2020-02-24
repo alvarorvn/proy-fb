@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
+import { Component, OnInit, Renderer2 } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { AuthService } from '../../services/auth.service';
+import { BiografiaService } from '../../services/biografia.service';
+
+declare var jQuery: any;
 
 @Component({
   selector: 'app-biografia',
@@ -10,10 +13,12 @@ import { AuthService } from '../../services/auth.service';
 export class BiografiaComponent implements OnInit {
 
   userLogin = {};
+  seguidores: Array<Object> = []
 
   constructor(
     private authService: AuthService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private biogService: BiografiaService
   ) {
   }
 
@@ -21,6 +26,10 @@ export class BiografiaComponent implements OnInit {
     if (this.authService.getId() && this.authService.getToken()) {
       this.getUserLogin(this.authService.getId());
     };
+    this.getSeguidores();
+    setTimeout(() => {
+      this.JqueryFunciones();
+    }, 500);
   }
 
   getUserLogin(id) {
@@ -33,5 +42,37 @@ export class BiografiaComponent implements OnInit {
 
   public getSantizeUrl(url: string) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(`data:image/png;charset=utf-8;base64, ${url}`);
+  }
+
+  getSeguidores() {
+    this.biogService.getSeguidores().subscribe(res => {
+      if (res.tipo == 'error') {
+        this.seguidores = res.result;
+      } else {
+        this.seguidores = res;
+      }
+    })
+  }
+
+  JqueryFunciones() {
+    (function ($) {
+      $(document).ready(function () {
+        $('#enlamigos').on('click', () => {
+          // NAV ITEMS
+          $('#nvbio').removeClass('active');
+          $('#nvamigos').addClass('active');
+          
+          $('#nvallamigos').removeClass('active');
+          $('#nvseguidores').addClass('active');
+
+          // TABS
+          $('#biografia').removeClass('active');
+          $('#amigos').addClass('active');
+
+          $('#allamigos').removeClass('active');
+          $('#seguidores').addClass('active');
+        })
+      });
+    })(jQuery);
   }
 }

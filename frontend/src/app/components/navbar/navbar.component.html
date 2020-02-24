@@ -25,7 +25,12 @@
                             <img [src]=getSantizeUrl(userLogin.image_rec_facial) class="nav-dp">
                         </ng-container>
                         <ng-template #fotoDefault>
-                            <img src="../assets/img/user_pred.jfif" class="nav-dp">
+                            <ng-container *ngIf="userLogin.usuario_sexo == 'Hombre'; else fotoDefaultSexo">
+                                <img src="../assets/img/user_pred.jfif" class="nav-dp">
+                            </ng-container>
+                            <ng-template #fotoDefaultSexo>
+                                <img src="../assets/img/user_pred_mujer.jpg" class="nav-dp">
+                            </ng-template>
                         </ng-template>
                         <span>{{userLogin.usuario_nombres}}</span>
                     </a>

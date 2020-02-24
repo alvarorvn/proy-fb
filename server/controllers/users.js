@@ -125,9 +125,26 @@ async function getUsuario(req, res) {
     res.json(result.rows[0]);
 }
 
+async function getSeguidos(req, res) {
+    const { id } = req.params;
+    let query = `SELECT seg.*, usu.usuario_nombres, usu.usuario_apellidos, usu.usuario_sexo, per.perfil_path_foto
+                    FROM seguidos as seg, usuario as usu, perfil_usuario as per
+                    WHERE seg.usuario_id=${id} AND seg.usuario_id_sigue = usu.usuario_id AND per.usuario_id = seg.usuario_id_sigue;`;
+    let result = await pool.query(query);
+    if (result.rows == 0) return res.json({ message: "No hay usuarios registrados", tipo: 'error', result: [] });
+    result.rows.forEach(seguidor => {
+        if (seguidor.perfil_path_foto != "") {
+            var base64str = base64_encode(seguidor.perfil_path_foto);
+            seguidor.image_perfil = base64str;
+            seguidor.image_perfil_name = path.basename(seguidor.perfil_path_foto);
+        }
+    });
+    res.json(result.rows);
+}
+
 module.exports = {
     login,
     register,
-    getUsuarios, getUsuario,
+    getUsuarios, getUsuario, getSeguidos,
     recFacialLogin
 };

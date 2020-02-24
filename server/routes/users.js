@@ -14,7 +14,8 @@ router.get('/', user.getUsuarios);
 //Ruta que inicia sesion con reconocimiento facial
 router.post('/recFacial', user.recFacialLogin);
 //Ruta para obtener un usuario
-router.post('/', user.getUsuario);
+router.post('/', validate.verifyToken, user.getUsuario);
+router.get('/:id/seguidos', validate.verifyToken, user.getSeguidos);
 
 //exportar objeto
 module.exports = router;
