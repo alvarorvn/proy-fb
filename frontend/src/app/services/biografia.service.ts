@@ -17,4 +17,8 @@ export class BiografiaService {
   getSeguidores() {
     return this.http.get<any>(`${this.URL}/${this.authService.getId()}/seguidos`);
   }
+
+  updatePerfilPhoto(photo) {
+    return this.http.post<any>(`${this.URL}/${this.authService.getId()}/update-perfil-photo`, photo);
+  }
 }

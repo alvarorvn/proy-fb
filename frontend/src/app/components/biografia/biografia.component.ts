@@ -2,6 +2,9 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AuthService } from '../../services/auth.service';
 import { BiografiaService } from '../../services/biografia.service';
+import { Router, ActivatedRoute } from '@angular/router';
+
+//import { NavbarComponent } from "../navbar/navbar.component";
 
 declare var jQuery: any;
 
@@ -12,13 +15,17 @@ declare var jQuery: any;
 })
 export class BiografiaComponent implements OnInit {
 
+  fileUpload;
   userLogin = {};
   seguidores: Array<Object> = []
 
   constructor(
     private authService: AuthService,
     private sanitizer: DomSanitizer,
-    private biogService: BiografiaService
+    private biogService: BiografiaService,
+    private router: Router/*,
+    private navbarC: NavbarComponent*/,
+    private route: ActivatedRoute
   ) {
   }
 
@@ -54,6 +61,23 @@ export class BiografiaComponent implements OnInit {
     })
   }
 
+  updatePerfilPhoto() {
+    const formData = new FormData();
+    formData.append('file', this.fileUpload);
+    this.biogService.updatePerfilPhoto(formData).subscribe(res => {
+      //this.router.navigate([`${this.authService.getId()}/biografia`], { relativeTo: this.route });
+      //this.ngOnInit();
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+      this.router.onSameUrlNavigation = 'reload';
+      this.router.navigate([`${this.authService.getId()}/biografia`]);
+    })
+  }
+
+  onFileChange(e) {
+    this.fileUpload = e.target.files[0];
+    this.updatePerfilPhoto();
+  }
+
   JqueryFunciones() {
     (function ($) {
       $(document).ready(function () {
@@ -61,7 +85,7 @@ export class BiografiaComponent implements OnInit {
           // NAV ITEMS
           $('#nvbio').removeClass('active');
           $('#nvamigos').addClass('active');
-          
+
           $('#nvallamigos').removeClass('active');
           $('#nvseguidores').addClass('active');
 

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { DomSanitizer } from '@angular/platform-browser';
 import { ToastrService } from "ngx-toastr";
 
 @Component({
@@ -32,7 +31,6 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private sanitizer: DomSanitizer,
     private toastr: ToastrService
   ) { }
 
@@ -57,10 +55,9 @@ export class LoginComponent implements OnInit {
     for (var u in this.user) {
       formData.append(u, this.user[u]);
     }
-    console.log(formData);
     this.authService.signUp(formData).subscribe(
       res => {
-        
+
         if (res.tipo == 'error') {
           console.log(res.message);
         } else {
@@ -72,17 +69,6 @@ export class LoginComponent implements OnInit {
       }
     )
   }
-
-  /*getUsers() {
-    this.authService.getUsers().subscribe(
-      res => { 
-        this.user = res;
-        this.image = this.sanitizer.bypassSecurityTrustResourceUrl(`data:image/png;base64, ${res.base64str}`);
-      }
-      ,
-      err => { }
-    )
-  }*/
 
   clearForm() {
     this.user.usuario_nombres = null;

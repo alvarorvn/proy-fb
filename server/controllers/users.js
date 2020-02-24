@@ -17,7 +17,6 @@ const pool = new Pool({
 // Funcion de registro de usuario - sin validar
 async function register(req, res) {
     const { usuario_nombres, usuario_apellidos, usuario_email, usuario_password, usuario_fechanac, usuario_sexo } = req.body;
-    console.log(req.body);
     let usuario_path_face = `faces/${req.file.originalname}`;
     let usuario_acc_verify, usuario_activo, usuario_conectado;
     let salt = bcrypt.genSaltSync(10);
@@ -51,7 +50,7 @@ async function register(req, res) {
 
         res.json({ token })
     } catch (error) {
-        return res.json({ message: "Error al registrar usuario" })
+        return res.json({ message: "Error al registrar usuario" });
     }
 }
 
@@ -143,9 +142,28 @@ async function getSeguidos(req, res) {
     res.json(result.rows);
 }
 
+async function updatePerfilPhoto(req, res) {
+    const { id } = req.params;
+    let perfil_path_foto = `faces/${req.file.originalname}`
+
+    try {
+        let query = `SELECT * FROM usuario WHERE usuario_id = ${id}`;
+        let result = await pool.query(query);
+        if (result.rowCount == 0) return res.json({ message: "No existe el usuario a actualizar", tipo: 'error' });
+        query = `UPDATE perfil_usuario set perfil_path_foto = '${perfil_path_foto}'
+                    WHERE usuario_id = ${id}`;
+        await pool.query(query);
+        return res.json({ message: "Foto de perfil actualizada" });
+    } catch (error) {
+        console.log(error);
+        return res.json({ message: "Error al actualizar foto de perfil" });
+    }
+}
+
 module.exports = {
     login,
     register,
     getUsuarios, getUsuario, getSeguidos,
-    recFacialLogin
+    recFacialLogin,
+    updatePerfilPhoto
 };

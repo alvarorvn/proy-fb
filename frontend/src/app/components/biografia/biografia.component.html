@@ -6,10 +6,15 @@
             <div class="container-fluid">
                 <div class="dp">
                     <ng-container *ngIf="userLogin.image_perfil; else fotoDefault">
-                        <img [src]=getSantizeUrl(userLogin.image_rec_facial) class="dp-img">
+                        <img [src]=getSantizeUrl(userLogin.image_perfil) class="dp-img">
                     </ng-container>
                     <ng-template #fotoDefault>
-                        <img src="../assets/img/user_pred.jfif" class="dp-img">
+                        <ng-container *ngIf="userLogin.usuario_sexo == 'Hombre'; else fotoDefaultSexo">
+                            <img src="../assets/img/user_pred.jfif" class="dp-img">
+                        </ng-container>
+                        <ng-template #fotoDefaultSexo>
+                            <img src="../assets/img/user_pred_mujer.jpg" class="dp-img">
+                        </ng-template>
                     </ng-template>
                     <a routerLink="/{{userLogin.usuario_id}}/biografia"
                         class="dp-profile-name">{{userLogin.usuario_nombres}} <i class="fas fa-check"></i></a>
@@ -45,7 +50,7 @@
             <div class="container-fluid">
                 <div class="dp">
                     <ng-container *ngIf="userLogin.image_perfil; else fotoDefault">
-                        <img [src]=getSantizeUrl(userLogin.image_rec_facial) class="dp-img">
+                        <img [src]=getSantizeUrl(userLogin.image_perfil) class="dp-img">
                     </ng-container>
                     <ng-template #fotoDefault>
                         <ng-container *ngIf="userLogin.usuario_sexo == 'Hombre'; else fotoDefaultSexo">
@@ -59,7 +64,7 @@
                         class="dp-profile-name">{{userLogin.usuario_nombres}} <i class="fas fa-check"></i>
                     </a>
                     <label class="custom-file-upload perfil-change">
-                        <input type="file" />
+                        <input type="file" (change)="onFileChange($event)" />
                         <i class="fas fa-camera"></i>
                         <span class="tooltiptext">Actualizar foto</span>
                     </label>

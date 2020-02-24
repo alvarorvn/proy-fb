@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { Router } from "@angular/router";
 
 
@@ -58,5 +58,12 @@ export class AuthService {
     localStorage.removeItem('id');
     localStorage.removeItem('token');
     this.router.navigate(['/']);
+  }
+
+  // Servicio compartido
+  userLogin = new BehaviorSubject<any>(null);
+
+  setLoginUser(userLogin) {
+    this.userLogin.next(userLogin);
   }
 }

@@ -22,7 +22,7 @@
                 <li>
                     <a class="nav-link dp-name" routerLink="/{{userLogin.usuario_id}}/biografia">
                         <ng-container *ngIf="userLogin.image_perfil; else fotoDefault">
-                            <img [src]=getSantizeUrl(userLogin.image_rec_facial) class="nav-dp">
+                            <img [src]=getSantizeUrl(userLogin.image_perfil) class="nav-dp">
                         </ng-container>
                         <ng-template #fotoDefault>
                             <ng-container *ngIf="userLogin.usuario_sexo == 'Hombre'; else fotoDefaultSexo">
