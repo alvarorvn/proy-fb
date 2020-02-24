@@ -16,7 +16,9 @@ export class BiografiaComponent implements OnInit {
   fileUpload;
   portadaUpload;
   userLogin = {};
-  seguidores: Array<Object> = []
+  seguidores: Array<Object> = [];
+  seguidos: Array<Object> = [];
+  amigos: Array<Object> = [];
 
   constructor(
     private authService: AuthService,
@@ -31,6 +33,8 @@ export class BiografiaComponent implements OnInit {
       this.getUserLogin(this.authService.getId());
     };
     this.getSeguidores();
+    this.getAmigos();
+    this.getSeguidos();
     setTimeout(() => {
       this.JqueryFunciones();
     }, 500);
@@ -54,6 +58,26 @@ export class BiografiaComponent implements OnInit {
         this.seguidores = res.result;
       } else {
         this.seguidores = res;
+      }
+    })
+  }
+
+  getAmigos() {
+    this.biogService.getAmigos().subscribe(res => {
+      if (res.tipo == 'error') {
+        this.amigos = res.result;
+      } else {
+        this.amigos = res;
+      }
+    })
+  }
+
+  getSeguidos() {
+    this.biogService.getSeguidos().subscribe(res => {
+      if (res.tipo == 'error') {
+        this.seguidos = res.result;
+      } else {
+        this.seguidos = res;
       }
     })
   }

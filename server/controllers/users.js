@@ -68,6 +68,7 @@ async function login(req, res) {
     res.json({ token, user: user.rows[0] })
 }
 
+// Obtener todos los usuarios
 async function getUsuarios(req, res) {
     let query = `SELECT * FROM usuario`;
     let result = await pool.query(query);
@@ -82,6 +83,7 @@ async function getUsuarios(req, res) {
     res.json(result.rows);
 }
 
+// codifica imagen
 function base64_encode(file) {
     // read binary data
     var bitmap = fs.readFileSync(file);
@@ -89,6 +91,7 @@ function base64_encode(file) {
     return Buffer.from(bitmap).toString('base64');
 }
 
+// inicio de sesion con reconocimiento facial
 async function recFacialLogin(req, res) {
     const { id } = req.body;
     let query = `SELECT * FROM usuario where usuario_id = '${id}'`;
@@ -99,6 +102,7 @@ async function recFacialLogin(req, res) {
     }
 }
 
+//obtiene datos de usuario (perfil)
 async function getUsuario(req, res) {
     const { usuario_id } = req.body;
     let query = `SELECT * FROM usuario as usu, perfil_usuario as perfil 
@@ -125,11 +129,12 @@ async function getUsuario(req, res) {
     res.json(result.rows[0]);
 }
 
-async function getSeguidos(req, res) {
+// obtiene los seguidores de un usuario
+async function getSeguidores(req, res) {
     const { id } = req.params;
     let query = `SELECT seg.*, usu.usuario_nombres, usu.usuario_apellidos, usu.usuario_sexo, per.perfil_path_foto
                     FROM seguidos as seg, usuario as usu, perfil_usuario as per
-                    WHERE seg.usuario_id=${id} AND seg.usuario_id_sigue = usu.usuario_id AND per.usuario_id = seg.usuario_id_sigue;`;
+                    WHERE seg.usuario_id=${id} AND seg.usuario_id_sigue = usu.usuario_id AND per.usuario_id = seg.usuario_id_sigue`;
     let result = await pool.query(query);
     if (result.rows == 0) return res.json({ message: "No hay usuarios registrados", tipo: 'error', result: [] });
     result.rows.forEach(seguidor => {
@@ -142,6 +147,43 @@ async function getSeguidos(req, res) {
     res.json(result.rows);
 }
 
+// obtiene los usuarios que sigue
+async function getSeguidos(req, res) {
+    const { id } = req.params;
+    let query = `SELECT seg.*, usu.usuario_nombres, usu.usuario_apellidos, usu.usuario_sexo, per.perfil_path_foto
+                    FROM seguidos as seg, usuario as usu, perfil_usuario as per
+                    WHERE seg.usuario_id_sigue=${id} AND seg.usuario_id = usu.usuario_id AND per.usuario_id = seg.usuario_id`;
+    let result = await pool.query(query);
+    if (result.rows == 0) return res.json({ message: "No sigues a otros usuarios", tipo: 'error', result: [] });
+    result.rows.forEach(seguido => {
+        if (seguido.perfil_path_foto != "") {
+            var base64str = base64_encode(seguido.perfil_path_foto);
+            seguido.image_perfil = base64str;
+            seguido.image_perfil_name = path.basename(seguido.perfil_path_foto);
+        }
+    });
+    res.json(result.rows);
+}
+
+// obtiene los amigos de un usuario
+async function getAmigos(req, res) {
+    const { id } = req.params;
+    let query = `SELECT am.*, usu.usuario_nombres, usu.usuario_apellidos, usu.usuario_sexo, per.perfil_path_foto
+                    FROM amigos as am, usuario as usu, perfil_usuario as per
+                    WHERE am.usuario_id=${id} AND am.usuario_id_amigo = usu.usuario_id AND per.usuario_id = am.usuario_id_amigo`;
+    let result = await pool.query(query);
+    if (result.rows == 0) return res.json({ message: "No hay amigos", tipo: 'error', result: [] });
+    result.rows.forEach(amigo => {
+        if (amigo.perfil_path_foto != "") {
+            var base64str = base64_encode(amigo.perfil_path_foto);
+            amigo.image_perfil = base64str;
+            amigo.image_perfil_name = path.basename(amigo.perfil_path_foto);
+        }
+    });
+    res.json(result.rows);
+}
+
+// actualiza foto de perfil
 async function updatePerfilPhoto(req, res) {
     const { id } = req.params;
     let perfil_path_foto = `faces/${req.file.originalname}`
@@ -160,6 +202,7 @@ async function updatePerfilPhoto(req, res) {
     }
 }
 
+// actualiza portada
 async function updatePortadaPhoto(req, res) {
     const { id } = req.params;
     let perfil_path_portada = `faces/${req.file.originalname}`
@@ -181,7 +224,7 @@ async function updatePortadaPhoto(req, res) {
 module.exports = {
     login,
     register,
-    getUsuarios, getUsuario, getSeguidos,
+    getUsuarios, getUsuario, getSeguidores, getAmigos, getSeguidos,
     recFacialLogin,
     updatePerfilPhoto, updatePortadaPhoto
 };

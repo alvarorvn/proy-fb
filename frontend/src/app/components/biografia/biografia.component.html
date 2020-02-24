@@ -111,7 +111,13 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" role="tab" data-toggle="tab" href="#amigos" id="nvamigos">Amigos
-                    <span class="label label-primary">26K</span></a>
+                    <ng-container *ngIf="amigos.length > 0; else amigosCero">
+                        <span class="label label-primary">{{amigos.length}}</span>
+                    </ng-container>
+                    <ng-template #amigosCero>
+                        <span class="label label-primary">0</span>
+                    </ng-template>
+                </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" role="tab" data-toggle="tab" href="#fotos">Fotos</a>
@@ -203,109 +209,11 @@
 
                 </div>
 
+                <!-- PUBLICACION -->
                 <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
                     <app-create-post></app-create-post>
                 </div>
-                <!-- POST -->
-                <!--<div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
-                    <div class="container-fluid">
-                        <div class="col-md-10 col sm-10">
-                            <div class="post">
-                                <div class="media media-name">
-                                    <ng-container *ngIf="userLogin.image_portada; else postFotoPerfil">
-                                        <a href="">
-                                            <img [src]=getSantizeUrl(userLogin.image_rec_facial) class="media-object">
-                                        </a>
-                                    </ng-container>
-                                    <ng-template #postFotoPerfil>
-                                        <a href="">
-                                            <img src="../assets/img/user_pred.jfif" class="media-object">
-                                        </a>
-                                    </ng-template>
-                                    <div class="media-body">
 
-                                        <div class="dropdown" style="position: absolute; right: 2em;">
-                                            <button class="btn btn-secondary dropdown-toggle" type="button"
-                                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                                aria-expanded="false">
-                                            </button>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" href="#">Editar publicación</a>
-                                                <a class="dropdown-item" href="#">Eliminar publicación</a>
-                                            </div>
-                                        </div>
-
-                                        <h5 class="media-heading" style="margin-bottom: 0;">
-                                            <a routerLink="/{{userLogin.usuario_id}}/biografia" class="colorbase"
-                                                style="font-size: 19px;">{{userLogin.usuario_nombres}}
-                                                {{userLogin.usuario_apellidos}}</a>
-                                        </h5>
-                                        <p>
-                                            <a href="" style="font-size: 14px; color: #555;">
-                                                <i class="fas fa-globe-americas"></i> 12 horas atras
-                                            </a>
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div class="post-content">
-                                    <p>
-                                        Descripcion
-                                    </p>
-                                    <img src="...">
-
-                                    <div class="card card-body bg-light fc-react">
-                                        <div class="fc-engage" style="padding: 5px;">
-                                            <div class="container">
-                                                <i class="far fa-thumbs-up f-tu"></i><a href=""> #</a> de reacciones
-                                            </div>
-
-                                            <div class="btn-toolbar" role="toolbar" aria-label="face-reacts">
-                                                <div class="btn-group" role="group" aria-label="...">
-                                                    <button type="button" class="btn btn-light"
-                                                        style="background: #eee;">
-                                                        <i class="far fa-thumbs-up"></i> Like
-                                                    </button>
-                                                    <button type="button" class="btn btn-light"
-                                                        style="background: #eee;">
-                                                        <i class="far fa-comment-alt"></i> Comentar
-                                                    </button>
-                                                    <button type="button" class="btn btn-light"
-                                                        style="background: #eee;">
-                                                        <i class="far fa-share-square"></i> Compartir
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                            <div class="media media-comment">
-                                                <div class="media-left">
-                                                    <ng-container
-                                                        *ngIf="userLogin.image_portada; else commentFotoPerfilDefault">
-                                                        <a routerLink="/{{userLogin.usuario_id}}/biografia">
-                                                            <img [src]=getSantizeUrl(userLogin.image_rec_facial)
-                                                                class="comment-foto"">
-                                                        </a>
-                                                    </ng-container>
-                                                    <ng-template #commentFotoPerfilDefault>
-                                                        <a routerLink=" /{{userLogin.usuario_id}}/biografia">
-                                                            <img src="../assets/img/user_pred.jfif"
-                                                                class="comment-foto">
-                                                        </a>
-                                                        </ng-template>
-                                                </div>
-                                                <div class="media-body">
-                                                    <textarea autosize placeholder="Escribe un comentario"></textarea>
-                                                    <a href="" style="color: grey;" class="textarea-camera"><i
-                                                            class="fas fa-camera"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>  ENGAGE 
-                                    </div> COMENTARIOS, LIKES Y COMPARTIR 
-                                </div> POST CONTENT 
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
             </div>
         </div>
 
@@ -429,15 +337,28 @@
                             </div>
                             <div class="card-body text-secondary">
 
+                                <!-- TABS DE AMIGOS -->
                                 <div class="tab-content">
-                                    <!-- TABS DE AMIGOS -->
+
+                                    <!-- CONTENEDOR DE TODOS LOS AMIGOS -->
                                     <div role="tabpanel" class="tab-pane active" id="allamigos">
                                         <div class="container-fluid" style="padding: 0em 1em !important;">
                                             <div
                                                 class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-3">
-                                                <!--<div class="tarjeta-amigos">
-                                                    <img [src]=getSantizeUrl(userLogin.image_rec_facial)>
-                                                    <a href="">Juan Bryan</a>
+                                                <div *ngFor="let amigo of amigos" class="tarjeta-amigos">
+                                                    <ng-container *ngIf="amigo.image_perfil; else fotoAmigoDefault">
+                                                        <img [src]=getSantizeUrl(amigo.image_perfil)>
+                                                    </ng-container>
+                                                    <ng-template #fotoAmigoDefault>
+                                                        <ng-container
+                                                            *ngIf="amigo.usuario_sexo == 'Hombre'; else fotoDefaultSexoAmigo">
+                                                            <img src="../assets/img/user_pred.jfif">
+                                                        </ng-container>
+                                                        <ng-template #fotoDefaultSexoAmigo>
+                                                            <img src="../assets/img/user_pred_mujer.jpg">
+                                                        </ng-template>
+                                                    </ng-template>
+                                                    <a href="">{{amigo.usuario_nombres}} {{amigo.usuario_apellidos}}</a>
                                                     <div class="dropdown">
                                                         <button class="btn btn-outline-secondary dropdown-toggle"
                                                             type="button" id="dropdownMenuButton" data-toggle="dropdown"
@@ -448,11 +369,12 @@
                                                             <a class="dropdown-item" href="#">Eliminar amigo</a>
                                                         </div>
                                                     </div>
-                                                </div>-->
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
 
+                                    <!-- CONTENEDOR DE SEGUDORES -->
                                     <div role="tabpanel" class="tab-pane" id="seguidores">
                                         <div class="container-fluid" style="padding: 0em 1em !important;">
                                             <div
@@ -479,9 +401,30 @@
                                         </div>
                                     </div>
 
+                                    <!-- CONTENEDOR DE SEGUIDOS -->
                                     <div role="tabpanel" class="tab-pane" id="seguidos">
-                                        <div class="row">
-                                            seguidos
+                                        <div class="container-fluid" style="padding: 0em 1em !important;">
+                                            <div
+                                                class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-3">
+                                                <div *ngFor="let seguido of seguidos" class="tarjeta-seguidores">
+                                                    <ng-container *ngIf="seguido.image_perfil; else fotoSeguidoDefault">
+                                                        <img [src]=getSantizeUrl(seguido.image_perfil)>
+                                                    </ng-container>
+                                                    <ng-template #fotoSeguidoDefault>
+                                                        <ng-container
+                                                            *ngIf="seguido.usuario_sexo == 'Hombre'; else fotoDefaultSexo">
+                                                            <img src="../assets/img/user_pred.jfif">
+                                                        </ng-container>
+                                                        <ng-template #fotoDefaultSexo>
+                                                            <img src="../assets/img/user_pred_mujer.jpg">
+                                                        </ng-template>
+                                                    </ng-template>
+                                                    <a href="">{{seguido.usuario_nombres}} {{seguido.usuario_apellidos}}</a>
+                                                    <!--<button class="btn btn-outline-secondary">
+                                                        <i class="fas fa-check"></i> Seguir
+                                                    </button>-->
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
