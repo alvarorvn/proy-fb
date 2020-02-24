@@ -50,7 +50,7 @@ async function register(req, res) {
 
         res.json({ token })
     } catch (error) {
-        return res.json({ message: "Error al registrar usuario" })
+        return res.json({ message: "Error al registrar usuario" });
     }
 }
 
@@ -125,9 +125,63 @@ async function getUsuario(req, res) {
     res.json(result.rows[0]);
 }
 
+async function getSeguidos(req, res) {
+    const { id } = req.params;
+    let query = `SELECT seg.*, usu.usuario_nombres, usu.usuario_apellidos, usu.usuario_sexo, per.perfil_path_foto
+                    FROM seguidos as seg, usuario as usu, perfil_usuario as per
+                    WHERE seg.usuario_id=${id} AND seg.usuario_id_sigue = usu.usuario_id AND per.usuario_id = seg.usuario_id_sigue;`;
+    let result = await pool.query(query);
+    if (result.rows == 0) return res.json({ message: "No hay usuarios registrados", tipo: 'error', result: [] });
+    result.rows.forEach(seguidor => {
+        if (seguidor.perfil_path_foto != "") {
+            var base64str = base64_encode(seguidor.perfil_path_foto);
+            seguidor.image_perfil = base64str;
+            seguidor.image_perfil_name = path.basename(seguidor.perfil_path_foto);
+        }
+    });
+    res.json(result.rows);
+}
+
+async function updatePerfilPhoto(req, res) {
+    const { id } = req.params;
+    let perfil_path_foto = `faces/${req.file.originalname}`
+
+    try {
+        let query = `SELECT * FROM usuario WHERE usuario_id = ${id}`;
+        let result = await pool.query(query);
+        if (result.rowCount == 0) return res.json({ message: "No existe el usuario a actualizar", tipo: 'error' });
+        query = `UPDATE perfil_usuario set perfil_path_foto = '${perfil_path_foto}'
+                    WHERE usuario_id = ${id}`;
+        await pool.query(query);
+        return res.json({ message: "Foto de perfil actualizada" });
+    } catch (error) {
+        console.log(error);
+        return res.json({ message: "Error al actualizar foto de perfil" });
+    }
+}
+
+async function updatePortadaPhoto(req, res) {
+    const { id } = req.params;
+    let perfil_path_portada = `faces/${req.file.originalname}`
+
+    try {
+        let query = `SELECT * FROM usuario WHERE usuario_id = ${id}`;
+        let result = await pool.query(query);
+        if (result.rowCount == 0) return res.json({ message: "No existe el usuario a actualizar", tipo: 'error' });
+        query = `UPDATE perfil_usuario set perfil_path_portada = '${perfil_path_portada}'
+                    WHERE usuario_id = ${id}`;
+        await pool.query(query);
+        return res.json({ message: "Portada actualizada" });
+    } catch (error) {
+        console.log(error);
+        return res.json({ message: "Error al actualizar portada" });
+    }
+}
+
 module.exports = {
     login,
     register,
-    getUsuarios, getUsuario,
-    recFacialLogin
+    getUsuarios, getUsuario, getSeguidos,
+    recFacialLogin,
+    updatePerfilPhoto, updatePortadaPhoto
 };

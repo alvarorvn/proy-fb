@@ -7,6 +7,7 @@ import { RecFacilComponent } from './components/rec-facil/rec-facil.component';
 import { BiografiaComponent } from './components/biografia/biografia.component';
 
 import { AuthGuard, AuthGuard2, VerifyUser } from './auth.guard'
+import { VerchatsComponent } from './components/verchats/verchats.component';
 
 const routes: Routes = [
   {
@@ -25,8 +26,11 @@ const routes: Routes = [
   },
   {
     path: ':iduser/biografia',
-    component: BiografiaComponent/*,
-    canActivate: [VerifyUser]*/
+    component: BiografiaComponent
+  },
+  {
+    path: ':iduser/verchats',
+    component: VerchatsComponent
   },
 ];
 

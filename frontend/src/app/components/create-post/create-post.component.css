@@ -11,7 +11,7 @@
 }
 
 .post-header {
-  background-color: #eeeeee;
+  background-color: rgba(0,0,0,.03);;
 }
 
 .post-body {
@@ -45,7 +45,7 @@ img.mediana {
   z-index: 1000;
   background-color: rgba(0, 0, 0, 0.75);
   top: 0;
-  width: 100%;
+  width: 96.5%;
   height: 100vh;
 }
 

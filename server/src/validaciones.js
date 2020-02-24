@@ -7,7 +7,7 @@ validaciones.verifyToken = (req, res, next) => {
     let token = req.headers.authorization.split(' ')[1];
     if (token === 'null') return res.status(401).json({ message: "No esta autorizado para ver esto" });
 
-    let payload = jwt.verify(token, 'secretKey');
+    let payload = jwt.verify(token, 'secretkey');
     req.user_email = payload._id;
     next();
 }

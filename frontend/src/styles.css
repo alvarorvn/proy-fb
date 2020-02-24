@@ -1,4 +1,8 @@
 @import "~@fortawesome/fontawesome-free/css/all.css";
+:root {
+    --color_base: #3B5998;
+}
+
 /* TOAST */
 
 /* based on angular-toastr css https://github.com/Foxandxss/angular-toastr/blob/cb508fe6801d6b288d3afc525bb40fee1b101650/dist/angular-toastr.css */
@@ -237,6 +241,7 @@ body {
     width: 100%;
     margin: 0 auto;
     padding: 0;
+    background: #e9ebee;
 }
 
 .contenedor {
@@ -312,6 +317,8 @@ body {
     width: 25px;
     height: 25px;
     border-radius: 50%;
+    object-fit: contain;
+    background-color: #eee;
 }
 
 .dp-name span {
@@ -319,7 +326,22 @@ body {
     font-weight: bold;
 }
 
-@media screen and (min-width: 200px) and (max-width: 780px) {
+/* TRATANDO DE OPTIMIZAR PARA TABLETS */
+
+@media screen and (min-width: 768px) and (max-width: 1320px) {
+    .input-search {
+        width: 240 !important;
+        margin-left: -0.5rem !important;
+        height: 31px !important;
+    }
+    .nav-icons span {
+        display: inline !important;
+    }
+}
+
+/* TRATANDO DE OPTIMIZAR PARA DISPOSITIVOS MOVILES */
+
+@media screen and (min-width: 200px) and (max-width: 575px) {
     .input-search {
         width: 320px !important;
         margin-left: -0.5rem !important;
@@ -328,4 +350,429 @@ body {
     .nav-icons span {
         display: inline;
     }
+    .jumbotron {
+        height: 300px !important;
+        background-position: center !important;
+        background-attachment: fixed !important;
+        border-radius: 0% !important;
+    }
+    .dp {
+        position: absolute !important;
+        margin-top: 16.5em !important;
+    }
+    .dp-img {
+        width: 130px !important;
+        height: 130px !important;
+        border-radius: 50% !important;
+        object-fit: contain !important;
+        background-color: #eee !important;
+    }
+    .f-buttons {
+        position: absolute !important;
+        margin-top: -4.5em !important;
+        right: 0.5em !important;
+    }
+    .timeline-nav .nav {
+        margin-left: 12rem !important;
+    }
+    .img-thumbnail {
+        width: 120px !important;
+        height: 120px !important;
+        margin-right: 5px !important;
+        margin-left: 3px !important;
+    }
+    .perfil-change {
+        position: absolute !important;
+        left: 0em !important;
+        top: 3em !important;
+    }
+    .custom-file-upload .tooltiptext {
+        visibility: hidden;
+        width: 90px !important;
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        /* Position the tooltip */
+        position: absolute;
+        z-index: 1;
+        margin-left: 5px;
+        margin-top: 0px !important;
+        font-size: 12px !important;
+    }
+    .portada-change {
+        position: absolute !important;
+        left: -2em !important;
+        top: -13em !important;
+    }
 }
+
+@media screen and (min-width: 575px) and (max-width: 780px) {
+    .jumbotron {
+        height: 300px !important;
+        background-position: center !important;
+        background-attachment: fixed !important;
+        border-radius: 0% !important;
+    }
+    .dp {
+        position: absolute !important;
+        margin-top: 16.5em !important;
+    }
+    .dp-img {
+        width: 130px !important;
+        height: 130px !important;
+        border-radius: 50% !important;
+        object-fit: contain !important;
+        background-color: #eee !important;
+    }
+    .timeline-nav .nav {
+        margin-left: 15rem !important;
+    }
+    .perfil-change {
+        position: absolute !important;
+        left: 0em !important;
+        top: 3em !important;
+    }
+    .custom-file-upload .tooltiptext {
+        visibility: hidden;
+        width: 90px !important;
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        /* Position the tooltip */
+        position: absolute;
+        z-index: 1;
+        margin-left: 5px;
+        margin-top: 0px !important;
+        font-size: 12px !important;
+    }
+    .portada-change {
+        position: absolute !important;
+        left: -2em !important;
+        top: -13em !important;
+    }
+}
+
+/* BIOGRAFIA */
+
+.dp-img {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    border: 7px solid #fff;
+    object-fit: contain;
+    background-color: #eee;
+}
+
+.dp-img:hover {
+    /*border: 4px solid #ffb300;*/
+    cursor: pointer;
+}
+
+.jumbotron {
+    height: 520px;
+    border-radius: 0%;
+    padding: 0px;
+}
+
+.jumbotron .jb-img {
+    width: 100%;
+    height: auto;
+    position: relative;
+}
+
+@supports(object-fit: contain) {
+    .jumbotron .jb-img {
+        height: 100%;
+        object-fit: cover;
+        object-position: center center;
+    }
+}
+
+.dp {
+    position: absolute;
+    margin-top: 28.5em;
+    top: 0;
+    display: inline-block;
+    margin-left: 1.5em;
+}
+
+.dp a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.8em;
+    margin-left: 1.2rem;
+}
+
+.f-buttons {
+    position: absolute;
+    margin-top: -6em;
+    right: 3em;
+}
+
+.dp-profile-name:hover .dp-profile-name:focus {
+    text-decoration: none;
+    color: #eee;
+}
+
+.dp-profile-name i {
+    font-size: 1.5rem !important;
+}
+
+.timeline-nav {
+    background: #fff !important;
+    margin-top: -2em;
+    border-bottom: 1px solid #eee;
+}
+
+.timeline-nav .nav {
+    margin-left: 20rem;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff !important;
+    background-color: var(--color_base) !important;
+    border-radius: 0%;
+}
+
+.row .container-fluid {
+    padding: 2em 2em 0em 2em !important;
+}
+
+.custom-file-upload {
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.custom-file-upload input[type="file"] {
+    display: none;
+}
+
+.perfil-change {
+    position: absolute;
+    left: 0.5em;
+    top: 4.8em;
+}
+
+.portada-change {
+    position: absolute;
+    left: -2em;
+    top: -25em;
+}
+
+.custom-file-upload:hover input[type="file"] {
+    display: none;
+    position: relative;
+    border-bottom: 1px dotted black;
+}
+
+.custom-file-upload .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    margin-left: 5px;
+    margin-top: -3px;
+    font-size: 15px;
+}
+
+.custom-file-upload .tooltiptextPortada {
+    visibility: hidden;
+    width: 140px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    margin-left: 5px;
+    margin-top: -3px;
+    font-size: 15px;
+}
+
+.custom-file-upload:hover .tooltiptext {
+    visibility: visible;
+}
+
+.custom-file-upload:hover .tooltiptextPortada {
+    visibility: visible;
+}
+
+/* BIOGRAFIA */
+
+.card {
+    /*margin-left: 2.5em;*/
+    color: #333;
+    font-family: sans-serif;
+}
+
+.img-thumbnail {
+    width: 100px;
+    height: 100px;
+    margin-right: 5px;
+    margin-left: 3px;
+}
+
+/* AMIGOS */
+
+.card-img-top {
+    height: 100px;
+    margin: auto !important;
+    padding: 0 !important;
+}
+
+.friend-card-text {
+    text-align: center;
+    font-size: 15px;
+}
+
+/* AMIGOS */
+
+/* POSTS */
+
+img.media-object {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.comment-foto {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+/*.media-name .media-body {
+    margin-top: .4em;
+}*/
+
+.post {
+    background: #fff;
+    border: 1px solid rgba(33, 33, 33, .33);
+    padding: 1em;
+}
+
+.post-content img {
+    /*width: 100%;*/
+    cursor: pointer;
+    padding: .4em;
+}
+
+.post-content img:hover {
+    opacity: .8;
+}
+
+.colorbase {
+    color: var(--color_base);
+}
+
+.fc-react {
+    background: #fff;
+    padding: 0;
+}
+
+.fc-react btn {
+    border: none;
+    padding: .2rem .5rem;
+    margin: .2rem .5rem;
+}
+
+.f-tu {
+    background: #3b5998;
+    color: #fff;
+    border-radius: 50%;
+    padding: .5em;
+}
+
+textarea {
+    width: 100%;
+    overflow: hidden;
+    padding: .4em;
+    /*display: inline-block;*/
+}
+
+.textarea-camera {
+    margin-left: -2em;
+    margin-top: .5em;
+    position: absolute;
+    z-index: 22;
+}
+
+.post-content p {
+    margin-top: .4rem;
+}
+
+.fc-engage {
+    background: #eee;
+}
+
+/* POSTS */
+
+/* AMIGOS, SEGUIDOS Y SEGUIDORES */
+
+.tarjeta-amigos {
+    border: 1px solid #ddd;
+    height: 110px;
+    position: relative;
+}
+
+.tarjeta-seguidores {
+    border: 1px solid #ddd;
+    height: 110px;
+    position: relative;
+}
+
+.tarjeta-amigos img {
+    width: 30%;
+    height: 100%;
+}
+
+.tarjeta-seguidores img {
+    width: 30%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.tarjeta-amigos a {
+    margin-left: 10px;
+    color: var(--color_base);
+}
+
+.tarjeta-seguidores a {
+    margin-left: 10px;
+    color: var(--color_base);
+}
+
+.tarjeta-amigos .dropdown {
+    position: absolute;
+    top: 0.5em;
+    right: 0.5em;
+}
+
+.tarjeta-amigos .dropdown button {
+    font-size: 15px;
+    padding: 0em .4em;
+}
+
+.tarjeta-seguidores button {
+    position: absolute;
+    top: 0.5em;
+    right: 0.5em;
+    font-size: 15px;
+    padding: 0em .4em;
+}
+
+/* AMIGOS,  SEGUIDOS Y SEGUIDORES */

@@ -1,16 +1,39 @@
 async function recFacial(router, ngZone) {
     const imageList = document.querySelector('#ListaImagenes');
-    const videoContainer = document.getElementById("video");
-    const video = await navigator.mediaDevices.getUserMedia({
+    var videoContainer = document.getElementById("video");
+    vendorUrl = window.URL || window.webkitURL;
+    navigator.getMedia = navigator.getUserMedia ||
+        navigator.webkitGetUserMedia ||
+        navigator.mozGetUserMedia ||
+        navigator.oGetUserMedia ||
+        navigator.msGetUserMedia;
+    /*var video = await navigator.mediaDevices.getUserMedia({
         video: true,
-    })
+    })*/
+
+    var MediaStream;
+    function captureWebcam(video, audio) {
+        navigator.getMedia({
+            video: video,
+            audio: audio
+        }, function (stream) {
+            videoContainer.srcObject = stream;
+            MediaStream = stream.getTracks()[0]; // create the stream tracker
+        }, function (error) {
+            // An error occured
+            // error.code
+            console.log(error)
+        });
+    }
+
+    captureWebcam(true, false)
 
     await faceapi.nets.tinyFaceDetector.loadFromUri('/assets/models')
     await faceapi.nets.faceLandmark68Net.loadFromUri('/assets/models')
     await faceapi.nets.faceExpressionNet.loadFromUri('/assets/models')
     await faceapi.nets.faceRecognitionNet.loadFromUri('/assets/models')
 
-    videoContainer['srcObject'] = video;
+    //videoContainer['srcObject'] = video;
 
     const imageDescriptors = [];
     var faceMatcher;
@@ -87,6 +110,7 @@ async function recFacial(router, ngZone) {
                     success: function (res) {
                         localStorage.setItem('token', res.token);
                         localStorage.setItem('id', res.user.usuario_id);
+                        MediaStream.stop()
                         clearInterval(proc);
                         ngZone.run(() => router.navigate([`${res.user.usuario_id}`]));
                     }

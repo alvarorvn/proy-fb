@@ -1,38 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { Injectable } from '@angular/core';
-import { AuthService } from "../../services/auth.service";
-import { DomSanitizer } from '@angular/platform-browser';
-
+import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
+import { AuthService } from '../../services/auth.service';
+//import { AuthService } from '../../services/auth.service';
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  selector: 'app-verchats',
+  templateUrl: './verchats.component.html',
+  styleUrls: ['./verchats.component.css']
 })
-@Injectable({
-  providedIn: 'root'
-})
-export class NavbarComponent implements OnInit {
-
+export class VerchatsComponent implements OnInit {
   userLogin = {};
-
   constructor(
     private authService: AuthService,
     private sanitizer: DomSanitizer
-  ) { }
+  ) {
+  
+  }
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (this.authService.getId() && this.authService.getToken()) {
       this.getUserLogin(this.authService.getId());
     };
-    /*setTimeout(() => {
-      console.log(this.userLogin);
-    }, 200);*/
   }
-
-  salir() {
-    this.authService.logout();
-  }
-
   getUserLogin(id) {
     this.authService.getUserLogin({ usuario_id: id }).subscribe(res => {
       if (res.tipo != 'error') {
@@ -40,7 +28,9 @@ export class NavbarComponent implements OnInit {
       }
     })
   }
-
+  getChatsUser(id){
+    
+  }
   public getSantizeUrl(url: string) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(`data:image/png;charset=utf-8;base64, ${url}`);
   }
