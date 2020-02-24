@@ -1,0 +1,22 @@
+<app-navbar></app-navbar>
+<div style="margin-top: 44px;">
+    <!-- Personas -->
+    <div class="container-fluid" style="padding: 0em 1em !important;">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-3">
+            <div *ngFor="let persona of personas" class="tarjeta-amigos">
+                <ng-container *ngIf="persona.image_perfil; else fotoAmigoDefault">
+                    <img [src]=getSantizeUrl(persona.image_perfil)>
+                </ng-container>
+                <ng-template #fotoAmigoDefault>
+                    <ng-container *ngIf="amigo.usuario_sexo == 'Hombre'; else fotoDefaultSexoAmigo">
+                        <img src="../assets/img/user_pred.jfif">
+                    </ng-container>
+                    <ng-template #fotoDefaultSexoAmigo>
+                        <img src="../assets/img/user_pred_mujer.jpg">
+                    </ng-template>
+                </ng-template>
+                <a href="">{{persona.usuario_nombres}} {{persona.usuario_apellidos}}</a>
+            </div>
+        </div>
+    </div>
+</div>

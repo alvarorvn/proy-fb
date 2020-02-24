@@ -20,6 +20,7 @@ import { PostsComponent } from './components/posts/posts.component';
 import { CreatePostComponent } from './components/create-post/create-post.component';
 import { BiografiaComponent } from './components/biografia/biografia.component';
 import { VerchatsComponent } from './components/verchats/verchats.component';
+import { BuscarpersonasComponent } from './components/buscarpersonas/buscarpersonas.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { VerchatsComponent } from './components/verchats/verchats.component';
     CreatePostComponent,
     BiografiaComponent,
     BiografiaComponent,
-    VerchatsComponent
+    VerchatsComponent,
+    BuscarpersonasComponent
   ],
   imports: [
     BrowserModule,

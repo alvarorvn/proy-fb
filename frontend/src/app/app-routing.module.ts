@@ -8,6 +8,7 @@ import { BiografiaComponent } from './components/biografia/biografia.component';
 
 import { AuthGuard, AuthGuard2, VerifyUser } from './auth.guard'
 import { VerchatsComponent } from './components/verchats/verchats.component';
+import { BuscarpersonasComponent } from './components/buscarpersonas/buscarpersonas.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
   {
     path: ':iduser/verchats',
     component: VerchatsComponent
+  },
+  {
+    path: ':busq/buscarpersonas',
+    component: BuscarpersonasComponent
   },
 ];
 
