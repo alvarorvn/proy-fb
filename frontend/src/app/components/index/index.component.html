@@ -1,3 +1,3 @@
 <app-navbar></app-navbar>
-<app-create-post></app-create-post>
-<app-posts></app-posts>
+<app-create-post #create_post></app-create-post>
+<app-posts [create_post]='create_post'></app-posts>

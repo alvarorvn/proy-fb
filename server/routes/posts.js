@@ -1,20 +1,13 @@
 const { Router } = require('express');
-const user = require('../controllers/users.js');
 const validate = require('../src/validaciones.js');
+const { savepost, getPostsUser, deletePost } = require('../controllers/posts.js');
 
 // objeto que permite definir rutas
 const router = Router();
 
-// Ruta de registro de usuario
-router.post('/register', user.register);
-// Ruta de inicio de sesion
-router.post('/login', user.login);
-// Ruta para obtener usuarios
-router.get('/', user.getUsuarios);
-//Ruta que inicia sesion con reconocimiento facial
-router.post('/recFacial', user.recFacialLogin);
-//Ruta para obtener un usuario
-router.post('/', user.getUsuario);
+router.post('/savepost', savepost);             // Ruta de registro de usuario
+router.get('/getpostsuser/:usuario_id', getPostsUser);     // Obtiene todas las publicaciones del usuario especificado
+router.delete('/deletepost/:pub_id', deletePost);
 
 //exportar objeto
 module.exports = router;

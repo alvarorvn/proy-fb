@@ -1,9 +1,11 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
-const user_routes = require('../routes/users.js');
 const multer = require('multer');
 const path = require('path');
+
+const user_routes = require('../routes/users.js');
+const posts_routes = require('../routes/posts.js');
 
 app.set('port', 3000 || process.env.PORT);
 
@@ -28,6 +30,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/', user_routes);
+app.use('/', posts_routes);
 
 // Start server
 app.listen(app.get('port'), () => {

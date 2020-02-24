@@ -1,16 +1,40 @@
 <div class="container col-8">
     <div class="create-post mt-5 ml-5 mr-5">
-        <div class="line-bottom">
+        <div class="line-bottom post-header">
             <span>Crear publicación</span>
         </div>
-        <div class="line-bottom">
+        <div class="line-bottom post-body">
             <div>
                 <img class="rounded-circle mediana float-left mr-2" src="assets/img/foto.jpg">
             </div>
-            <div>
-                <textarea rows="2" cols="60" placeholder="¿Qué estás pensando, Juan?"></textarea>
+            <div id="textarea-pub" class="comment-text-area">
+                <textarea [(ngModel)]="pub_texto" (click)="showModal()" name="pub_texto" class="textinput"
+                    placeholder="¿Qué estás pensando, Juan?"></textarea>
             </div>
         </div>
-        <div><button ((click)="toPost()") type="submit" class="btn btn-secondary col-12">Publicar</button></div>
+        <!-- <div><button (click)="toPost()" type="submit" class="btn btn-secondary col-12">Publicar</button></div> -->
     </div>
 </div>
+
+<div id="modal" class="modali">
+    <div class="container col-8">
+        <div class="create-post mt-5 ml-5 mr-5">
+            <div class="line-bottom post-header">
+                <span>Crear publicación</span>
+            </div>
+            <div class="line-bottom post-body">
+                <div>
+                    <img class="rounded-circle mediana float-left mr-2" src="assets/img/foto.jpg">
+                </div>
+                <div id="textarea-pub" class="comment-text-area">
+                    <textarea [(ngModel)]="pub_texto" name="pub_texto" class="textinput"
+                        placeholder="¿Qué estás pensando, Juan?"></textarea>
+                </div>
+            </div>
+            <div><button (click)="toPost()" type="submit" class="btn btn-secondary col-12">Publicar</button></div>
+        </div>
+    </div>
+</div> 
+
+<app-posts *ngFor='let post of posts' [pub_texto]='post.pub_texto' [pub_id]='post.pub_id'></app-posts>
+
