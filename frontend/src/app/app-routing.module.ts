@@ -10,6 +10,7 @@ import { AuthGuard, AuthGuard2, VerifyUser } from './auth.guard'
 import { VerchatsComponent } from './components/verchats/verchats.component';
 import { BuscarpersonasComponent } from './components/buscarpersonas/buscarpersonas.component';
 import { PerfilAmigoComponent } from './components/perfil-amigo/perfil-amigo.component';
+import { VerconectadosComponent } from './components/verconectados/verconectados.component';
 
 const routes: Routes = [
   {
@@ -34,6 +35,12 @@ const routes: Routes = [
     path: ':iduser/verchats',
     component: VerchatsComponent
   },
+  {
+    path: 'verconectados/',
+    component: VerconectadosComponent
+  },
+
+  
   {
     path: 'buscarpersonas/:usr_busq',
     component: BuscarpersonasComponent

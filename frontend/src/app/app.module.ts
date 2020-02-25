@@ -23,6 +23,7 @@ import { BiografiaComponent } from './components/biografia/biografia.component';
 import { VerchatsComponent } from './components/verchats/verchats.component';
 import { BuscarpersonasComponent } from './components/buscarpersonas/buscarpersonas.component';
 import { PerfilAmigoComponent } from './components/perfil-amigo/perfil-amigo.component';
+import { VerconectadosComponent } from './components/verconectados/verconectados.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { PerfilAmigoComponent } from './components/perfil-amigo/perfil-amigo.com
     BiografiaComponent,
     VerchatsComponent,
     BuscarpersonasComponent,
-    PerfilAmigoComponent
+    PerfilAmigoComponent,
+    VerconectadosComponent
   ],
   imports: [
     BrowserModule,
