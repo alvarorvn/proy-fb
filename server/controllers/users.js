@@ -93,7 +93,7 @@ async function recFacialLogin(req, res) {
     }
 }
 async function getPersonas(req,res){
-    const { usuario_busq } = req.body;
+    
     let query = `SELECT usuario.usuario_id, 
                 usuario.usuario_nombres, 
                 usuario.usuario_apellidos, 
@@ -101,10 +101,11 @@ async function getPersonas(req,res){
                 usuario.usuario_sexo
                 FROM usuario, perfil_usuario
                 WHERE usuario.usuario_id = perfil_usuario.usuario_id AND
-                (usuario.usuario_nombres ILIKE %${usuario_busq}% 
+                (usuario.usuario_nombres ILIKE '%${req.params.usr_busq}%' 
                 OR usuario.usuario_apellidos 
-                ILIKE %${usuario_busq}%)`;
+                ILIKE '%${req.params.usr_busq}%')`;
     let result = await pool.query(query);
+    console.log(result.rows);
     if (result.rows == 0) return res.json({ 
         message: "No se registraron coincidencias",
      tipo: 'error', result: [] });

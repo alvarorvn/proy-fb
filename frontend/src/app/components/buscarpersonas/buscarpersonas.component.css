@@ -1,0 +1,18 @@
+
+.tarjeta-amigos1 {
+    margin-left: 1PX ;
+    border: 14px solid #ffff;
+    height: 110px;
+    position: relative;
+    align-items: inherit;
+}
+.tarjeta-amigos1 img {
+    margin-left: 1px;
+    width: 30%;
+    height: 100%;
+    object-fit: contain;
+}
+.tarjeta-amigos1 a {
+    margin-left: 1px;
+    color: var(--color_base);
+}

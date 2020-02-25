@@ -34,7 +34,7 @@ const routes: Routes = [
     component: VerchatsComponent
   },
   {
-    path: ':busq/buscarpersonas',
+    path: 'buscarpersonas/:usr_busq',
     component: BuscarpersonasComponent
   },
 ];
