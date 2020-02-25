@@ -48,7 +48,18 @@ export class PerfilAmigoComponent implements OnInit {
       this.getTelefonos();
       this.getApodos();
       this.getDirecciones();
+      console.log(this.esAmigo());
     }, 1000);
+  }
+
+  esAmigo() {
+    let esAmigo = false;
+    this.amigos.forEach(amig => {
+      if (amig['usuario_id_amigo'] == this.authService.getId()) {
+        esAmigo = true;
+      }
+    });
+    return esAmigo;
   }
 
   getPerfilAmigo() {
