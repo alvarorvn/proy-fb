@@ -37,17 +37,30 @@ export class BiografiaComponent implements OnInit {
     univ_finalizada: true,
     perfilusu_id: ""
   };
+  telf = {
+    telf_numero: "",
+    perfilusu_id: ""
+  }
+  direccion = {
+    dir_detalle: "",
+    dir_codigopostal: "",
+    perfilusu_id: "",
+    ciud_id: ""
+  }
 
   fileUpload;
   portadaUpload;
 
   // Lista de cosas
+  ciudades: Array<Object> = [];
   seguidores: Array<Object> = [];
   seguidos: Array<Object> = [];
   amigos: Array<Object> = [];
   empleos: Array<Object> = [];
   aptitudes: Array<Object> = [];
   estudios: Array<Object> = [];
+  telefonos: Array<Object> = [];
+  direcciones: Array<Object> = [];
 
   constructor(
     private authService: AuthService,
@@ -69,6 +82,9 @@ export class BiografiaComponent implements OnInit {
       this.getEmpleos();
       this.getAptitudes();
       this.getEstudios();
+      this.getTelefonos();
+      this.getCiudades();
+      this.getDirecciones();
     }, 1000);
     setTimeout(() => {
       this.JqueryFunciones();
@@ -103,6 +119,16 @@ export class BiografiaComponent implements OnInit {
         this.amigos = res.result;
       } else {
         this.amigos = res;
+      }
+    })
+  }
+
+  getCiudades() {
+    this.biogService.getCiudades().subscribe(res => {
+      if (res.tipo == 'error') {
+        this.ciudades = res.result;
+      } else {
+        this.ciudades = res;
       }
     })
   }
@@ -162,7 +188,7 @@ export class BiografiaComponent implements OnInit {
             this.toastr.success(res.message, "Éxito");
             this.getEmpleos();
             this.clearFormEmpleo();
-            this.CerrarFormEmpleo();
+            this.CerrarForm('#formEmpleo', '#btnAddEmpl');
           }
         },
         err => {
@@ -178,7 +204,7 @@ export class BiografiaComponent implements OnInit {
           this.toastr.success(res.message, "Éxito");
           this.getEmpleos();
           this.clearFormEmpleo();
-          this.CerrarFormEmpleo();
+          this.CerrarForm('#formEmpleo', '#btnAddEmpl');
         }
       })
     }
@@ -196,6 +222,7 @@ export class BiografiaComponent implements OnInit {
 
   editEmpleo(emp) {
     this.empleo = emp;
+    this.AbrirForm('#formEmpleo', '#btnAddEmpl');
   }
 
   deleteEmpleo(empleo_id) {
@@ -223,6 +250,7 @@ export class BiografiaComponent implements OnInit {
       empleo_fechafin: "",
       perfilusu_id: ""
     };
+    this.CerrarForm('#formEmpleo', '#btnAddEmpl');
   }
 
   // FIN EMPLEO
@@ -239,7 +267,7 @@ export class BiografiaComponent implements OnInit {
             this.toastr.success(res.message, "Éxito");
             this.getAptitudes();
             this.clearFormAptitud();
-            this.CerrarFormAptitud();
+            this.CerrarForm('#formAptitud', '#btnAddAptitud')
           }
         },
         err => {
@@ -255,7 +283,7 @@ export class BiografiaComponent implements OnInit {
           this.toastr.success(res.message, "Éxito");
           this.getAptitudes();
           this.clearFormAptitud();
-          this.CerrarFormAptitud();
+          this.CerrarForm('#formAptitud', '#btnAddAptitud')
         }
       })
     }
@@ -273,6 +301,7 @@ export class BiografiaComponent implements OnInit {
 
   editAptitud(apt) {
     this.aptitud = apt;
+    this.AbrirForm('#formAptitud', '#btnAddAptitud')
   }
 
   deleteAptitud(aptitud_id) {
@@ -296,6 +325,7 @@ export class BiografiaComponent implements OnInit {
       habprof_aptitud: "",
       perfilusu_id: ""
     };
+    this.CerrarForm('#formAptitud', '#btnAddAptitud')
   }
 
   // FIN APTITUDES
@@ -312,7 +342,7 @@ export class BiografiaComponent implements OnInit {
             this.toastr.success(res.message, "Éxito");
             this.getEstudios();
             this.clearFormEstudio();
-            this.CerrarFormEstudio();
+            this.CerrarForm('#formEstudio', '#btnAddEstudio');
           }
         },
         err => {
@@ -328,7 +358,7 @@ export class BiografiaComponent implements OnInit {
           this.toastr.success(res.message, "Éxito");
           this.getEstudios();
           this.clearFormEstudio();
-          this.CerrarFormEstudio();
+          this.CerrarForm('#formEstudio', '#btnAddEstudio');
         }
       })
     }
@@ -346,6 +376,7 @@ export class BiografiaComponent implements OnInit {
 
   editEstudio(est) {
     this.estudio = est;
+    this.AbrirForm('#formEstudio', '#btnAddEstudio');
   }
 
   deleteEstudio(univ_id) {
@@ -374,9 +405,255 @@ export class BiografiaComponent implements OnInit {
       univ_finalizada: true,
       perfilusu_id: ""
     };
+    this.CerrarForm('#formEstudio', '#btnAddEstudio');
   }
 
   // FIN ESTUDIOS
+
+  // TELEFONO
+
+  guardarTelefono() {
+    if (this.telf['telf_id']) {
+      this.biogService.updateTelf(this.userLogin['perfilusu_id'], this.telf).subscribe(
+        res => {
+          if (res.tipo == 'error') {
+            this.toastr.error(res.message, "Error");
+          } else {
+            this.toastr.success(res.message, "Éxito");
+            this.getTelefonos();
+            this.clearFormTelf();
+            this.CerrarForm('#formTelefono', '#btnAddTelf');
+          }
+        },
+        err => {
+          console.log(err);
+        }
+      )
+    } else {
+      this.telf.perfilusu_id = this.userLogin['perfilusu_id'];
+      this.biogService.addTelf(this.telf).subscribe(res => {
+        if (res.tipo == 'error') {
+          this.toastr.error(res.message, "Error");
+        } else {
+          this.toastr.success(res.message, "Éxito");
+          this.getTelefonos();
+          this.clearFormTelf();
+          this.CerrarForm('#formTelefono', '#btnAddTelf');
+        }
+      })
+    }
+  }
+
+  getTelefonos() {
+    this.biogService.getTelf(this.userLogin['perfilusu_id']).subscribe(res => {
+      if (res.tipo == 'error') {
+        this.telefonos = res.result;
+      } else {
+        this.telefonos = res;
+      }
+    })
+  }
+
+  editTelefono(telf) {
+    this.AbrirForm('#formTelefono', '#btnAddTelf');
+    this.telf = telf;
+  }
+
+  deleteTelf(telf_id) {
+    this.biogService.deleteTelf(this.userLogin['perfilusu_id'], telf_id).subscribe(
+      res => {
+        if (res.tipo == 'error') {
+          this.toastr.error(res.message, "Error");
+        } else {
+          this.toastr.success(res.message, "Éxito");
+          this.getTelefonos();
+        }
+      },
+      err => {
+        console.log(err);
+      }
+    )
+  }
+
+  clearFormTelf() {
+    this.telf = {
+      telf_numero: "",
+      perfilusu_id: ""
+    };
+    this.CerrarForm('#formTelefono', '#btnAddTelf')
+  }
+
+  // FIN TELEFONO
+
+  // DIRECCION
+
+  guardarDireccion() {
+    if (this.direccion['dir_id']) {
+      this.biogService.updateDireccion(this.userLogin['perfilusu_id'], this.direccion).subscribe(
+        res => {
+          if (res.tipo == 'error') {
+            this.toastr.error(res.message, "Error");
+          } else {
+            this.toastr.success(res.message, "Éxito");
+            this.getDirecciones();
+            this.clearFormDireccion();
+            this.CerrarForm('#formDireccion', '#btnAddDireccion')
+          }
+        },
+        err => {
+          console.log(err);
+        }
+      )
+    } else {
+      this.direccion.perfilusu_id = this.userLogin['perfilusu_id'];
+      this.biogService.addDireccion(this.direccion).subscribe(res => {
+        if (res.tipo == 'error') {
+          this.toastr.error(res.message, "Error");
+        } else {
+          this.toastr.success(res.message, "Éxito");
+          this.getDirecciones();
+          this.clearFormDireccion();
+          this.CerrarForm('#formDireccion', '#btnAddDireccion')
+        }
+      })
+    }
+  }
+
+  getDirecciones() {
+    this.biogService.getDireccion(this.userLogin['perfilusu_id']).subscribe(res => {
+      if (res.tipo == 'error') {
+        this.direcciones = res.result;
+      } else {
+        this.direcciones = res;
+      }
+    })
+  }
+
+  editDireccion(direccion) {
+    this.AbrirForm('#formDireccion', '#btnAddDireccion');
+    this.direccion = direccion;
+  }
+
+  deleteDireccion(dir_id) {
+    this.biogService.deleteDireccion(this.userLogin['perfilusu_id'], dir_id).subscribe(
+      res => {
+        if (res.tipo == 'error') {
+          this.toastr.error(res.message, "Error");
+        } else {
+          this.toastr.success(res.message, "Éxito");
+          this.getDirecciones();
+        }
+      },
+      err => {
+        console.log(err);
+      }
+    )
+  }
+
+  clearFormDireccion() {
+    this.direccion = {
+      dir_detalle: "",
+      dir_codigopostal: "",
+      perfilusu_id: "",
+      ciud_id: ""
+    }
+    this.CerrarForm('#formDireccion', '#btnAddDireccion')
+  }
+
+  // FIN DIRECCION
+
+  // RELIGION
+
+  guardarReligion() {
+    this.biogService.updateReligion(this.userLogin['perfilusu_id'], { perfil_religion: this.userLogin['perfil_religion'] }).subscribe(
+      res => {
+        if (res.tipo == 'error') {
+          this.toastr.error(res.message, "Error");
+        } else {
+          this.toastr.success(res.message, "Éxito");
+          this.getUserLogin(this.authService.getId());
+          this.CerrarForm('#formReligion', '#btnAddReligion');
+        }
+      },
+      err => {
+        console.log(err);
+      }
+    )
+  }
+
+  editReligion(religion) {
+    this.AbrirForm('#formReligion', '#btnAddReligion');
+    this.userLogin = religion;
+  }
+
+  clearFormReligion() {
+    this.CerrarForm('#formReligion', '#btnAddReligion')
+  }
+
+  // FIN RELIGION
+
+  // INTERES
+
+  guardarInteres() {
+    this.biogService.updateInteres(this.userLogin['perfilusu_id'], { perfil_interes: this.userLogin['perfil_interes'] }).subscribe(
+      res => {
+        if (res.tipo == 'error') {
+          this.toastr.error(res.message, "Error");
+        } else {
+          this.toastr.success(res.message, "Éxito");
+          this.getUserLogin(this.authService.getId());
+          this.CerrarForm('#formInteres', '#btnAddInteres');
+        }
+      },
+      err => {
+        console.log(err);
+      }
+    )
+  }
+
+  editInteres(interes) {
+    this.AbrirForm('#formInteres', '#btnAddInteres');
+    this.userLogin = interes;
+  }
+
+  clearFormInteres() {
+    this.CerrarForm('#formInteres', '#btnAddInteres')
+  }
+
+  // FIN INTERES
+
+  // USERLOGIN
+
+  guardarUserLogin() {
+    let obj = {
+      usuario_fechanac: this.userLogin['usuario_fechanac'],
+      usuario_sexo: this.userLogin['usuario_sexo']
+    }
+    this.biogService.updateUserLogin(obj).subscribe(
+      res => {
+        if (res.tipo == 'error') {
+          this.toastr.error(res.message, "Error");
+        } else {
+          this.toastr.success(res.message, "Éxito");
+          this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+          this.router.onSameUrlNavigation = 'reload';
+          this.router.navigate([`${this.authService.getId()}/biografia`]);
+        }
+      },
+      err => {
+        console.log(err);
+      }
+    )
+  }
+
+  editUserlogin(userLogin) {
+    this.AbrirForm('#formInfoBasica', '#lala');
+    this.userLogin = userLogin;
+  }
+
+  // FIN USERLOGIN
+
+  // FUNCIONES JQUERY
 
   JqueryFunciones() {
     (function ($) {
@@ -385,6 +662,11 @@ export class BiografiaComponent implements OnInit {
         $('#formEmpleo').hide();
         $('#formAptitud').hide();
         $('#formEstudio').hide();
+        $('#formTelefono').hide();
+        $('#formInfoBasica').hide();
+        $('#formDireccion').hide();
+        $('#formReligion').hide();
+        $('#formInteres').hide();
 
         // Cambio de navs
         $('#enlamigos').on('click', () => {
@@ -403,71 +685,37 @@ export class BiografiaComponent implements OnInit {
           $('#seguidores').addClass('active');
         })
 
-        //Mostrar formulario de empleo
-        $('#btnAddEmpl').on('click', () => {
-          $('#formEmpleo').show();
-          $('#btnAddEmpl').hide();
-        })
-        $('#btnAddAptitud').on('click', () => {
-          $('#formAptitud').show();
-          $('#btnAddAptitud').hide();
-        })
-        $('#btnAddEstudio').on('click', () => {
-          $('#formEstudio').show();
-          $('#btnAddEstudio').hide();
-        })
+        $('#btn-act-info').on('click', () => {
+          // NAV ITEMS
+          $('#nvbio').removeClass('active');
+          $('#nvamigos').removeClass('active');
+          $('#nvfotos').removeClass('active');
+          $('#nvinfo').addClass('active');
 
-        $('#editAptitudButton').on('click', () => {
-          $('#formAptitud').show();
+          // TABS
+          $('#biografia').removeClass('active');
+          $('#amigos').removeClass('active');
+          $('#fotos').removeClass('active');
+          $('#informacion').addClass('active');
         })
-        $('#editEmpleoB').on('click', () => {
-          $('#formEmpleo').show();
-        })
-        $('#editEstudioButton').on('click', () => {
-          $('#formEstudio').show();
-        })
-
-        //Ocultar formulario de emplo
-        $('#cancelFormEmpleo').on('click', () => {
-          $('#formEmpleo').hide();
-          $('#btnAddEmpl').show();
-        })
-        $('#cancelFormAptitud').on('click', () => {
-          $('#formAptitud').hide();
-          $('#btnAddAptitud').show();
-        })
-        $('#cancelFormEstudio').on('click', () => {
-          $('#formEstudio').hide();
-          $('#btnAddEstudio').show();
-        })
-
       });
     })(jQuery);
   }
 
-  CerrarFormEmpleo() {
+  CerrarForm(formulario, boton) {
     (function ($) {
       $(document).ready(function () {
-        $('#formEmpleo').hide();
-        $('#btnAddEmpl').show();
+        $(formulario).hide();
+        $(boton).show();
       });
     })(jQuery);
   }
 
-  CerrarFormAptitud() {
+  AbrirForm(formulario, boton) {
     (function ($) {
       $(document).ready(function () {
-        $('#formAptitud').hide();
-        $('#btnAddAptitud').show();
-      });
-    })(jQuery);
-  }
-
-  CerrarFormEstudio() {
-    (function ($) {
-      $(document).ready(function () {
-        $('#formEstudio').hide();
-        $('#btnAddEstudio').show();
+        $(formulario).show();
+        $(boton).hide();
       });
     })(jQuery);
   }
