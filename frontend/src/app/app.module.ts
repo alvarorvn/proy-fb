@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 import { LoginComponent } from './components/login/login.component';
@@ -45,7 +46,8 @@ import { VerchatsComponent } from './components/verchats/verchats.component';
       positionClass: 'toast-bottom-right',
       preventDuplicates: true
     }),
-    TextareaAutosizeModule
+    TextareaAutosizeModule,
+    NgSelectModule
   ],
   providers: [
     AuthGuard,

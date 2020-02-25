@@ -1,9 +1,9 @@
-const { Pool } = require('pg');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const fs = require('fs');
 const path = require('path');
 const pool = require('../database/conexion');
+const validar = require('../src/validaciones');
 
 // Funcion de registro de usuario - sin validar
 async function register(req, res) {
@@ -115,7 +115,10 @@ async function getUsuario(req, res) {
             var base64str = base64_encode(usuario.perfil_path_portada);
             usuario.image_portada = base64str;
             usuario.image_portada_name = path.basename(usuario.perfil_path_portada);
+
         }
+        usuario.usuario_fechanac = validar.changeFormatDate(usuario.usuario_fechanac, 'YYYY-MM-DD');
+        usuario.usuario_fechanacM = validar.changeFormatDate(usuario.usuario_fechanac, 'DD [de] MMMM [de] YYYY');
     });
     res.json(result.rows[0]);
 }
@@ -212,10 +215,38 @@ async function updatePortadaPhoto(req, res) {
     }
 }
 
+// Actualiza userLogin
+async function updateUserLogin(req, res) {
+    const { usuario_fechanac, usuario_sexo } = req.body;
+    if (validar.campoVacio(usuario_fechanac) || validar.campoVacio(usuario_sexo))
+        return res.json({ message: "Llene el formulario por favor", tipo: 'error' });
+
+    try {
+        let sql = `SELECT * FROM usuario where usuario_id = '${req.params.iduser}'`;
+        let result = await pool.query(sql);
+        if (result.rowCount == 0) return res.json({ message: "No existe usuario registrado a editar", tipo: "error" });
+        sql = `UPDATE usuario SET
+            usuario_fechanac = '${usuario_fechanac}', usuario_sexo= '${usuario_sexo}'
+            WHERE usuario_id = '${req.params.iduser}'`;
+        result = await pool.query(sql);
+        if (result.rowCount == 1) return res.json({ message: "Datos actualizados con exito", tipo: "exito" });
+    } catch (error) {
+        return res.json({ message: "Error al actualizar datos", tipo: "error" });
+    }
+}
+
+// Obtener ciudades
+async function getCiudades(req, res) {
+    let query = `SELECT * FROM ciudad`;
+    let result = await pool.query(query);
+    if (result.rows == 0) return res.json({ message: "No hay ciudades registrados", result: [] });
+    res.json(result.rows);
+}
+
 module.exports = {
     login,
-    register,
+    register, 
     getUsuarios, getUsuario, getSeguidores, getAmigos, getSeguidos,
-    recFacialLogin,
-    updatePerfilPhoto, updatePortadaPhoto
+    recFacialLogin, getCiudades,
+    updatePerfilPhoto, updatePortadaPhoto, updateUserLogin
 };

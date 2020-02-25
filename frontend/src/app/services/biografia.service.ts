@@ -18,6 +18,10 @@ export class BiografiaService {
     return this.http.get<any>(`${this.URL}/${this.authService.getId()}/seguidores`);
   }
 
+  getCiudades() {
+    return this.http.get<any>(`${this.URL}/ciudades`);
+  }
+
   getAmigos() {
     return this.http.get<any>(`${this.URL}/${this.authService.getId()}/amigos`);
   }
@@ -87,4 +91,59 @@ export class BiografiaService {
     return this.http.delete<any>(`${this.URL}/${this.authService.getId()}/biografia/${perfil_id}/delete-estudio/${univ_id}`);
   }
   // FIN ESTUDIOS
+
+
+  // TELEFONOS
+  addTelf(telf) {
+    return this.http.post<any>(`${this.URL}/${this.authService.getId()}/biografia/add-telf`, telf);
+  }
+
+  getTelf(perfil_id) {
+    return this.http.get<any>(`${this.URL}/${this.authService.getId()}/biografia/${perfil_id}/get-telf`);
+  }
+
+  updateTelf(perfil_id, telf) {
+    return this.http.put<any>(`${this.URL}/${this.authService.getId()}/biografia/${perfil_id}/update-telf/${telf['telf_id']}`, telf);
+  }
+
+  deleteTelf(perfil_id, telf_id) {
+    return this.http.delete<any>(`${this.URL}/${this.authService.getId()}/biografia/${perfil_id}/delete-telf/${telf_id}`);
+  }
+  // FIN TELEFONOS
+
+  // DIRECCION
+  addDireccion(direccion) {
+    return this.http.post<any>(`${this.URL}/${this.authService.getId()}/biografia/add-direccion`, direccion);
+  }
+
+  getDireccion(perfil_id) {
+    return this.http.get<any>(`${this.URL}/${this.authService.getId()}/biografia/${perfil_id}/get-direccion`);
+  }
+
+  updateDireccion(perfil_id, direccion) {
+    return this.http.put<any>(`${this.URL}/${this.authService.getId()}/biografia/${perfil_id}/update-direccion/${direccion['dir_id']}`, direccion);
+  }
+
+  deleteDireccion(perfil_id, dir_id) {
+    return this.http.delete<any>(`${this.URL}/${this.authService.getId()}/biografia/${perfil_id}/delete-direccion/${dir_id}`);
+  }
+  // FIN DIRECCION
+
+  // RELIGION
+  updateReligion(perfil_id, religion) {
+    return this.http.put<any>(`${this.URL}/${this.authService.getId()}/biografia/${perfil_id}/update-religion`, religion);
+  }
+  // FIN RELIGION
+
+   // INTERES
+   updateInteres(perfil_id, interes) {
+    return this.http.put<any>(`${this.URL}/${this.authService.getId()}/biografia/${perfil_id}/update-interes`, interes);
+  }
+  // FIN INTERES
+
+  // USERLOGIN
+  updateUserLogin(userLogin) {
+    return this.http.put<any>(`${this.URL}/${this.authService.getId()}`, userLogin);
+  }
+  // FIN USERLOGIN
 }
