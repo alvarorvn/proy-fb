@@ -18,6 +18,8 @@ router.post('/add-telf', validate.verifyToken, biografia.addTelefono);
 router.post('/add-direccion', validate.verifyToken, biografia.addDireccion);
 // Ruta para agregar apodo
 router.post('/add-apodo', validate.verifyToken, biografia.addApodo);
+// Ruta para agregar seguidor
+router.post('/add-seguidor', validate.verifyToken, biografia.addSeguidor);
 
 // Ruta para obtener empleos de un usuario
 router.get('/:perfilID/get-empleo', validate.verifyToken, biografia.getEmpleos);

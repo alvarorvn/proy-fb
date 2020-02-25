@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ToastrService } from "ngx-toastr";
 
 import { AuthService } from "../../services/auth.service";
 import { PerfilAmigoService } from "../../services/perfil-amigo.service";
+
+declare var jQuery: any;
 
 @Component({
   selector: 'app-perfil-amigo',
@@ -31,7 +34,8 @@ export class PerfilAmigoComponent implements OnInit {
     private route: ActivatedRoute,
     private authService: AuthService,
     private sanitizer: DomSanitizer,
-    private perfAmigo: PerfilAmigoService
+    private perfAmigo: PerfilAmigoService,
+    private toastr: ToastrService
   ) {
     this.amigo_id = this.route.snapshot.params.idamigo;
   }
@@ -48,8 +52,14 @@ export class PerfilAmigoComponent implements OnInit {
       this.getTelefonos();
       this.getApodos();
       this.getDirecciones();
-      console.log(this.esAmigo());
+      console.log('seguidores');
+      console.log(this.seguidores);
+      console.log('seguidos');
+      console.log(this.seguidos);
     }, 1000);
+    setTimeout(() => {
+      this.JqueryFunciones();
+    }, 1500);
   }
 
   esAmigo() {
@@ -60,6 +70,16 @@ export class PerfilAmigoComponent implements OnInit {
       }
     });
     return esAmigo;
+  }
+
+  siguiendo() {
+    let siguiendo = false;
+    this.seguidores.forEach(seguidor => {
+      if (seguidor['usuario_id'] == this.authService.getId()) {
+        siguiendo = true;
+      }
+    });
+    return siguiendo;
   }
 
   getPerfilAmigo() {
@@ -160,5 +180,48 @@ export class PerfilAmigoComponent implements OnInit {
         this.apodos = res;
       }
     })
+  }
+
+  follow() {
+    let obj = {
+      seguido_tipo: "Usuario",
+      pagina_id: null,
+      usuario_id_sigue: this.amigo_id,
+      usuario_id: this.authService.getId()
+    }
+    this.perfAmigo.addSeguidor(obj).subscribe(res => {
+      if (res.tipo == 'error') {
+        this.toastr.error(res.message, "Error");
+      } else {
+        this.toastr.success(res.message, "Éxito");
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+        this.router.onSameUrlNavigation = 'reload';
+        this.router.navigate([`${this.authService.getId()}/biografia/${this.amigo_id}`]);
+      }
+    })
+  }
+
+  JqueryFunciones() {
+    (function ($) {
+      $(document).ready(function () {
+
+        // Cambio de navs
+        $('#enlamigos').on('click', () => {
+          // NAV ITEMS
+          $('#nvbio').removeClass('active');
+          $('#nvamigos').addClass('active');
+
+          $('#nvallamigos').removeClass('active');
+          $('#nvseguidores').addClass('active');
+
+          // TABS
+          $('#biografia').removeClass('active');
+          $('#amigos').addClass('active');
+
+          $('#allamigos').removeClass('active');
+          $('#seguidores').addClass('active');
+        })
+      });
+    })(jQuery);
   }
 }

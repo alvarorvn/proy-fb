@@ -154,7 +154,7 @@ async function getSeguidores(req, res) {
     const { id } = req.params;
     let query = `SELECT seg.*, usu.usuario_nombres, usu.usuario_apellidos, usu.usuario_sexo, per.perfil_path_foto
                     FROM seguidos as seg, usuario as usu, perfil_usuario as per
-                    WHERE seg.usuario_id=${id} AND seg.usuario_id_sigue = usu.usuario_id AND per.usuario_id = seg.usuario_id_sigue`;
+                    WHERE seg.usuario_id_sigue=${id} AND seg.usuario_id = usu.usuario_id AND per.usuario_id = seg.usuario_id`;
     let result = await pool.query(query);
     if (result.rows == 0) return res.json({ message: "No hay usuarios registrados", tipo: 'error', result: [] });
     result.rows.forEach(seguidor => {
@@ -172,7 +172,7 @@ async function getSeguidos(req, res) {
     const { id } = req.params;
     let query = `SELECT seg.*, usu.usuario_nombres, usu.usuario_apellidos, usu.usuario_sexo, per.perfil_path_foto
                     FROM seguidos as seg, usuario as usu, perfil_usuario as per
-                    WHERE seg.usuario_id_sigue=${id} AND seg.usuario_id = usu.usuario_id AND per.usuario_id = seg.usuario_id`;
+                    WHERE seg.usuario_id=${id} AND seg.usuario_id_sigue = usu.usuario_id AND per.usuario_id = seg.usuario_id_sigue`;
     let result = await pool.query(query);
     if (result.rows == 0) return res.json({ message: "No sigues a otros usuarios", tipo: 'error', result: [] });
     result.rows.forEach(seguido => {

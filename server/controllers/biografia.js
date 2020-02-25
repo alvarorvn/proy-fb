@@ -465,6 +465,29 @@ async function updateApodo(req, res) {
     }
 }
 
+// Registra seguidor
+async function addSeguidor(req, res) {
+    const { seguido_tipo, pagina_id, usuario_id_sigue, usuario_id } = req.body;
+    /*if (validar.campoVacio(dir_detalle) || validar.campoVacio(perfilusu_id) || validar.campoVacio(ciud_id))
+        return res.json({ message: "Llene el formulario por favor", tipo: 'error' });*/
+
+    try {
+        /*let query = `SELECT * FROM usuario WHERE usuario_email = '${usuario_email}'`;
+        let result = await pool.query(query);
+
+        if (result.rowCount > 0) return res.json({ message: "Ya existe un usuario registrado con este correo", tipo: 'error' });*/
+
+        query = `INSERT INTO seguidos
+                    (seguido_tipo, pagina_id, usuario_id_sigue, usuario_id) 
+                    VALUES ('${seguido_tipo}',${pagina_id},'${usuario_id_sigue}','${usuario_id}')`;
+        result = await pool.query(query);
+        if (result.rowCount == 1) return res.json({ message: "Ahora sigues a este usuario", tipo: "exito" });
+    } catch (error) {
+        console.log(error);
+        return res.json({ message: "Error al seguir a este usuario", tipo: 'error' });
+    }
+}
+
 module.exports = {
     addEmpleo, getEmpleos, deteleEmpleo, updateEmpleo,
     addAptitud, getAptitudes, deteleAptitud, updateAptitud,
@@ -472,5 +495,6 @@ module.exports = {
     addTelefono, getTelefonos, deleteTelefono, updateTelefono,
     addDireccion, getDirecciones, deleteDireccion, updateDireccion,
     updateReligion, updateInteres, updateInformacion,
-    addApodo, getApodos, deleteApodo, updateApodo
+    addApodo, getApodos, deleteApodo, updateApodo,
+    addSeguidor
 };
