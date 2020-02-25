@@ -261,6 +261,25 @@ async function updateUserLogin(req, res) {
     }
 }
 
+// Actualiza estado de conexion
+async function updateConectado(req, res) {
+    const { usuario_conectado } = req.body;
+    /*if (validar.campoVacio(usuario_fechanac) || validar.campoVacio(usuario_sexo))
+        return res.json({ message: "Llene el formulario por favor", tipo: 'error' });*/
+
+    try {
+        let sql = `SELECT * FROM usuario where usuario_id = '${req.params.iduser}'`;
+        let result = await pool.query(sql);
+        if (result.rowCount == 0) return res.json({ message: "No existe usuario registrado a editar", tipo: "error" });
+        sql = `UPDATE usuario SET
+            usuario_conectado = '${usuario_conectado}' WHERE usuario_id = '${req.params.iduser}'`;
+        result = await pool.query(sql);
+        if (result.rowCount == 1) return res.json({ message: "Estado actualizado con exito", tipo: "exito" });
+    } catch (error) {
+        return res.json({ message: "Error al actualizar estado", tipo: "error" });
+    }
+}
+
 // Obtener ciudades
 async function getCiudades(req, res) {
     let query = `SELECT * FROM ciudad`;
@@ -274,6 +293,6 @@ module.exports = {
     register,
     getPersonas, getUsuarios, getUsuario, getSeguidores, getAmigos, getSeguidos,
     recFacialLogin, getCiudades,
-    updatePerfilPhoto, updatePortadaPhoto, updateUserLogin
+    updatePerfilPhoto, updatePortadaPhoto, updateUserLogin, updateConectado
 
 };
