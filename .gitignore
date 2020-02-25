@@ -3,3 +3,4 @@ anotaciones.docx
 server/node_modules
 
 comandos.sql
+server/database/conexion.js

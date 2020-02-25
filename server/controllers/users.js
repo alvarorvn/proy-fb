@@ -92,7 +92,33 @@ async function recFacialLogin(req, res) {
         return res.json({ token, user: result.rows[0] })
     }
 }
+async function getPersonas(req,res){
+    
+    let query = `SELECT usuario.usuario_id, 
+                usuario.usuario_nombres, 
+                usuario.usuario_apellidos, 
+                perfil_usuario.perfil_path_foto, 
+                usuario.usuario_sexo
+                FROM usuario, perfil_usuario
+                WHERE usuario.usuario_id = perfil_usuario.usuario_id AND
+                (usuario.usuario_nombres ILIKE '%${req.params.usr_busq}%' 
+                OR usuario.usuario_apellidos 
+                ILIKE '%${req.params.usr_busq}%')`;
+    let result = await pool.query(query);
+    console.log(result.rows);
+    if (result.rows == 0) return res.json({ 
+        message: "No se registraron coincidencias",
+     tipo: 'error', result: [] });
+    result.rows.forEach(persona => {
+        if (persona.perfil_path_foto != "") {
+            var base64str = base64_encode(persona.perfil_path_foto);
+            persona.image_perfil = base64str;
+            persona.image_perfil_name = path.basename(persona.perfil_path_foto);
+        }
+    });
+    res.json(result.rows);
 
+}
 //obtiene datos de usuario (perfil)
 async function getUsuario(req, res) {
     const { usuario_id } = req.body;
@@ -245,8 +271,9 @@ async function getCiudades(req, res) {
 
 module.exports = {
     login,
-    register, 
-    getUsuarios, getUsuario, getSeguidores, getAmigos, getSeguidos,
+    register,
+    getPersonas, getUsuarios, getUsuario, getSeguidores, getAmigos, getSeguidos,
     recFacialLogin, getCiudades,
     updatePerfilPhoto, updatePortadaPhoto, updateUserLogin
+
 };

@@ -23,6 +23,8 @@ router.get('/:id/seguidores', validate.verifyToken, user.getSeguidores);
 router.get('/:id/seguidos', validate.verifyToken, user.getSeguidos);
 // Ruta para obtener amigos de usuario logueado
 router.get('/:id/amigos', validate.verifyToken, user.getAmigos);
+//Ruta para obtener personas en una busqueda
+router.get('/personas/:usr_busq', user.getPersonas);
 // Ruta para editar foto de perfil
 router.post('/:id/update-perfil-photo', validate.verifyToken, user.updatePerfilPhoto);
 // Ruta para editar portada
