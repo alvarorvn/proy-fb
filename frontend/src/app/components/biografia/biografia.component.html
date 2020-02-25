@@ -149,15 +149,16 @@
                             <div class="card-body text-secondary">
                                 <ng-container *ngIf="userLogin.perfil_informacion != ''; else editarDescripcion">
                                     <p class="card-text">{{userLogin.perfil_informacion}}</p>
-                                    <!--<button class="btn btn-block btn-outline-secondary">Editar
-                                        descripción</button>-->
                                 </ng-container>
                                 <ng-template #editarDescripcion>
                                     <p>Agrega tu descripción :)</p>
                                 </ng-template>
                                 <div class="dropdown-divider"></div>
-                                <i class="fas fa-home" style="margin-right: 3px;"></i> Vive en
-                                <br>
+                                <ng-container *ngIf="direcciones.length > 0">
+                                    <i class="fas fa-home" style="margin-right: 3px;"></i> Vive en
+                                    {{direcciones[0].ciud_nombre}}
+                                    <br>
+                                </ng-container>
                                 <ng-container *ngIf="seguidores.length > 0; else seguidoresCero">
                                     <i class="fas fa-user-check" style="margin-right: 3px;"></i>
                                     <a href="#amigos" role="tab" data-toggle="tab" id="enlamigos">
@@ -175,7 +176,7 @@
                                 <ng-template #sexoFemenino>
                                     <i class="fas fa-female" style="margin-right: 15px;"></i> Mujer
                                 </ng-template>
-                                <button class="btn btn-block btn-outline-secondary" style="margin-top: 10px;">Editar
+                                <button class="btn btn-block btn-outline-secondary" style="margin-top: 10px;" id="btn-editar-detalles">Editar
                                     detalles</button>
                             </div>
                         </div>
@@ -973,19 +974,135 @@
                                             </div>
 
                                             <div role="tabpanel" class="tab-pane" id="familia">
-                                                <div class="container-fluid" style="padding: 0em 1em !important;">
-                                                    <div
-                                                        class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-3">
-                                                        4
-                                                    </div>
-                                                </div>
+
                                             </div>
 
                                             <div role="tabpanel" class="tab-pane" id="sobreti">
                                                 <div class="container-fluid" style="padding: 0em 1em !important;">
-                                                    <div
-                                                        class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-3">
-                                                        5
+                                                    <div class="container-fluid">
+
+                                                        <!-- INFORMACION SOBRE TI -->
+                                                        <div>
+                                                            <h4 style="font-weight: bold;">Información sobre ti</h4>
+                                                            <hr>
+                                                            <div style="margin-top: 20px;">
+                                                                <ng-container *ngIf="userLogin.perfil_informacion">
+                                                                    <div style="font-size: 14px;">
+                                                                        <div class="row">
+                                                                            <div class="col-10">
+                                                                                {{userLogin.perfil_informacion}}
+                                                                            </div>
+                                                                            <div class="col-2">
+                                                                                <button
+                                                                                    class="btn btn-outline-secondary btn-sm"
+                                                                                    style="margin-right: 10px;"
+                                                                                    (click)="editInformacion(userLogin)">
+                                                                                    <i class="fas fa-edit"></i>
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </ng-container>
+                                                            </div>
+                                                            <ng-container *ngIf="!userLogin.perfil_informacion">
+                                                                <button class="btn btn-outline-primary btn-sm btn-block"
+                                                                    id="btnAddInformacion"
+                                                                    (click)="AbrirForm('#formInformacion', '#btnAddInformacion')">Agregar
+                                                                    Informacion
+                                                                </button>
+                                                            </ng-container>
+                                                            <div id="formInformacion">
+                                                                <form style="padding: 25px; padding-bottom: 0px;">
+                                                                    <div class="form-group row">
+                                                                        <label
+                                                                            class="col-sm-2 col-form-label">Información</label>
+                                                                        <div class="col-sm-10">
+                                                                            <input type="text"
+                                                                                [(ngModel)]="userLogin.perfil_informacion"
+                                                                                style="border: 1px solid #bbb; padding-left: 7px;"
+                                                                                name="perfil_informacion"
+                                                                                class="form-control-plaintext form-control-sm">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row"
+                                                                        style="padding-bottom: 5px; justify-content: center;">
+                                                                        <button class="btn btn-outline-primary btn-sm"
+                                                                            style="margin-right: 10px;"
+                                                                            (click)="guardarInformacion()">Guardar</button>
+                                                                        <button class="btn btn-outline-primary btn-sm"
+                                                                            (click)="clearFormInformacion()">Cancelar</button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- APODOS -->
+                                                        <br>
+                                                        <div>
+                                                            <h4 style="font-weight: bold;">APODOS</h4>
+                                                            <hr>
+                                                            <div style="margin-top: 20px;">
+                                                                <ng-container *ngIf="apodos.length > 0">
+                                                                    <div *ngFor="let apo of apodos"
+                                                                        style="font-size: 14px;">
+                                                                        <div class="row">
+                                                                            <div class="col-10">
+                                                                                {{apo.apodo_nombre}}
+                                                                            </div>
+                                                                            <div class="col-2">
+                                                                                <button
+                                                                                    class="btn btn-outline-secondary btn-sm"
+                                                                                    style="margin-right: 10px;"
+                                                                                    (click)="editApodo(apo)">
+                                                                                    <i class="fas fa-edit"></i>
+                                                                                </button>
+                                                                                <button
+                                                                                    class="btn btn-outline-secondary btn-sm"
+                                                                                    style="margin-right: 10px;"
+                                                                                    (click)="deleteApodo(apo.apodo_id)">
+                                                                                    <i class="fas fa-trash"></i>
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </ng-container>
+                                                            </div>
+                                                            <br>
+                                                            <button class="btn btn-outline-primary btn-sm btn-block"
+                                                                id="btnAddApodos"
+                                                                (click)="AbrirForm('#formApodos', '#btnAddApodos')">Agregar
+                                                                apodos
+                                                            </button>
+                                                            <div id="formApodos">
+                                                                <form style="padding: 25px; padding-bottom: 0px;">
+                                                                    <div class="form-group row">
+                                                                        <label
+                                                                            class="col-sm-2 col-form-label">Apodos</label>
+                                                                        <div class="col-sm-10">
+                                                                            <input type="text"
+                                                                                [(ngModel)]="apodo.apodo_id"
+                                                                                style="border: 1px solid #bbb; padding-left: 7px;"
+                                                                                name="apodo_id"
+                                                                                class="form-control-plaintext form-control-sm"
+                                                                                hidden>
+                                                                            <input type="text"
+                                                                                [(ngModel)]="apodo.apodo_nombre"
+                                                                                style="border: 1px solid #bbb; padding-left: 7px;"
+                                                                                name="apodo_nombre"
+                                                                                class="form-control-plaintext form-control-sm">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row"
+                                                                        style="padding-bottom: 5px; justify-content: center;">
+                                                                        <button class="btn btn-outline-primary btn-sm"
+                                                                            style="margin-right: 10px;"
+                                                                            (click)="guardarApodo()">Guardar</button>
+                                                                        <button class="btn btn-outline-primary btn-sm"
+                                                                            (click)="clearFormApodo()">Cancelar</button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -996,7 +1113,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-1 col-md-12 col-12 col-sm-12"> </div>
             </div>
         </div>

@@ -47,6 +47,10 @@ export class BiografiaComponent implements OnInit {
     perfilusu_id: "",
     ciud_id: ""
   }
+  apodo = {
+    apodo_nombre: "",
+    perfilusu_id: ""
+  }
 
   fileUpload;
   portadaUpload;
@@ -61,6 +65,7 @@ export class BiografiaComponent implements OnInit {
   estudios: Array<Object> = [];
   telefonos: Array<Object> = [];
   direcciones: Array<Object> = [];
+  apodos: Array<Object> = [];
 
   constructor(
     private authService: AuthService,
@@ -84,6 +89,7 @@ export class BiografiaComponent implements OnInit {
       this.getEstudios();
       this.getTelefonos();
       this.getCiudades();
+      this.getApodos();
       this.getDirecciones();
     }, 1000);
     setTimeout(() => {
@@ -622,6 +628,36 @@ export class BiografiaComponent implements OnInit {
 
   // FIN INTERES
 
+  // INFORMACION
+
+  guardarInformacion() {
+    this.biogService.updateInformacion(this.userLogin['perfilusu_id'], { perfil_informacion: this.userLogin['perfil_informacion'] }).subscribe(
+      res => {
+        if (res.tipo == 'error') {
+          this.toastr.error(res.message, "Error");
+        } else {
+          this.toastr.success(res.message, "Éxito");
+          this.getUserLogin(this.authService.getId());
+          this.CerrarForm('#formInformacion', '#btnAddInformacion')
+        }
+      },
+      err => {
+        console.log(err);
+      }
+    )
+  }
+
+  editInformacion(info) {
+    this.AbrirForm('#formInformacion', '#btnAddInformacion');
+    this.userLogin = info;
+  }
+
+  clearFormInformacion() {
+    this.CerrarForm('#formInformacion', '#btnAddInformacion')
+  }
+
+  // FIN INFORMACION
+
   // USERLOGIN
 
   guardarUserLogin() {
@@ -653,6 +689,81 @@ export class BiografiaComponent implements OnInit {
 
   // FIN USERLOGIN
 
+  // APODOS
+
+  guardarApodo() {
+    if (this.apodo['apodo_id']) {
+      this.biogService.updateApodo(this.userLogin['perfilusu_id'], this.apodo).subscribe(
+        res => {
+          if (res.tipo == 'error') {
+            this.toastr.error(res.message, "Error");
+          } else {
+            this.toastr.success(res.message, "Éxito");
+            this.getApodos();
+            this.clearFormApodo();
+            this.CerrarForm('#formApodos', '#btnAddApodos');
+          }
+        },
+        err => {
+          console.log(err);
+        }
+      )
+    } else {
+      this.apodo.perfilusu_id = this.userLogin['perfilusu_id'];
+      this.biogService.addApodo(this.apodo).subscribe(res => {
+        if (res.tipo == 'error') {
+          this.toastr.error(res.message, "Error");
+        } else {
+          this.toastr.success(res.message, "Éxito");
+          this.getApodos();
+          this.clearFormApodo();
+          this.CerrarForm('#formApodos', '#btnAddApodos');
+        }
+      })
+    }
+  }
+
+  getApodos() {
+    this.biogService.getApodo(this.userLogin['perfilusu_id']).subscribe(res => {
+      if (res.tipo == 'error') {
+        this.apodos = res.result;
+      } else {
+        this.apodos = res;
+      }
+    })
+  }
+
+  editApodo(apodo) {
+    this.apodo = apodo;
+    this.AbrirForm('#formApodos', '#btnAddApodos');
+  }
+
+  deleteApodo(apodo_id) {
+    this.biogService.deleteApodo(this.userLogin['perfilusu_id'], apodo_id).subscribe(
+      res => {
+        if (res.tipo == 'error') {
+          this.toastr.error(res.message, "Error");
+        } else {
+          this.toastr.success(res.message, "Éxito");
+          this.getApodos();
+        }
+      },
+      err => {
+        console.log(err);
+      }
+    )
+  }
+
+  clearFormApodo() {
+    this.apodo = {
+      apodo_nombre: "",
+      perfilusu_id: ""
+    };
+    this.CerrarForm('#formApodos', '#btnAddApodos');
+  }
+
+  // FIN ESTUDIOS
+
   // FUNCIONES JQUERY
 
   JqueryFunciones() {
@@ -667,6 +778,9 @@ export class BiografiaComponent implements OnInit {
         $('#formDireccion').hide();
         $('#formReligion').hide();
         $('#formInteres').hide();
+        $('#formInformacion').hide();
+        $('#formApodos').hide();
+
 
         // Cambio de navs
         $('#enlamigos').on('click', () => {
@@ -696,6 +810,16 @@ export class BiografiaComponent implements OnInit {
           $('#biografia').removeClass('active');
           $('#amigos').removeClass('active');
           $('#fotos').removeClass('active');
+          $('#informacion').addClass('active');
+        })
+
+        $('#btn-editar-detalles').on('click', () => {
+          // NAV ITEMS
+          $('#nvbio').removeClass('active');
+          $('#nvinfo').addClass('active');
+
+          // TABS
+          $('#biografia').removeClass('active');
           $('#informacion').addClass('active');
         })
       });
