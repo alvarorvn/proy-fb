@@ -11,13 +11,14 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <form class="form-inline my-2 my-lg-0">
-                    <input (input)="onSearchChange($event.target.value)" name="value-search" [(ngModel)]="persona.usr_busq" class="form-control mr-sm-2 input-search" type="text" placeholder="Search"
-                        aria-label="Search">
-                    
-                    <a class="btn btn-light btn-search btn-sm" href="/buscarpersonas/{{persona.usr_busq}}">
-                        <i class="fas fa-search"></i>
+                    <input (input)="onSearchChange($event.target.value)" name="value-search"
+                        [(ngModel)]="persona.usr_busq" class="form-control mr-sm-2 input-search" type="text"
+                        placeholder="Search" aria-label="Search">
+
+                    <a class="btn btn-light btn-search btn-sm" routerLink="/buscarpersonas/{{persona.usr_busq}}">
+                        <i class="fas fa-search" style="color: #888;"></i>
                     </a>
-                    
+
                 </form>
             </ul>
             <ul class="nav navbar-nav">
@@ -71,4 +72,3 @@
     </div>
     </div>
 </nav>
-

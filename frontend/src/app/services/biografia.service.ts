@@ -135,9 +135,15 @@ export class BiografiaService {
   }
   // FIN RELIGION
 
-   // INTERES
-   updateInteres(perfil_id, interes) {
+  // INTERES
+  updateInteres(perfil_id, interes) {
     return this.http.put<any>(`${this.URL}/${this.authService.getId()}/biografia/${perfil_id}/update-interes`, interes);
+  }
+  // FIN INTERES
+
+  // INFORMACION
+  updateInformacion(perfil_id, info) {
+    return this.http.put<any>(`${this.URL}/${this.authService.getId()}/biografia/${perfil_id}/update-info`, info);
   }
   // FIN INTERES
 
@@ -146,4 +152,22 @@ export class BiografiaService {
     return this.http.put<any>(`${this.URL}/${this.authService.getId()}`, userLogin);
   }
   // FIN USERLOGIN
+
+  // APODOS
+  addApodo(apodo) {
+    return this.http.post<any>(`${this.URL}/${this.authService.getId()}/biografia/add-apodo`, apodo);
+  }
+
+  getApodo(perfil_id) {
+    return this.http.get<any>(`${this.URL}/${this.authService.getId()}/biografia/${perfil_id}/get-apodo`);
+  }
+
+  updateApodo(perfil_id, apodo) {
+    return this.http.put<any>(`${this.URL}/${this.authService.getId()}/biografia/${perfil_id}/update-apodo/${apodo['apodo_id']}`, apodo);
+  }
+
+  deleteApodo(perfil_id, apodo_id) {
+    return this.http.delete<any>(`${this.URL}/${this.authService.getId()}/biografia/${perfil_id}/delete-apodo/${apodo_id}`);
+  }
+  // FIN APODOS
 }

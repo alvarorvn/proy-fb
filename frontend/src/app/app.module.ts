@@ -22,6 +22,7 @@ import { CreatePostComponent } from './components/create-post/create-post.compon
 import { BiografiaComponent } from './components/biografia/biografia.component';
 import { VerchatsComponent } from './components/verchats/verchats.component';
 import { BuscarpersonasComponent } from './components/buscarpersonas/buscarpersonas.component';
+import { PerfilAmigoComponent } from './components/perfil-amigo/perfil-amigo.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { BuscarpersonasComponent } from './components/buscarpersonas/buscarperso
     BiografiaComponent,
     BiografiaComponent,
     VerchatsComponent,
-    BuscarpersonasComponent
+    BuscarpersonasComponent,
+    PerfilAmigoComponent
   ],
   imports: [
     BrowserModule,
