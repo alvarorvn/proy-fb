@@ -188,7 +188,7 @@ async function getSeguidos(req, res) {
 // obtiene los amigos de un usuario
 async function getAmigos(req, res) {
     const { id } = req.params;
-    let query = `SELECT am.*, usu.usuario_nombres, usu.usuario_apellidos, usu.usuario_sexo, per.perfil_path_foto
+    let query = `SELECT am.*, usu.usuario_nombres, usu.usuario_apellidos, usu.usuario_sexo, usu.usuario_conectado, per.perfil_path_foto
                     FROM amigos as am, usuario as usu, perfil_usuario as per
                     WHERE am.usuario_id=${id} AND am.usuario_id_amigo = usu.usuario_id AND per.usuario_id = am.usuario_id_amigo`;
     let result = await pool.query(query);
