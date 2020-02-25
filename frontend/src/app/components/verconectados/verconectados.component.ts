@@ -25,9 +25,9 @@ export class VerconectadosComponent implements OnInit {
     if (this.authService.getId() && this.authService.getToken()) {
       this.getUserLogin(this.authService.getId());
     };
-    setTimeout(() => {
+    setInterval(() => {
       this.getAmigos();
-    }, 500);
+    }, 1000);
     
   }
   getUserLogin(id) {

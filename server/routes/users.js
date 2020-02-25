@@ -31,6 +31,8 @@ router.post('/:id/update-perfil-photo', validate.verifyToken, user.updatePerfilP
 router.post('/:id/update-portada-photo', validate.verifyToken, user.updatePortadaPhoto);
 // Ruta para actualizar userLogin de un usuario
 router.put('/:iduser', validate.verifyToken, user.updateUserLogin);
+// Ruta para actualizar estado de un usuario
+router.put('/:iduser/est', validate.verifyToken, user.updateConectado);
 
 //exportar objeto
 module.exports = router;

@@ -53,6 +53,11 @@ export class AuthService {
     return id;
   }
 
+  //updateEstado de conexion
+  cambiarEstadoConexion(usuario_conectado, iduser) {
+    return this.http.put<any>(`${this.URL}/${iduser}/est`, usuario_conectado);
+  }
+
   // Cerrar sesion
   logout() {
     localStorage.removeItem('id');
