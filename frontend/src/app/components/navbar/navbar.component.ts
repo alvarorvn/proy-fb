@@ -30,12 +30,14 @@ export class NavbarComponent implements OnInit {
     };
     /*setTimeout(() => {
       console.log(this.userLogin);
-    }, 200);*/
+    }, 500);*/
   }
 
   salir() {
     this.authService.cambiarEstadoConexion({ usuario_conectado: false }, this.userLogin['usuario_id']).subscribe();
-    this.authService.logout();
+    setTimeout(() => {
+      this.authService.logout();
+    }, 500);
   }
 
   getUserLogin(id) {
