@@ -15,9 +15,14 @@
                         <img src="../assets/img/user_pred_mujer.jpg">
                     </ng-template>
                 </ng-template>
-                <a routerLink
-                ="/{{authService.getId()}}/biografia/{{persona.usuario_id}}">{{persona.usuario_nombres}}
-                    {{persona.usuario_apellidos}}</a>
+                <ng-container *ngIf="persona.usuario_id == authService.getId(); else otrosUsers">
+                    <a routerLink="/{{authService.getId()}}/biografia">{{persona.usuario_nombres}}
+                        {{persona.usuario_apellidos}}</a>
+                </ng-container>
+                <ng-template #otrosUsers>
+                    <a routerLink="/{{authService.getId()}}/biografia/{{persona.usuario_id}}">{{persona.usuario_nombres}}
+                        {{persona.usuario_apellidos}}</a>
+                </ng-template>
             </div>"
         </div>
     </div>

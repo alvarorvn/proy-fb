@@ -1,1 +1,71 @@
-<p>perfil-amigo works!</p>
+<app-navbar></app-navbar>
+<div style="margin-top: 44px;">
+    <ng-container *ngIf="perfil_amigo.image_portada; else portadaDefault">
+        <div class="jumbotron">
+            <img [src]=getSantizeUrl(perfil_amigo.image_portada) class="jb-img">
+            <div class="container-fluid">
+                <div class="dp">
+                    <ng-container *ngIf="perfil_amigo.image_perfil; else fotoDefault">
+                        <img [src]=getSantizeUrl(perfil_amigo.image_perfil) class="dp-img">
+                    </ng-container>
+                    <ng-template #fotoDefault>
+                        <ng-container *ngIf="perfil_amigo.usuario_sexo == 'Hombre'; else fotoDefaultSexo">
+                            <img src="../assets/img/user_pred.jfif" class="dp-img">
+                        </ng-container>
+                        <ng-template #fotoDefaultSexo>
+                            <img src="../assets/img/user_pred_mujer.jpg" class="dp-img">
+                        </ng-template>
+                    </ng-template>
+                    <a routerLink="/{{authService.getId()}}/biografia/{{perfil_amigo.usuario_id}}"
+                        class="dp-profile-name">{{perfil_amigo.usuario_nombres}}</a>
+                </div>
+                <div class="f-buttons">
+                    <button class="btn btn-light btn-sm">
+                        <i class="fas fa-check"></i> Amigos
+                    </button>
+                    <button class="btn btn-light btn-sm">
+                        <i class="fas fa-check"></i> Siguiendo
+                    </button>
+                    <button class="btn btn-light btn-sm">
+                        <i class="fab fa-facebook-messenger"></i> Enviar mensaje
+                    </button>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <ng-template #portadaDefault>
+        <div class="jumbotron">
+            <img src="../../../assets/img/portada_default.jpg" class="jb-img">
+            <div class="container-fluid">
+                <div class="dp">
+                    <ng-container *ngIf="perfil_amigo.image_perfil; else fotoDefault">
+                        <img [src]=getSantizeUrl(perfil_amigo.image_perfil) class="dp-img">
+                    </ng-container>
+                    <ng-template #fotoDefault>
+                        <ng-container *ngIf="perfil_amigo.usuario_sexo == 'Hombre'; else fotoDefaultSexo">
+                            <img src="../assets/img/user_pred.jfif" class="dp-img">
+                        </ng-container>
+                        <ng-template #fotoDefaultSexo>
+                            <img src="../assets/img/user_pred_mujer.jpg" class="dp-img">
+                        </ng-template>
+                    </ng-template>
+                    <a routerLink="/{{authService.getId()}}/biografia/{{perfil_amigo.usuario_id}"
+                        class="dp-profile-name">{{perfil_amigo.usuario_nombres}}
+                    </a>
+                </div>
+                <div class="f-buttons pull-right">
+                    <button class="btn btn-light btn-sm">
+                        <i class="fas fa-check"></i> Amigos
+                    </button>
+                    <button class="btn btn-light btn-sm">
+                        <i class="fas fa-check"></i> Siguiendo
+                    </button>
+                    <button class="btn btn-light btn-sm">
+                        <i class="fab fa-facebook-messenger"></i> Enviar mensaje
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!--FINAL JUMBOTRON -->
+    </ng-template>
+</div>
