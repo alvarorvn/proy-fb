@@ -9,6 +9,7 @@ import { BiografiaComponent } from './components/biografia/biografia.component';
 import { AuthGuard, AuthGuard2, VerifyUser } from './auth.guard'
 import { VerchatsComponent } from './components/verchats/verchats.component';
 import { BuscarpersonasComponent } from './components/buscarpersonas/buscarpersonas.component';
+import { PerfilAmigoComponent } from './components/perfil-amigo/perfil-amigo.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,11 @@ const routes: Routes = [
   {
     path: 'buscarpersonas/:usr_busq',
     component: BuscarpersonasComponent
+  },
+  {
+    path: ':iduser/biografia/:idamigo',
+    component: PerfilAmigoComponent,
+    canActivate: [VerifyUser]
   },
 ];
 

@@ -92,8 +92,8 @@ async function recFacialLogin(req, res) {
         return res.json({ token, user: result.rows[0] })
     }
 }
-async function getPersonas(req,res){
-    
+async function getPersonas(req, res) {
+
     let query = `SELECT usuario.usuario_id, 
                 usuario.usuario_nombres, 
                 usuario.usuario_apellidos, 
@@ -105,10 +105,10 @@ async function getPersonas(req,res){
                 OR usuario.usuario_apellidos 
                 ILIKE '%${req.params.usr_busq}%')`;
     let result = await pool.query(query);
-    console.log(result.rows);
-    if (result.rows == 0) return res.json({ 
+    if (result.rows == 0) return res.json({
         message: "No se registraron coincidencias",
-     tipo: 'error', result: [] });
+        tipo: 'error', result: []
+    });
     result.rows.forEach(persona => {
         if (persona.perfil_path_foto != "") {
             var base64str = base64_encode(persona.perfil_path_foto);
