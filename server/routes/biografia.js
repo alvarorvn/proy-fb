@@ -20,6 +20,8 @@ router.post('/add-direccion', validate.verifyToken, biografia.addDireccion);
 router.post('/add-apodo', validate.verifyToken, biografia.addApodo);
 // Ruta para agregar seguidor
 router.post('/add-seguidor', validate.verifyToken, biografia.addSeguidor);
+// Ruta para agregar solicitud de amistad
+router.post('/add-soli', validate.verifyToken, biografia.addSoli);
 
 // Ruta para obtener empleos de un usuario
 router.get('/:perfilID/get-empleo', validate.verifyToken, biografia.getEmpleos);
@@ -46,6 +48,10 @@ router.delete('/:perfilID/delete-telf/:telfID', validate.verifyToken, biografia.
 router.delete('/:perfilID/delete-direccion/:dirID', validate.verifyToken, biografia.deleteDireccion);
 // Ruta para borrar apodo de un usuario
 router.delete('/:perfilID/delete-apodo/:apodoID', validate.verifyToken, biografia.deleteApodo);
+// Ruta para borrar seguidor de un usuario
+router.post('/delete-seguidor', validate.verifyToken, biografia.deleteSeguidor);
+// Ruta para borrar solicitud de amistad de un usuario
+router.post('/delete-soli', validate.verifyToken, biografia.deleteSolicitud);
 
 // Ruta para actualizar empleo de un usuario
 router.put('/:perfilID/update-empleo/:empleoID', validate.verifyToken, biografia.updateEmpleo);

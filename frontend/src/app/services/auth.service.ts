@@ -66,18 +66,4 @@ export class AuthService {
     localStorage.removeItem('token');
     this.router.navigate(['/']);
   }
-
-  /*iniciarBucleGetAmigos() {
-    this.bucleAmigos = setInterval(() => {
-      this.getAmigos();
-    }, 1000);
-  }
-
-  pararBucleAmigos() {
-    clearInterval(this.bucleAmigos)
-  }
-
-  getAmigos() {
-    return this.http.get<any>(`${this.URL}/${this.getId()}/amigos`);
-  }*/
 }

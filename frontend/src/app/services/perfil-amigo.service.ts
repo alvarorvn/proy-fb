@@ -81,5 +81,24 @@ export class PerfilAmigoService {
     return this.http.post<any>(`${this.URL}/${this.authService.getId()}/biografia/add-seguidor`, seguidor);
   }
 
+  deleteSeguidor(seguidor) {
+    return this.http.post<any>(`${this.URL}/${this.authService.getId()}/biografia/delete-seguidor`, seguidor);
+  }
+
   // FIN SEGUIDOR
+
+  // SOLICITUD AMISTAD
+  addSoli(soli) {
+    return this.http.post<any>(`${this.URL}/${this.authService.getId()}/biografia/add-soli`, soli);
+  }
+
+  getSoliEnviadas() {
+    return this.http.get<any>(`${this.URL}/${this.authService.getId()}/get-soli-env`);
+  }
+
+  deleteSolicitud(soli) {
+    return this.http.post<any>(`${this.URL}/${this.authService.getId()}/biografia/delete-soli`, soli);
+  }
+  
+  // FIN SOLICITUD AMISTAD
 }

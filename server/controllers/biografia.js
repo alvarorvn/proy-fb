@@ -488,6 +488,73 @@ async function addSeguidor(req, res) {
     }
 }
 
+// Elimina seguidor
+async function deleteSeguidor(req, res) {
+    const { usuario_id_sigue, usuario_id } = req.body;
+    try {
+        let sql = `DELETE FROM seguidos WHERE usuario_id_sigue = ${usuario_id_sigue} AND usuario_id = ${usuario_id}`;
+        let result = await pool.query(sql);
+        if (result.rowCount == 0) return res.json({ message: "No estas siguiendo a este usuario", tipo: "error" });
+        return res.json({ message: "Dejaste de seguir a este usuario", tipo: "exito" });
+    } catch (err) {
+        console.log(err);
+        return res.json({ message: "Error al dejar de seguir a este usuario", tipo: "error" });
+    }
+}
+
+// Registra solictud de amistad
+async function addSoli(req, res) {
+    const { solic_estado, usuario_id_recepta, usuario_id_envia } = req.body;
+    /*if (validar.campoVacio(dir_detalle) || validar.campoVacio(perfilusu_id) || validar.campoVacio(ciud_id))
+        return res.json({ message: "Llene el formulario por favor", tipo: 'error' });*/
+
+    try {
+        /*let query = `SELECT * FROM usuario WHERE usuario_email = '${usuario_email}'`;
+        let result = await pool.query(query);
+
+        if (result.rowCount > 0) return res.json({ message: "Ya existe un usuario registrado con este correo", tipo: 'error' });*/
+
+        query = `INSERT INTO solic_amistad
+                    (solic_estado, usuario_id_recepta, usuario_id_envia) 
+                    VALUES ('${solic_estado}',${usuario_id_recepta},'${usuario_id_envia}')`;
+        result = await pool.query(query);
+        if (result.rowCount == 1) return res.json({ message: "Solicitud de amistad enviada", tipo: "exito" });
+    } catch (error) {
+        console.log(error);
+        return res.json({ message: "Error al enviar solicitud de amistad", tipo: 'error' });
+    }
+}
+
+// Obtener solicitudes de amistad enviadas de un usuario
+async function getSoliEnviadas(req, res) {
+    let query = `SELECT * FROM solic_amistad WHERE usuario_id_envia = ${req.params.iduser}`;
+    let result = await pool.query(query);
+    if (result.rows == 0) return res.json({ message: "No hay solicitudes enviadas", result: [] });
+    res.json(result.rows);
+}
+
+// Elimina solicitud de amistad
+async function deleteSolicitud(req, res) {
+    const { usuario_id_recepta, usuario_id_envia } = req.body;
+    try {
+        let sql = `DELETE FROM solic_amistad WHERE usuario_id_recepta = ${usuario_id_recepta} AND usuario_id_envia = ${usuario_id_envia}`;
+        let result = await pool.query(sql);
+        if (result.rowCount == 0) return res.json({ message: "No has enviado solicitud de amistad para este usuario", tipo: "error" });
+        return res.json({ message: "Solicitud de amistad cancelada", tipo: "exito" });
+    } catch (err) {
+        console.log(err);
+        return res.json({ message: "Error al dejar de seguir a este usuario", tipo: "error" });
+    }
+}
+
+// Obtener solicitudes de amistad recibidas de un usuario
+async function getSoliRecibidas(req, res) {
+    let query = `SELECT * FROM solic_amistad WHERE usuario_id_recepta = ${req.params.iduser}`;
+    let result = await pool.query(query);
+    if (result.rows == 0) return res.json({ message: "No hay solicitudes recibidas", result: [] });
+    res.json(result.rows);
+}
+
 module.exports = {
     addEmpleo, getEmpleos, deteleEmpleo, updateEmpleo,
     addAptitud, getAptitudes, deteleAptitud, updateAptitud,
@@ -496,5 +563,6 @@ module.exports = {
     addDireccion, getDirecciones, deleteDireccion, updateDireccion,
     updateReligion, updateInteres, updateInformacion,
     addApodo, getApodos, deleteApodo, updateApodo,
-    addSeguidor
+    addSeguidor, deleteSeguidor,
+    addSoli, getSoliEnviadas, deleteSolicitud, getSoliRecibidas
 };

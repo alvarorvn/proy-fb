@@ -28,6 +28,7 @@ export class PerfilAmigoComponent implements OnInit {
   telefonos: Array<Object> = [];
   direcciones: Array<Object> = [];
   apodos: Array<Object> = [];
+  soliEnviadas: Array<Object> = [];
 
   constructor(
     private router: Router,
@@ -45,6 +46,7 @@ export class PerfilAmigoComponent implements OnInit {
     this.getAmigos();
     this.getSeguidores();
     this.getSeguidos();
+    this.getSoliEnviadas();
     setTimeout(() => {
       this.getEmpleos();
       this.getAptitudes();
@@ -52,14 +54,20 @@ export class PerfilAmigoComponent implements OnInit {
       this.getTelefonos();
       this.getApodos();
       this.getDirecciones();
-      console.log('seguidores');
-      console.log(this.seguidores);
-      console.log('seguidos');
-      console.log(this.seguidos);
     }, 1000);
     setTimeout(() => {
       this.JqueryFunciones();
     }, 1500);
+  }
+
+  tieneSolicitud() {
+    let tiene = false;
+    this.soliEnviadas.forEach(soli => {
+      if (soli['usuario_id_recepta'] == this.amigo_id && soli['solic_estado'] == false) {
+        tiene = true;
+      }
+    });
+    return tiene;
   }
 
   esAmigo() {
@@ -190,6 +198,68 @@ export class PerfilAmigoComponent implements OnInit {
       usuario_id: this.authService.getId()
     }
     this.perfAmigo.addSeguidor(obj).subscribe(res => {
+      if (res.tipo == 'error') {
+        this.toastr.error(res.message, "Error");
+      } else {
+        this.toastr.success(res.message, "Éxito");
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+        this.router.onSameUrlNavigation = 'reload';
+        this.router.navigate([`${this.authService.getId()}/biografia/${this.amigo_id}`]);
+      }
+    })
+  }
+
+  dejarSeguir() {
+    let obj = {
+      usuario_id_sigue: this.amigo_id,
+      usuario_id: this.authService.getId()
+    }
+    this.perfAmigo.deleteSeguidor(obj).subscribe(res => {
+      if (res.tipo == 'error') {
+        this.toastr.error(res.message, "Error");
+      } else {
+        this.toastr.success(res.message, "Éxito");
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+        this.router.onSameUrlNavigation = 'reload';
+        this.router.navigate([`${this.authService.getId()}/biografia/${this.amigo_id}`]);
+      }
+    })
+  }
+
+  enviarSolicitud() {
+    let obj = {
+      solic_estado: false,
+      usuario_id_recepta: this.amigo_id,
+      usuario_id_envia: this.authService.getId()
+    }
+    this.perfAmigo.addSoli(obj).subscribe(res => {
+      if (res.tipo == 'error') {
+        this.toastr.error(res.message, "Error");
+      } else {
+        this.toastr.success(res.message, "Éxito");
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+        this.router.onSameUrlNavigation = 'reload';
+        this.router.navigate([`${this.authService.getId()}/biografia/${this.amigo_id}`]);
+      }
+    })
+  }
+
+  getSoliEnviadas() {
+    this.perfAmigo.getSoliEnviadas().subscribe(res => {
+      if (res.tipo == 'error') {
+        this.soliEnviadas = res.result;
+      } else {
+        this.soliEnviadas = res;
+      }
+    })
+  }
+
+  cancelarSolicitud() {
+    let obj = {
+      usuario_id_recepta: this.amigo_id,
+      usuario_id_envia: this.authService.getId()
+    }
+    this.perfAmigo.deleteSolicitud(obj).subscribe(res => {
       if (res.tipo == 'error') {
         this.toastr.error(res.message, "Error");
       } else {
