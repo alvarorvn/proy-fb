@@ -1,0 +1,229 @@
+<!-- Barra de navegacion -->
+<app-navbar></app-navbar>
+
+<!-- Modal para ver ventas -->
+<app-ver-ventas
+  *ngIf="verVentas"
+  [ventasUsuario]="ventasUsuario"
+  [categorias]="categorias"
+></app-ver-ventas>
+
+<!-- Modal para ver guardados -->
+<app-ver-guardados
+  *ngIf="verGuardadas"
+  [ventasGuardadas]="ventasGuardadas"
+></app-ver-guardados>
+
+<!-- Formulario-Modal para agregar venta -->
+<div
+  class="modal fade"
+  data-backdrop="static"
+  id="agregarVenta"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="agregarVentaLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="agregarVentaLabel">
+          <i class="fas fa-store nav-icons mr-2"></i>Vende en Marketplace
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="clear()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row py-2">
+            <div class="col">
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="venta.venta_nombre"
+                name="venta_nombre"
+                placeholder="¿Qué vendes?"
+              />
+            </div>
+          </div>
+
+          <div class="row py-2">
+            <div class="col">
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="venta.venta_detalle"
+                name="venta_detalle"
+                placeholder="Describe tu artículo"
+              />
+            </div>
+          </div>
+          <div class="row py-2">
+            <div class="col">
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="venta.venta_url"
+                name="venta_url"
+                placeholder="Url de imágen"
+              />
+            </div>
+          </div>
+          <div class="row py-2">
+            <div class="col">
+              <input
+                type="number"
+                [(ngModel)]="venta.venta_precio"
+                name="venta_precio"
+                class="form-control"
+                placeholder="Precio"
+              />
+            </div>
+          </div>
+          <div class="row py-2">
+            <div class="col">
+              <select class="form-control" [(ngModel)]="venta.categ_id">
+                <option value="0" disabled>Selecciona una categoría</option>
+                <option
+                  *ngFor="let categoria of categorias"
+                  value="{{ categoria.categ_id }}"
+                  >{{ categoria.categ_nombre }}</option
+                >
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          (click)="clear()"
+          type="button"
+          class="btn btn-danger"
+          data-dismiss="modal"
+        >
+          Cancelar
+        </button>
+        <button (click)="addVenta()" type="button" class="btn btn-primary">
+          Vender
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Contenido del marketplace -->
+<div class="wrapper" style="margin-top: 44px;">
+  <nav id="sidebar">
+    <div class="sidebar-header">
+      <h3>Marketplace</h3>
+    </div>
+    <ul class="list-unstyled components">
+      <li id="verTodo" class="active" (click)="getVentas()">
+        <a><i class="fas fa-store"></i>Ver todo</a>
+      </li>
+      <li data-toggle="modal" data-target="#agregarVenta">
+        <a><i class="fas fa-edit"></i>Publicar Producto</a>
+      </li>
+      <li
+        data-toggle="modal"
+        data-target="#verVentas"
+        (click)="verVentasUsuario()"
+      >
+        <a><i class="fas fa-cash-register"></i>Mis ventas</a>
+      </li>
+      <li
+        data-toggle="modal"
+        data-target="#verVentasGuardadas"
+        (click)="verVentasGuardadas()"
+      >
+        <a><i class="fas fa-cart-arrow-down"></i>Ver Guardados</a>
+      </li>
+      <li>
+        <a
+          href="#pageSubmenu"
+          data-toggle="collapse"
+          aria-expanded="false"
+          class="dropdown-toggle"
+          ><i class="fas fa-list-alt"></i>Categorías</a
+        >
+        <ul class="collapse list-unstyled" id="pageSubmenu">
+          <li
+            *ngFor="let categoria of categorias"
+            (click)="filtrarVentas(categoria.categ_id)"
+          >
+            <a>{{ categoria.categ_nombre }}</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+  <div id="content">
+    <div class="container-fluid p-3">
+      <div class="row mb-3">
+        <div class="col d-flex">
+          <input
+            [(ngModel)]="search"
+            class="form-control"
+            type="text"
+            placeholder="Buscar Artículo"
+          />
+
+          <a class="btn btn-light btn-search btn-sm" (click)="buscarVenta()">
+            <i class="fas fa-search"></i>
+          </a>
+        </div>
+      </div>
+      <div class="row" *ngIf="ventasFiltradas.length > 0">
+        <div class="col d-flex justify-content-around flex-wrap">
+          <div
+            class="card mb-4"
+            style="width: 15rem;"
+            *ngFor="let venta of ventasFiltradas"
+          >
+            <img
+              class="card-img-top"
+              [src]="venta.venta_url"
+              alt="Product img"
+              style="width: 50%;"
+            />
+            <div class="card-body">
+              <h5 class="card-title">{{ venta.venta_nombre }}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">
+                $ {{ venta.venta_precio }}
+              </h6>
+              <p class="card-text">{{ venta.venta_detalle }}</p>
+            </div>
+            <div
+              class="card-body"
+              *ngIf="userLogin.usuario_id !== venta.usuario_id"
+            >
+              <button (click)="saveVenta(venta.venta_id)" class="btn">
+                Agregar
+              </button>
+              <button
+                class="btn"
+                data-toggle="tooltip"
+                data-placement="bottom"
+                title="Enviar Mensaje"
+              >
+                <i class="fas fa-comment-dots" style="color: #3b5998;"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="ventasFiltradas.length === 0">
+        <div class="col justify-content-center d-flex">
+          <h3>No se han encontrado artículos</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

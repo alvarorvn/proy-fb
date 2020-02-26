@@ -1,74 +1,127 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <div class="container">
-        <a class="navbar-brand" routerLink="/{{userLogin.usuario_id}}">
-            <img src="../assets/img/logo.png" class="fb-logo" width="30px" style="padding-bottom: 2px;">
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+  <div class="container">
+    <a class="navbar-brand" routerLink="/{{ userLogin.usuario_id }}">
+      <img
+        src="../assets/img/logo.png"
+        class="fb-logo"
+        width="30px"
+        style="padding-bottom: 2px;"
+      />
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <form class="form-inline my-2 my-lg-0">
-                    <input (input)="onSearchChange($event.target.value)" name="value-search" [(ngModel)]="persona.usr_busq" class="form-control mr-sm-2 input-search" type="text" placeholder="Search"
-                        aria-label="Search">
-                    
-                    <a class="btn btn-light btn-search btn-sm" href="/buscarpersonas/{{persona.usr_busq}}">
-                        <i class="fas fa-search"></i>
-                    </a>
-                    
-                </form>
-            </ul>
-            <ul class="nav navbar-nav">
-                <li>
-                    <a class="nav-link dp-name" routerLink="/{{userLogin.usuario_id}}/biografia">
-                        <ng-container *ngIf="userLogin.image_perfil; else fotoDefault">
-                            <img [src]=getSantizeUrl(userLogin.image_perfil) class="nav-dp">
-                        </ng-container>
-                        <ng-template #fotoDefault>
-                            <ng-container *ngIf="userLogin.usuario_sexo == 'Hombre'; else fotoDefaultSexo">
-                                <img src="../assets/img/user_pred.jfif" class="nav-dp">
-                            </ng-container>
-                            <ng-template #fotoDefaultSexo>
-                                <img src="../assets/img/user_pred_mujer.jpg" class="nav-dp">
-                            </ng-template>
-                        </ng-template>
-                        <span>{{userLogin.usuario_nombres}}</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="nav-link" href="#">
-                        <i class="fas fa-user-friends nav-icons"></i>
-                    </a>
-                </li>
-                <li>
-                    <a class="nav-link" routerLink="/{{userLogin.usuario_id}}/verchats">
-                        <i class="fab fa-facebook-messenger nav-icons"></i>
-                    </a>
-                </li>
-                <li>
-                    <a class="nav-link" href="#">
-                        <i class="fas fa-bell nav-icons"></i>
-                    </a>
-                </li>
-                <li class="nav-item dropdown">
-                    <ul class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="cursor: pointer;">
-                    </ul>
-                    <div class="dropdown-menu settings-drop" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Administrar páginas</a></li>
-                <div class="dropdown-divider"></div>
-                <li><a class="dropdown-item" href="#">Tus grupos</a></li>
-                <div class="dropdown-divider"></div>
-                <li><a class="dropdown-item" href="#">Registro de actividad</a></li>
-                <li><a class="dropdown-item" href="#">Configuración</a></li>
-                <div class="dropdown-divider"></div>
-                <li><a class="dropdown-item" (click)="salir()" style="cursor: pointer;">Cerrar sesión</a></li>
-        </div>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <form class="form-inline my-2 my-lg-0">
+          <input
+            (input)="onSearchChange($event.target.value)"
+            name="value-search"
+            [(ngModel)]="persona.usr_busq"
+            class="form-control mr-sm-2 input-search"
+            type="text"
+            placeholder="Search"
+            aria-label="Search"
+          />
+
+          <a
+            class="btn btn-light btn-search btn-sm"
+            href="/buscarpersonas/{{ persona.usr_busq }}"
+          >
+            <i class="fas fa-search"></i>
+          </a>
+        </form>
+      </ul>
+      <ul class="nav navbar-nav">
+        <li>
+          <a
+            class="nav-link dp-name"
+            routerLink="/{{ userLogin.usuario_id }}/biografia"
+          >
+            <ng-container *ngIf="userLogin.image_perfil; else fotoDefault">
+              <img
+                [src]="getSantizeUrl(userLogin.image_perfil)"
+                class="nav-dp"
+              />
+            </ng-container>
+            <ng-template #fotoDefault>
+              <ng-container
+                *ngIf="userLogin.usuario_sexo == 'Hombre'; else fotoDefaultSexo"
+              >
+                <img src="../assets/img/user_pred.jfif" class="nav-dp" />
+              </ng-container>
+              <ng-template #fotoDefaultSexo>
+                <img src="../assets/img/user_pred_mujer.jpg" class="nav-dp" />
+              </ng-template>
+            </ng-template>
+            <span>{{ userLogin.usuario_nombres }}</span>
+          </a>
         </li>
-        </ul>
+        <li>
+          <a
+            class="nav-link"
+            routerLink="/{{ userLogin.usuario_id }}/marketplace"
+          >
+            <i class="fas fa-store nav-icons"></i>
+          </a>
+        </li>
+        <li>
+          <a class="nav-link" href="#">
+            <i class="fas fa-user-friends nav-icons"></i>
+          </a>
+        </li>
+        <li>
+          <a class="nav-link" routerLink="/{{ userLogin.usuario_id }}/verchats">
+            <i class="fab fa-facebook-messenger nav-icons"></i>
+          </a>
+        </li>
+        <li>
+          <a class="nav-link" href="#">
+            <i class="fas fa-bell nav-icons"></i>
+          </a>
+        </li>
+        <li class="nav-item dropdown">
+          <ul
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            style="cursor: pointer;"
+          ></ul>
+          <div
+            class="dropdown-menu settings-drop"
+            aria-labelledby="navbarDropdown"
+          >
+            <li><a class="dropdown-item" href="#">Administrar páginas</a></li>
+            <div class="dropdown-divider"></div>
+            <li><a class="dropdown-item" href="#">Tus grupos</a></li>
+            <div class="dropdown-divider"></div>
+            <li><a class="dropdown-item" href="#">Registro de actividad</a></li>
+            <li><a class="dropdown-item" href="#">Configuración</a></li>
+            <div class="dropdown-divider"></div>
+            <li>
+              <a
+                class="dropdown-item"
+                (click)="salir()"
+                style="cursor: pointer;"
+                >Cerrar sesión</a
+              >
+            </li>
+          </div>
+        </li>
+      </ul>
     </div>
-    </div>
+  </div>
 </nav>
-

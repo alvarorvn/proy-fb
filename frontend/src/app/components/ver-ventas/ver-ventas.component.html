@@ -1,0 +1,217 @@
+<div
+  class="modal fade"
+  id="verVentas"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="verVentasModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="verVentasModalLabel">
+          <i class="fas fa-store nav-icons mr-2"></i>Mis ventas
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="editando">
+        <div class="container">
+          <div class="row py-2">
+            <div class="col">
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="venta.venta_nombre"
+                name="venta_nombre"
+                placeholder="Artículo"
+              />
+            </div>
+          </div>
+
+          <div class="row py-2">
+            <div class="col">
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="venta.venta_detalle"
+                name="venta_detalle"
+                placeholder="Detalle"
+              />
+            </div>
+          </div>
+          <div class="row py-2">
+            <div class="col">
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="venta.venta_url"
+                name="venta_url"
+                placeholder="Url de imágen"
+              />
+            </div>
+          </div>
+          <div class="row py-2">
+            <div class="col">
+              <input
+                type="number"
+                [(ngModel)]="venta.venta_precio"
+                name="venta_precio"
+                class="form-control"
+                placeholder="Precio"
+              />
+            </div>
+          </div>
+          <div class="row py-2">
+            <div class="col">
+              <select class="form-control" [(ngModel)]="venta.categ_id">
+                <option value="0" disabled>Selecciona una categoría</option>
+                <option
+                  *ngFor="let categoria of categorias"
+                  value="{{ categoria.categ_id }}"
+                  >{{ categoria.categ_nombre }}</option
+                >
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body" *ngIf="!editando">
+        <div class="container-fluid p-3">
+          <div class="row" *ngIf="ventasUsuario.length > 0">
+            <div
+              class="col d-flex justify-content-around flex-wrap"
+              style="max-height: 400px; overflow: auto;"
+            >
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Imagen</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Detalle</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let venta of ventasUsuario; let i = index">
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>
+                      <img [src]="venta.venta_url" style="max-width: 100px;" />
+                    </td>
+                    <td>{{ venta.venta_nombre }}</td>
+                    <td>{{ venta.venta_detalle }}</td>
+                    <td>$ {{ venta.venta_precio }}</td>
+                    <td>
+                      <button
+                        class="btn"
+                        data-toggle="tooltip"
+                        data-placement="bottom"
+                        title="Editar"
+                        (click)="setVenta(venta)"
+                      >
+                        <i class="fas fa-pen" style="color: dodgerblue;"></i>
+                      </button>
+                      <button
+                        class="btn"
+                        data-toggle="tooltip"
+                        data-placement="bottom"
+                        title="Eliminar"
+                        data-toggle="modal"
+                        data-target="#eliminarVenta"
+                        (click)="eliminar = venta"
+                      >
+                        <i class="fas fa-trash" style="color: tomato;"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="row" *ngIf="ventasUsuario.length === 0">
+            <div class="col justify-content-center d-flex">
+              <h3>No se han encontrado artículos</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          *ngIf="editando"
+          type="button"
+          class="btn btn-secondary"
+          (click)="clear(); editando = false"
+        >
+          Volver
+        </button>
+        <button
+          (click)="editarVenta()"
+          *ngIf="editando"
+          type="button"
+          class="btn btn-primary"
+        >
+          Editar
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          data-dismiss="modal"
+          (click)="clear(); editando = false"
+        >
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="eliminarVenta"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="eliminarVentaModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content" style="border: solid firebrick;">
+      <div class="modal-header">
+        <h5 class="modal-title" id="eliminarVentaModalLabel">
+          Eliminar publicación del marketplace
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ¿Estás seguro que deseas eliminar este artículo?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Cancelar
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="eliminarVenta()"
+          data-dismiss="modal"
+        >
+          Eliminar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
