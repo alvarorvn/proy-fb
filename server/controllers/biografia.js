@@ -563,6 +563,33 @@ async function getSoliRecibidas(req, res) {
     res.json(result.rows);
 }
 
+// Registra solictud de amistad
+async function addAmigo(req, res) {
+    const { amig_fecha, usuario_id, usuario_id_amigo } = req.body;
+    /*if (validar.campoVacio(dir_detalle) || validar.campoVacio(perfilusu_id) || validar.campoVacio(ciud_id))
+        return res.json({ message: "Llene el formulario por favor", tipo: 'error' });*/
+
+    try {
+        /*let query = `SELECT * FROM usuario WHERE usuario_email = '${usuario_email}'`;
+        let result = await pool.query(query);
+
+        if (result.rowCount > 0) return res.json({ message: "Ya existe un usuario registrado con este correo", tipo: 'error' });*/
+
+        query = `INSERT INTO amigos
+                    (amig_fecha, usuario_id, usuario_id_amigo) 
+                    VALUES ('${amig_fecha}',${usuario_id},${usuario_id_amigo})`;
+        result = await pool.query(query);
+        query = `INSERT INTO amigos
+                    (amig_fecha, usuario_id, usuario_id_amigo) 
+                    VALUES ('${amig_fecha}',${usuario_id_amigo},${usuario_id})`;
+        result = await pool.query(query);
+        if (result.rowCount == 1) return res.json({ message: "Amigo agregado con exito", tipo: "exito" });
+    } catch (error) {
+        console.log(error);
+        return res.json({ message: "Error al agregar amigo", tipo: 'error' });
+    }
+}
+
 module.exports = {
     addEmpleo, getEmpleos, deteleEmpleo, updateEmpleo,
     addAptitud, getAptitudes, deteleAptitud, updateAptitud,
@@ -572,5 +599,6 @@ module.exports = {
     updateReligion, updateInteres, updateInformacion,
     addApodo, getApodos, deleteApodo, updateApodo,
     addSeguidor, deleteSeguidor,
-    addSoli, getSoliEnviadas, deleteSolicitud, getSoliRecibidas
+    addSoli, getSoliEnviadas, deleteSolicitud, getSoliRecibidas,
+    addAmigo
 };

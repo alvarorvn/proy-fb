@@ -163,9 +163,7 @@ export class BiografiaComponent implements OnInit {
     const formData = new FormData();
     formData.append('file', this.portadaUpload);
     this.biogService.updatePortadaPhoto(formData).subscribe(res => {
-      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-      this.router.onSameUrlNavigation = 'reload';
-      this.router.navigate([`${this.authService.getId()}/biografia`]);
+      this.ngOnInit();
     })
   }
 

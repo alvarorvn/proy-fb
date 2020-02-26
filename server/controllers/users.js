@@ -206,7 +206,7 @@ async function getAmigos(req, res) {
 // actualiza foto de perfil
 async function updatePerfilPhoto(req, res) {
     const { id } = req.params;
-    let perfil_path_foto = `faces/${req.file.originalname}`
+    let perfil_path_foto = `faces/${req.files[0].originalname}`
 
     try {
         let query = `SELECT * FROM usuario WHERE usuario_id = ${id}`;
@@ -225,7 +225,7 @@ async function updatePerfilPhoto(req, res) {
 // actualiza portada
 async function updatePortadaPhoto(req, res) {
     const { id } = req.params;
-    let perfil_path_portada = `faces/${req.file.originalname}`
+    let perfil_path_portada = `faces/${req.files[0].originalname}`
 
     try {
         let query = `SELECT * FROM usuario WHERE usuario_id = ${id}`;

@@ -22,6 +22,8 @@ router.post('/add-apodo', validate.verifyToken, biografia.addApodo);
 router.post('/add-seguidor', validate.verifyToken, biografia.addSeguidor);
 // Ruta para agregar solicitud de amistad
 router.post('/add-soli', validate.verifyToken, biografia.addSoli);
+// Ruta para agregar amigo
+router.post('/add-amigo', validate.verifyToken, biografia.addAmigo);
 
 // Ruta para obtener empleos de un usuario
 router.get('/:perfilID/get-empleo', validate.verifyToken, biografia.getEmpleos);

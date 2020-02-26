@@ -81,9 +81,10 @@
                                             </div>
                                             <div class="col-5">
                                                 <button class="btn btn-outline-primary btn-sm"
-                                                    style="font-size: 13px;">Aceptar</button>
+                                                    style="font-size: 13px;" (click)="aceptarSoli(soli.usuario_id)">Aceptar</button>
                                                 <button class="btn btn-outline-secondary btn-sm"
-                                                    style="margin-left: 5px; font-size: 13px;">Rechazar</button>
+                                                    style="margin-left: 5px; font-size: 13px;"
+                                                    (click)="cancelarSolicitudDesdeMiPerfil(soli.usuario_id)">Rechazar</button>
                                             </div>
                                         </div>
                                     </div>

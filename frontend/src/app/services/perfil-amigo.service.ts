@@ -88,6 +88,7 @@ export class PerfilAmigoService {
   // FIN SEGUIDOR
 
   // SOLICITUD AMISTAD
+
   addSoli(soli) {
     return this.http.post<any>(`${this.URL}/${this.authService.getId()}/biografia/add-soli`, soli);
   }
@@ -99,6 +100,6 @@ export class PerfilAmigoService {
   deleteSolicitud(soli) {
     return this.http.post<any>(`${this.URL}/${this.authService.getId()}/biografia/delete-soli`, soli);
   }
-  
+
   // FIN SOLICITUD AMISTAD
 }

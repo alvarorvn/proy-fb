@@ -2,8 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { AuthService } from "../../services/auth.service";
 import { NavbarService } from "../../services/navbar.service";
+import { BiografiaService } from "../../services/biografia.service";
+import { PerfilAmigoService } from "../../services/perfil-amigo.service";
 import { DomSanitizer } from '@angular/platform-browser';
-import { Router, } from '@angular/router';
+import { Router } from '@angular/router';
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: 'app-navbar',
@@ -28,6 +31,9 @@ export class NavbarComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private navbarService: NavbarService,
     private router: Router,
+    private perfAmigo: PerfilAmigoService,
+    private toastr: ToastrService,
+    private biogService: BiografiaService
   ) { }
 
   ngOnInit() {
@@ -76,6 +82,53 @@ export class NavbarComponent implements OnInit {
         this.soliRecibidas = res.result;
       } else {
         this.soliRecibidas = res;
+      }
+    })
+  }
+
+  aceptarSoli(amigo_id) {
+    let f = new Date();
+    let obj = {
+      amig_fecha: `${f.getDate()}-${f.getMonth()}-${f.getFullYear()}`,
+      usuario_id: this.authService.getId(),
+      usuario_id_amigo: amigo_id
+    }
+
+    this.biogService.addAmigo(obj).subscribe(res => {
+      if (res.tipo == 'error') {
+        this.toastr.error(res.message, "Error");
+      } else {
+        this.toastr.success(res.message, "Éxito");
+        let obj_soli = {
+          usuario_id_recepta: this.authService.getId(),
+          usuario_id_envia: amigo_id
+        }
+        this.perfAmigo.deleteSolicitud(obj_soli).subscribe(res => {
+          if (res.tipo == 'error') {
+            this.toastr.error(res.message, "Error");
+          } else {
+            this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+            this.router.onSameUrlNavigation = 'reload';
+            this.router.navigate([this.router.url]);
+          }
+        })
+      }
+    })
+  }
+
+  cancelarSolicitudDesdeMiPerfil(amigo_id) {
+    let obj = {
+      usuario_id_recepta: this.authService.getId(),
+      usuario_id_envia: amigo_id
+    }
+    this.perfAmigo.deleteSolicitud(obj).subscribe(res => {
+      if (res.tipo == 'error') {
+        this.toastr.error(res.message, "Error");
+      } else {
+        this.toastr.success(res.message, "Éxito");
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+        this.router.onSameUrlNavigation = 'reload';
+        this.router.navigate([`${this.authService.getId()}/biografia/${amigo_id}`]);
       }
     })
   }
