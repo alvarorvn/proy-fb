@@ -1,0 +1,31 @@
+<app-navbar></app-navbar>
+<app-verconectados></app-verconectados>
+<div style="margin-top: 44px;">
+    <div style="margin-left: 13%;">
+        <div class="container-sm" style="margin-left: 9%; width: 100%; position: fixed; align-self:center;">
+            <div class="row row-cols-1">
+                <div *ngFor="let persona of personas" class="tarjeta-amigos1">
+                    <ng-container *ngIf="persona.image_perfil; else fotoAmigoDefault">
+                        <img [src]=getSantizeUrl(persona.image_perfil)>
+                    </ng-container>
+                    <ng-template #fotoAmigoDefault>
+                        <ng-container *ngIf="persona.usuario_sexo == 'Hombre'; else fotoDefaultSexoAmigo">
+                            <img src="../assets/img/user_pred.jfif">
+                        </ng-container>
+                        <ng-template #fotoDefaultSexoAmigo>
+                            <img src="../assets/img/user_pred_mujer.jpg">
+                        </ng-template>
+                    </ng-template>
+                    <ng-container *ngIf="persona.usuario_id == authService.getId(); else otrosUsers">
+                        <a routerLink="/{{authService.getId()}}/biografia">{{persona.usuario_nombres}}
+                            {{persona.usuario_apellidos}}</a>
+                    </ng-container>
+                    <ng-template #otrosUsers>
+                        <a routerLink="/{{authService.getId()}}/biografia/{{persona.usuario_id}}">{{persona.usuario_nombres}}
+                            {{persona.usuario_apellidos}}</a>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

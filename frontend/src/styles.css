@@ -1,6 +1,14 @@
 @import "~@fortawesome/fontawesome-free/css/all.css";
+@import "~@ng-select/ng-select/themes/default.theme.css";
 :root {
     --color_base: #3B5998;
+}
+
+.dropdown-menu {
+    padding: 4px !important;
+    /*margin: 0px !important;
+    border: 0.5px solid rgba(0,0,0,.15) !important;*/
+    border-radius: 0% !important;
 }
 
 /* TOAST */

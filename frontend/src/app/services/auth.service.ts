@@ -9,11 +9,13 @@ import { Router } from "@angular/router";
 })
 export class AuthService {
 
+  bucleAmigos;
   URL: string = 'http://localhost:3000';
   authSubject = new BehaviorSubject(false);
 
   constructor(
-    private http: HttpClient, private router: Router
+    private http: HttpClient,
+    private router: Router
   ) { }
 
   // Registro
@@ -53,6 +55,11 @@ export class AuthService {
     return id;
   }
 
+  //updateEstado de conexion
+  cambiarEstadoConexion(usuario_conectado, iduser) {
+    return this.http.put<any>(`${this.URL}/${iduser}/est`, usuario_conectado);
+  }
+
   // Cerrar sesion
   logout() {
     localStorage.removeItem('id');
@@ -60,10 +67,17 @@ export class AuthService {
     this.router.navigate(['/']);
   }
 
-  // Servicio compartido
-  userLogin = new BehaviorSubject<any>(null);
-
-  setLoginUser(userLogin) {
-    this.userLogin.next(userLogin);
+  /*iniciarBucleGetAmigos() {
+    this.bucleAmigos = setInterval(() => {
+      this.getAmigos();
+    }, 1000);
   }
+
+  pararBucleAmigos() {
+    clearInterval(this.bucleAmigos)
+  }
+
+  getAmigos() {
+    return this.http.get<any>(`${this.URL}/${this.getId()}/amigos`);
+  }*/
 }

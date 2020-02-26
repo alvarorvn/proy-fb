@@ -11,6 +11,8 @@ router.post('/register', user.register);
 router.post('/login', user.login);
 // Ruta para obtener usuarios
 router.get('/', user.getUsuarios);
+// Ruta para obtener ciudades
+router.get('/ciudades', user.getCiudades);
 // Ruta que inicia sesion con reconocimiento facial
 router.post('/recFacial', user.recFacialLogin);
 // Ruta para obtener un usuario
@@ -21,10 +23,16 @@ router.get('/:id/seguidores', validate.verifyToken, user.getSeguidores);
 router.get('/:id/seguidos', validate.verifyToken, user.getSeguidos);
 // Ruta para obtener amigos de usuario logueado
 router.get('/:id/amigos', validate.verifyToken, user.getAmigos);
+//Ruta para obtener personas en una busqueda
+router.get('/personas/:usr_busq', user.getPersonas);
 // Ruta para editar foto de perfil
 router.post('/:id/update-perfil-photo', validate.verifyToken, user.updatePerfilPhoto);
 // Ruta para editar portada
 router.post('/:id/update-portada-photo', validate.verifyToken, user.updatePortadaPhoto);
+// Ruta para actualizar userLogin de un usuario
+router.put('/:iduser', validate.verifyToken, user.updateUserLogin);
+// Ruta para actualizar estado de un usuario
+router.put('/:iduser/est', validate.verifyToken, user.updateConectado);
 
 //exportar objeto
 module.exports = router;

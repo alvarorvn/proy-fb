@@ -1,0 +1,32 @@
+<div class="vertical-nav bg-white" id="sidebar">
+    <ul class="nav flex-column bg-white mb-0">
+        <div class="row row-cols-1">
+            <li *ngFor="let amigo of amigos" class="nav-item">
+                <div class="tarjeta-amigos1">
+                    <ng-container *ngIf="amigo.image_perfil; else fotoAmigoDefault">
+                        <img [src]=getSantizeUrl(amigo.image_perfil)>
+                    </ng-container>
+                    <ng-template #fotoAmigoDefault>
+                        <ng-container *ngIf="amigo.usuario_sexo == 'Hombre'; else fotoDefaultSexoAmigo">
+                            <img src="../assets/img/user_pred.jfif">
+                        </ng-container>
+                        <ng-template #fotoDefaultSexoAmigo>
+                            <img src="../assets/img/user_pred_mujer.jpg">
+                        </ng-template>
+                    </ng-template>
+                    <ng-container *ngIf="!amigo.usuario_conectado; else conectado">
+                        <a routerLink="#">{{amigo.usuario_nombres}}
+                            {{amigo.usuario_apellidos}}</a>
+                    </ng-container>
+                    <ng-template #conectado>
+                        <a routerLink="#">{{amigo.usuario_nombres}}
+                            {{amigo.usuario_apellidos}}
+                            <i class="fas fa-toggle-on"></i>
+                        </a>
+                    </ng-template>
+
+                </div>
+            </li>
+        </div>
+    </ul>
+</div>

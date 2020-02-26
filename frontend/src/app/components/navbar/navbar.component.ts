@@ -14,6 +14,10 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class NavbarComponent implements OnInit {
 
   userLogin = {};
+  persona = {
+    usr_busq: ""
+  };
+
 
   constructor(
     private authService: AuthService,
@@ -26,11 +30,14 @@ export class NavbarComponent implements OnInit {
     };
     /*setTimeout(() => {
       console.log(this.userLogin);
-    }, 200);*/
+    }, 500);*/
   }
 
   salir() {
-    this.authService.logout();
+    this.authService.cambiarEstadoConexion({ usuario_conectado: false }, this.userLogin['usuario_id']).subscribe();
+    setTimeout(() => {
+      this.authService.logout();
+    }, 500);
   }
 
   getUserLogin(id) {
@@ -43,6 +50,11 @@ export class NavbarComponent implements OnInit {
 
   public getSantizeUrl(url: string) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(`data:image/png;charset=utf-8;base64, ${url}`);
+  }
+
+  onSearchChange(searchValue: string): void {
+    localStorage.setItem('usr_busq', searchValue);
+    console.log("busq");
   }
 
 }

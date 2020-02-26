@@ -44,6 +44,7 @@ export class LoginComponent implements OnInit {
       } else {
         localStorage.setItem('token', res.token);
         localStorage.setItem('id', res.user.usuario_id)
+        this.authService.cambiarEstadoConexion({ usuario_conectado: true }, res.user.usuario_id).subscribe();
         this.router.navigate([`${res.user.usuario_id}`])
       }
     });

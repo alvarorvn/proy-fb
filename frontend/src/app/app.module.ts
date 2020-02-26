@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 import { LoginComponent } from './components/login/login.component';
@@ -20,6 +21,9 @@ import { PostsComponent } from './components/posts/posts.component';
 import { CreatePostComponent } from './components/create-post/create-post.component';
 import { BiografiaComponent } from './components/biografia/biografia.component';
 import { VerchatsComponent } from './components/verchats/verchats.component';
+import { BuscarpersonasComponent } from './components/buscarpersonas/buscarpersonas.component';
+import { PerfilAmigoComponent } from './components/perfil-amigo/perfil-amigo.component';
+import { VerconectadosComponent } from './components/verconectados/verconectados.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +36,10 @@ import { VerchatsComponent } from './components/verchats/verchats.component';
     CreatePostComponent,
     BiografiaComponent,
     BiografiaComponent,
-    VerchatsComponent
+    VerchatsComponent,
+    BuscarpersonasComponent,
+    PerfilAmigoComponent,
+    VerconectadosComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +52,8 @@ import { VerchatsComponent } from './components/verchats/verchats.component';
       positionClass: 'toast-bottom-right',
       preventDuplicates: true
     }),
-    TextareaAutosizeModule
+    TextareaAutosizeModule,
+    NgSelectModule
   ],
   providers: [
     AuthGuard,
