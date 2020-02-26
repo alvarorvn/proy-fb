@@ -5,6 +5,7 @@ import { ToastrService } from "ngx-toastr";
 
 import { AuthService } from "../../services/auth.service";
 import { PerfilAmigoService } from "../../services/perfil-amigo.service";
+import { NavbarService } from "../../services/navbar.service";
 
 declare var jQuery: any;
 
@@ -29,6 +30,7 @@ export class PerfilAmigoComponent implements OnInit {
   direcciones: Array<Object> = [];
   apodos: Array<Object> = [];
   soliEnviadas: Array<Object> = [];
+  solicitudesRecibidas: Array<Object> = [];
 
   constructor(
     private router: Router,
@@ -36,7 +38,8 @@ export class PerfilAmigoComponent implements OnInit {
     private authService: AuthService,
     private sanitizer: DomSanitizer,
     private perfAmigo: PerfilAmigoService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private navbarService: NavbarService
   ) {
     this.amigo_id = this.route.snapshot.params.idamigo;
   }
@@ -47,6 +50,7 @@ export class PerfilAmigoComponent implements OnInit {
     this.getSeguidores();
     this.getSeguidos();
     this.getSoliEnviadas();
+    this.getSoliRecibidas();
     setTimeout(() => {
       this.getEmpleos();
       this.getAptitudes();
@@ -54,6 +58,7 @@ export class PerfilAmigoComponent implements OnInit {
       this.getTelefonos();
       this.getApodos();
       this.getDirecciones();
+      console.log(this.solicitudesRecibidas);
     }, 1000);
     setTimeout(() => {
       this.JqueryFunciones();
@@ -70,6 +75,16 @@ export class PerfilAmigoComponent implements OnInit {
     return tiene;
   }
 
+  tieneSolicituRecibida() {
+    let tiene = false;
+    this.solicitudesRecibidas.forEach(soli => {
+      if (soli['usuario_id_envia'] == this.amigo_id && soli['solic_estado'] == false) {
+        tiene = true;
+      }
+    });
+    return tiene;
+  }
+
   esAmigo() {
     let esAmigo = false;
     this.amigos.forEach(amig => {
@@ -78,6 +93,16 @@ export class PerfilAmigoComponent implements OnInit {
       }
     });
     return esAmigo;
+  }
+
+  getSoliRecibidas() {
+    this.navbarService.getSoliRecibidas().subscribe(res => {
+      if (res.tipo == 'error') {
+        this.solicitudesRecibidas = res.result;
+      } else {
+        this.solicitudesRecibidas = res;
+      }
+    })
   }
 
   siguiendo() {

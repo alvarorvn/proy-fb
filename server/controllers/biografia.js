@@ -529,7 +529,7 @@ async function addSoli(req, res) {
 async function getSoliEnviadas(req, res) {
     let query = `SELECT * FROM solic_amistad WHERE usuario_id_envia = ${req.params.iduser}`;
     let result = await pool.query(query);
-    if (result.rows == 0) return res.json({ message: "No hay solicitudes enviadas", result: [] });
+    if (result.rows == 0) return res.json({ message: "No hay solicitudes enviadas", result: [], tipo: 'error' });
     res.json(result.rows);
 }
 
@@ -549,9 +549,17 @@ async function deleteSolicitud(req, res) {
 
 // Obtener solicitudes de amistad recibidas de un usuario
 async function getSoliRecibidas(req, res) {
-    let query = `SELECT * FROM solic_amistad WHERE usuario_id_recepta = ${req.params.iduser}`;
+    let query = `SELECT * FROM solic_amistad as s, usuario as u, perfil_usuario as p
+                    WHERE s.usuario_id_recepta = ${req.params.iduser} AND s.usuario_id_envia = u.usuario_id
+                    AND p.usuario_id = s.usuario_id_envia`;
     let result = await pool.query(query);
-    if (result.rows == 0) return res.json({ message: "No hay solicitudes recibidas", result: [] });
+    if (result.rows == 0) return res.json({ message: "No hay solicitudes recibidas", result: [], tipo: 'error' });
+    result.rows.forEach(usuario => {
+        if (usuario.perfil_path_foto != "") {
+            var base64str = base64_encode(usuario.perfil_path_foto);
+            usuario.image_perfil = base64str;
+        }
+    });
     res.json(result.rows);
 }
 

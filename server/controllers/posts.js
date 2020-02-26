@@ -21,6 +21,7 @@ async function savepost(req, res) {
     
 
     result = await pool.query('INSERT INTO publicacion (pub_texto, usuario_id) VALUES ($1, $2) RETURNING pub_id;', [pub_texto, usuario_id]);
+    console.log(result);
     
     res.json({
       "pub_id": result.rows[0].pub_id,

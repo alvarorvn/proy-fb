@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { AuthService } from "../../services/auth.service";
 import { NavbarService } from "../../services/navbar.service";
 import { DomSanitizer } from '@angular/platform-browser';
+import { Router, } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -25,21 +26,29 @@ export class NavbarComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private sanitizer: DomSanitizer,
-    private navbarService: NavbarService
+    private navbarService: NavbarService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
     if (this.authService.getId() && this.authService.getToken()) {
       this.getUserLogin(this.authService.getId());
     };
-    let getSolRec = setInterval(() => {
-      if (!this.authService.getId() && !this.authService.getToken()) {
-        this.pararBucle(getSolRec)
-      } else {
-        this.getSoliRecibidas();
-        console.log(this.soliRecibidas);
-      }
-    }, 1000);
+    setTimeout(() => {
+      let getSolRec = setInterval(() => {
+        if (!this.authService.getId() && !this.authService.getToken()) {
+          this.pararBucle(getSolRec)
+        } else {
+          this.getSoliRecibidas();
+        }
+      }, 500);
+    }, 500);
+  }
+
+  toUser(userid) {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate([`${this.authService.getId()}/biografia/${userid}`]);
   }
 
   pararBucle(nombre) {

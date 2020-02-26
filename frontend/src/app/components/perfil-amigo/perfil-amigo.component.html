@@ -48,9 +48,27 @@
                             </div>
                         </ng-container>
                         <ng-template #noSoli>
-                            <button class="btn btn-light btn-sm" (click)="enviarSolicitud()">
-                                <i class="fas fa-user-plus"></i> Agregar
-                            </button>
+                            <ng-container *ngIf="tieneSolicituRecibida() == true; else agregaAmigo">
+                                <div class="dropdown">
+                                    <button class="btn btn-light btn-sm dropdown-toggle" type="button"
+                                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false" style="border-radius: 0%;">
+                                        <i class="fas fa-user-clock"></i> Responder a la solicitud de amistad
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                        style="font-size: 14px;">
+                                        <a class="dropdown-item" (click)="cancelarSolicitud()"
+                                            style="cursor: pointer;">Confirmar solicitud</a>
+                                        <a class="dropdown-item" (click)="cancelarSolicitud()"
+                                            style="cursor: pointer;">Eliminar solicitud</a>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-template #agregaAmigo>
+                                <button class="btn btn-light btn-sm" (click)="enviarSolicitud()">
+                                    <i class="fas fa-user-plus"></i> Agregar
+                                </button>
+                            </ng-template>
                         </ng-template>
                     </ng-template>
 
@@ -143,9 +161,27 @@
                                 </div>
                             </ng-container>
                             <ng-template #noSoli>
-                                <button class="btn btn-light btn-sm" (click)="enviarSolicitud()">
-                                    <i class="fas fa-user-plus"></i> Agregar
-                                </button>
+                                <ng-container *ngIf="tieneSolicituRecibida() == true; else agregaAmigo">
+                                    <div class="dropdown">
+                                        <button class="btn btn-light btn-sm dropdown-toggle" type="button"
+                                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false" style="border-radius: 0%;">
+                                            <i class="fas fa-user-clock"></i> Responder a la solicitud de amistad
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                            style="font-size: 14px;">
+                                            <a class="dropdown-item" (click)="cancelarSolicitud()"
+                                                style="cursor: pointer;">Confirmar solicitud</a>
+                                            <a class="dropdown-item" (click)="cancelarSolicitud()"
+                                                style="cursor: pointer;">Eliminar solicitud</a>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <ng-template #agregaAmigo>
+                                    <button class="btn btn-light btn-sm" (click)="enviarSolicitud()">
+                                        <i class="fas fa-user-plus"></i> Agregar
+                                    </button>
+                                </ng-template>
                             </ng-template>
                         </ng-template>
 
