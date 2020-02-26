@@ -20,7 +20,7 @@ const storage = multer.diskStorage({
     }
 })
 
-app.use(multer({ storage: storage, dest: path.join(__dirname, '../faces') }).single('file'));
+app.use(multer({ storage: storage, dest: path.join(__dirname, '../faces') }).array('file'));
 
 //comunicar con otro servidor
 app.use(cors());

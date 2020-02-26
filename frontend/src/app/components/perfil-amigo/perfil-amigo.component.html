@@ -33,9 +33,43 @@
                         </div>
                     </ng-container>
                     <ng-template #addAmigo>
-                        <button class="btn btn-light btn-sm">
-                            <i class="fas fa-user-plus"></i> Agregar
-                        </button>
+                        <ng-container *ngIf="tieneSolicitud() == true; else noSoli">
+                            <div class="dropdown">
+                                <button class="btn btn-light btn-sm dropdown-toggle" type="button"
+                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false" style="border-radius: 0%;">
+                                    <i class="fas fa-user-clock"></i> Solictud de amistad enviada
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                    style="font-size: 14px;">
+                                    <a class="dropdown-item" (click)="cancelarSolicitud()"
+                                        style="cursor: pointer;">Cancelar solicitud</a>
+                                </div>
+                            </div>
+                        </ng-container>
+                        <ng-template #noSoli>
+                            <ng-container *ngIf="tieneSolicituRecibida() == true; else agregaAmigo">
+                                <div class="dropdown">
+                                    <button class="btn btn-light btn-sm dropdown-toggle" type="button"
+                                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false" style="border-radius: 0%;">
+                                        <i class="fas fa-user-clock"></i> Responder a la solicitud de amistad
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                        style="font-size: 14px;">
+                                        <a class="dropdown-item" (click)="aceptarSoli()"
+                                            style="cursor: pointer;">Confirmar solicitud</a>
+                                        <a class="dropdown-item" (click)="cancelarSolicitudDesdeMiPerfil()"
+                                            style="cursor: pointer;">Eliminar solicitud</a>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-template #agregaAmigo>
+                                <button class="btn btn-light btn-sm" (click)="enviarSolicitud()">
+                                    <i class="fas fa-user-plus"></i> Agregar
+                                </button>
+                            </ng-template>
+                        </ng-template>
                     </ng-template>
 
                     <ng-container *ngIf="siguiendo() == true; else seguir">
@@ -47,7 +81,8 @@
                             </button>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton"
                                 style="font-size: 14px;">
-                                <a class="dropdown-item" href="#">Eliminar</a>
+                                <a class="dropdown-item" (click)="dejarSeguir()" style="cursor: pointer;">Dejar de
+                                    seguir</a>
                             </div>
                         </div>
                     </ng-container>
@@ -111,9 +146,43 @@
                             </div>
                         </ng-container>
                         <ng-template #addAmigo>
-                            <button class="btn btn-light btn-sm">
-                                <i class="fas fa-user-plus"></i> Agregar
-                            </button>
+                            <ng-container *ngIf="tieneSolicitud() == true; else noSoli">
+                                <div class="dropdown">
+                                    <button class="btn btn-light btn-sm dropdown-toggle" type="button"
+                                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false" style="border-radius: 0%;">
+                                        <i class="fas fa-user-clock"></i> Solictud de amistad enviada
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                        style="font-size: 14px;">
+                                        <a class="dropdown-item" (click)="cancelarSolicitud()"
+                                            style="cursor: pointer;">Cancelar solicitud</a>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-template #noSoli>
+                                <ng-container *ngIf="tieneSolicituRecibida() == true; else agregaAmigo">
+                                    <div class="dropdown">
+                                        <button class="btn btn-light btn-sm dropdown-toggle" type="button"
+                                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false" style="border-radius: 0%;">
+                                            <i class="fas fa-user-clock"></i> Responder a la solicitud de amistad
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                            style="font-size: 14px;">
+                                            <a class="dropdown-item" (click)="aceptarSoli()"
+                                                style=" cursor: pointer;">Confirmar solicitud</a>
+                                            <a class="dropdown-item" (click)="cancelarSolicitudDesdeMiPerfil()"
+                                                style="cursor: pointer;">Eliminar solicitud</a>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <ng-template #agregaAmigo>
+                                    <button class="btn btn-light btn-sm" (click)="enviarSolicitud()">
+                                        <i class="fas fa-user-plus"></i> Agregar
+                                    </button>
+                                </ng-template>
+                            </ng-template>
                         </ng-template>
 
                         <ng-container *ngIf="siguiendo() == true; else seguir">
@@ -125,7 +194,8 @@
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton"
                                     style="font-size: 14px;">
-                                    <a class="dropdown-item" href="#">Eliminar</a>
+                                    <a class="dropdown-item" (click)="dejarSeguir()" style="cursor: pointer;">Dejar de
+                                        seguir</a>
                                 </div>
                             </div>
                         </ng-container>
