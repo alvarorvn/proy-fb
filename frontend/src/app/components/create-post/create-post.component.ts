@@ -3,6 +3,7 @@ import { AuthService } from "../../services/auth.service";
 import { CreatePostService } from '../../services/create-post.service';
 import { Post } from 'src/app/Post';
 import { Router } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 
 import { PostsComponent } from '../../components/posts/posts.component';
 
@@ -17,12 +18,15 @@ export class CreatePostComponent implements OnInit {//PADRE
 
   private pub_texto: string;
   test: string = 'Prueba de delete'; //<---
-  userLogin = {};
+  userLogin = {usuario_apellidos:""};
   posts: Post[];
+  saludo: string;
   userId = this.authService.getId();
   fileUpload;
 
-  constructor(private authService: AuthService, private createPostService: CreatePostService, private router: Router) {
+  constructor(private authService: AuthService, private createPostService: CreatePostService, private router: Router,private sanitizer: DomSanitizer) {
+    this.getUserLogin();
+    this.saludo = `¿Qué estás pensando ${this.userLogin.usuario_apellidos}?`;
     createPostService.getPostsUser(this.userId).subscribe(res => {
       if (res['message']) {
         this.posts = res['result'];
@@ -36,6 +40,7 @@ export class CreatePostComponent implements OnInit {//PADRE
     /*setTimeout(() => {
       console.log(this.posts['result']);
     }, 1000);*/
+    
   }
 
   receiveMessage($event){
@@ -45,12 +50,31 @@ export class CreatePostComponent implements OnInit {//PADRE
   // Add post
   toPost() {
     console.log(this.pub_texto, this.userId);
-    this.createPostService.savepost({ "pub_texto": this.pub_texto, "usuario_id": this.userId }).subscribe(res => {
+    const formData = new FormData();
+    formData.append('file', this.fileUpload);
+    formData.append('pub_texto', this.pub_texto);
+    formData.append('usuario_id', this.userId);
+    //debugger
+    //console.log(formData);
+
+    //{ "pub_texto": this.pub_texto, "usuario_id": this.userId },
+    this.createPostService.savepost(formData).subscribe(res => {
+      
       this.posts.push(res);
-      console.log(res);
+      //console.log(res);
       this.closeModal();
       this.pub_texto = '';
     });
+  }
+
+  // Subida de archivos
+  onFileChange(e) {
+    this.fileUpload = e.target.files[0];
+    console.log(this.fileUpload);
+    const formData = new FormData;
+    formData.append('file', this.fileUpload);
+    console.log(formData);
+    //this.uploadImage();
   }
 
   // Delete post
@@ -72,8 +96,8 @@ export class CreatePostComponent implements OnInit {//PADRE
     }
   }
 
-  getUserLogin(id) {
-    this.authService.getUserLogin({ usuario_id: id }).subscribe(res => {
+  getUserLogin() {
+    this.authService.getUserLogin({ usuario_id: this.userId }).subscribe(res => {
       if (res.tipo != 'error') {
         this.userLogin = res;
         console.log(this.userLogin);
@@ -96,13 +120,9 @@ export class CreatePostComponent implements OnInit {//PADRE
     modali.style.display = 'none';
   }
 
-  // Subida de archivos
-  /*onFileChange(e) {
-    this.fileUpload = e.target.files[0];
-    this.uploadImage();
-  }
+  
 
-  uploadImage() {
+  /*uploadImage() {
     const formData = new FormData();
     formData.append('file', this.fileUpload);
     this.createPostService.updatePerfilPhoto(formData).subscribe(res => {
@@ -121,6 +141,10 @@ export class CreatePostComponent implements OnInit {//PADRE
   updatePost(){
     let p = {"pub_id": 56, "pub_texto": "Actualizado!", "usuario_id": 2};
     this.createPostService.updatePost(p);
+  }
+
+  public getSantizeUrl(url: string) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(`data:image/png;charset=utf-8;base64, ${url}`);
   }
 
 }//end class

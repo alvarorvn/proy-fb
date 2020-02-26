@@ -24,6 +24,7 @@ img.reac {
 .post-header {
   display: flex;
   justify-content: space-between;
+  Padding: 10px;
 }
 
 .post-border {
@@ -33,8 +34,8 @@ img.reac {
 }
 
 .post-bottom-line {
-    border-bottom: 1px solid #dddddd;
-    padding: 15px;
+    border-bottom: 1px solid rgba(0,0,0,.08);
+    
 }
 
 .post-body {
@@ -43,4 +44,9 @@ img.reac {
 
 .post-footer {
     border-top: 1px solid #dddddd;
+}
+
+.post-image {
+  width: 100%;
+  height: 500px;
 }

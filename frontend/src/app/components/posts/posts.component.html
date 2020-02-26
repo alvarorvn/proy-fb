@@ -1,11 +1,23 @@
 <div class="container-fluid" id={{pub_id}}>
     <div class="post-border">
 
-        <div class="post-bottom-line post-header">
+        <div class="post-header">
             <div class="post-header">
-                <img class="mediana rounded-circle mr-2" src="assets/img/foto.jpg" alt="foto">
+
+                <ng-container *ngIf="userLogin.image_perfil; else fotoDefault">
+                    <img [src]=getSantizeUrl(userLogin.image_perfil) class="rounded-circle mediana float-left mr-2">
+                </ng-container>
+                <ng-template #fotoDefault>
+                    <ng-container *ngIf="userLogin.usuario_sexo == 'Hombre'; else fotoDefaultSexo">
+                        <img src="../assets/img/user_pred.jfif" class="rounded-circle mediana float-left mr-2">
+                    </ng-container>
+                    <ng-template #fotoDefaultSexo>
+                        <img src="../assets/img/user_pred_mujer.jpg" class="rounded-circle mediana float-left mr-2">
+                    </ng-template>
+                </ng-template>
+
                 <div class="vertical">
-                    <h6>Juan Cuesta</h6>
+                    <h6>{{userLogin.usuario_nombres}} {{userLogin.usuario_apellidos}}</h6>
                     <small>53 min</small>
                 </div>
             </div>
@@ -24,11 +36,15 @@
             </div>
         </div>
 
-        <div class="post-bottom-line">
+        <div class="post-bottom-line pl-4">
             <p>{{ pub_texto }}</p>
         </div>
 
-        <div class="post-bottom-line">
+        <ng-container *ngIf="pub_pathMult" class="">
+            <img [src]=getSantizeUrl(pub_pathMult) class="post-image">
+        </ng-container>
+
+        <div class="post-bottom-line p-2">
             <div class="float-left"><small>Reacciones</small></div>
             <div class="float-right"><small>61 comentarios 129 veces compartido</small></div><br>
         </div>
