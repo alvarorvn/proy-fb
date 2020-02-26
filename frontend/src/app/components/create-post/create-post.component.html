@@ -17,10 +17,11 @@
 </div>
 
 <div id="modal" class="modali">
-    <div class="container-fluid">
+    <div class="rebote">
         <div class="create-post">
             <div class="line-bottom post-header">
                 <span>Crear publicación</span>
+                <button (click)="closeModal()" class="rounded-pill close-modal pl-3 pr-3">X</button>
             </div>
             <div class="line-bottom post-body">
                 <div>
@@ -31,12 +32,43 @@
                         placeholder="¿Qué estás pensando, Juan?"></textarea>
                 </div>
             </div>
+
+            <div class="post_options line-bottom">
+                <!-- <button class="btn rounded-pill btn_option"><i class="far fa-images mr-2"></i>Foto</button> -->
+                <label class="btn rounded-pill btn_option custom-file-upload">
+                    <input type="file" (change)="onFileChange($event)" />
+                    <i class="far fa-images mr-2"></i>Foto
+                </label>
+                <!-- -->
+                <button (click)="updatePost()" class="btn rounded-pill btn_option"><i
+                        class="fas fa-user-tag mr-2"></i>Etiquetar
+                    amigos</button>
+                <button (click)="deletePost()" class="btn rounded-pill btn_option"><i
+                        class="far fa-grin-beam mr-2"></i>Sentimiento</button>
+            </div>
+            <div class="news_histories">
+                <div>
+
+                    <label class="container ml-4">
+                        <input type="checkbox" id="news" name="new_histories" value="news" checked>
+                        <i class="far fa-newspaper circle mr-2 ml-2"></i>Noticias<span class="checkmark"></span>
+                    </label>
+                </div>
+                <div>
+                    <label class="container ml-4">
+                        <input type="checkbox" id="histories" name="new_histories" value="histories">
+                        <i class="far fa-newspaper circle mr-2 ml-2"></i>Tu historia<span class="checkmark"></span>
+                    </label>
+                </div>
+
+            </div>
+
             <div><button (click)="toPost()" type="submit" class="btn btn-secondary col-12">Publicar</button></div>
         </div>
     </div>
 </div>
 
-
-<app-posts *ngFor='let post of posts' [pub_texto]='post.pub_texto' [pub_id]='post.pub_id'></app-posts>
+<app-posts *ngFor='let post of posts' [pub_id]='post.pub_id' [pub_texto]='post.pub_texto' [usuario_id]='post.usuario_id'
+    (messageEvent)="receiveMessage($event)"></app-posts>
 <!--<ng-container *ngIf="posts.results != 0">
 </ng-container>-->
