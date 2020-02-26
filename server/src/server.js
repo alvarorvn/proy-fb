@@ -7,6 +7,7 @@ const path = require('path');
 const user_routes = require('../routes/users');
 const posts_routes = require('../routes/posts');
 const biografia_routes = require('../routes/biografia');
+const eventos_routes = require('../routes/eventos');
 
 app.set('port', 3000 || process.env.PORT);
 
@@ -33,6 +34,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/', user_routes);
 app.use('/', posts_routes);
 app.use('/:iduser/biografia', biografia_routes);
+
+app.use('/:iduser/eventos', eventos_routes);
+
 
 // Start server
 app.listen(app.get('port'), () => {

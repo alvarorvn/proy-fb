@@ -5,6 +5,7 @@ import { LoginComponent } from './components/login/login.component';
 import { IndexComponent } from './components/index/index.component';
 import { RecFacilComponent } from './components/rec-facil/rec-facil.component';
 import { BiografiaComponent } from './components/biografia/biografia.component';
+import { EventosComponent } from './components/eventos/eventos.component';
 
 import { AuthGuard, AuthGuard2, VerifyUser } from './auth.guard'
 import { VerchatsComponent } from './components/verchats/verchats.component';
@@ -38,9 +39,7 @@ const routes: Routes = [
   {
     path: 'verconectados/',
     component: VerconectadosComponent
-  },
-
-  
+  }, 
   {
     path: 'buscarpersonas/:usr_busq',
     component: BuscarpersonasComponent
@@ -50,6 +49,10 @@ const routes: Routes = [
     component: PerfilAmigoComponent,
     canActivate: [VerifyUser]
   },
+  {
+    path: ':iduser/eventos',
+    component: EventosComponent
+  }
 ];
 
 @NgModule({

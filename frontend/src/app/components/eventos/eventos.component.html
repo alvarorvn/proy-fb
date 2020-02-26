@@ -1,0 +1,114 @@
+<app-navbar></app-navbar>
+
+<div style="margin-top: 77px;">     
+
+    <!-- EMPIEZA EL TIMELINE - MENU DE EVENTO-->
+    <div class="timeline">
+        <h1>Eventos</h1>
+        <ul class="nav flex-column nav-pills" aria-orientation="vertical">
+            <li class="nav-item">
+                <a class="nav-link active" style="color:rgb(0, 0, 0);" role="tab" data-toggle="tab" href="#biografia" id="nvbio">Eventos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" style="color:rgb(0, 0, 0);" role="tab" data-toggle="tab" href="#informacion">Calendario</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" style="color:rgb(0, 0, 0);" role="tab" data-toggle="tab" href="#amigos" id="nvamigos">Cumpleaños</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" style="color:rgb(0, 0, 0);" role="tab" data-toggle="tab" href="#fotos">Sugerencias</a>
+            </li>
+        </ul>
+    </div> <!-- FINALIZA EL TIMELINE -->
+
+
+    <!-- CONTENEDORES DEL TIMELINE -->
+    <div class="tab-content" style="margin-left: 320px;">
+        <!-- BIOGRAFIA -->
+        <div role="tabpanel" class="tab-pane active" id="biografia">
+            <div class="row">
+                <div class="col-lg-7 col-md-12 col-12 col-sm-12">
+                            
+                    <div class="lateral_izq">
+                        <div class="card col-12">
+                            <div class="card-header">
+                                <i></i> Próximos Eventos
+                            </div>
+                            <div class="card-body text-secondary">
+                                <i style="margin-right: 0px;"></i> No tienes ningún evento próximamente.
+                                <br><br>
+                                <button href="#ventana1" class="btn btn-outline-secondary btn-sm btn-block" data-toggle="modal"
+                                    style='width:170px; height:35px'> Añadir Evento </button>
+                                
+                                <div class="modal fade" id="ventana1">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <!--Header -->
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Evento</h5>
+                                                <button tyle="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            </div>
+                                            <!--Contenido -->
+                                            <div class="modal-body">                                        
+                                                <p>Logo del evento: <input type="file" name="logoUpload" (change)="onFileChange($event)"></p>
+                                                <p>Portada del evento: <input type="file" name="portadaUpload" (change)="onFile1Change($event)"></p>
+                                                <p>Nombre del evento: <input  size="40" type="text" [(ngModel)]="eventos.evento_nombre" name="evento_nombre" placeholder="  Agrega un nombre conciso y claro" id="firstname"> </p>                                                
+                                                <p>Ubicación: <input  size="40" type="text" [(ngModel)]="eventos.evento_lugar" name="evento_lugar" placeholder="  Incluye un lugar o una dirección" id="firstname1"></p>
+                                                <p>Fecha/Hora: <input type="datetime-local" [(ngModel)]="eventos.evento_fecha_hora" name="evento_fecha_hora"> </p>
+                                                <p>Tipo evento: 
+                                                    <input type="text" list="items" [(ngModel)]="eventos.evento_tipo" name="evento_tipo">                                                    
+                                                    <datalist id="items">
+                                                        <option >Fiesta</option>
+                                                        <option >Arte</option>
+                                                        <option >Música</option>
+                                                        <option >Comedia</option>
+                                                        <option >Manualidades</option>
+                                                    </datalist>
+                                                
+                                                </p>    
+                                                <!--
+                                                <p>Descripción: <input  size="40" type="text" [(ngModel)]="eventos.evento_tipo" name="usuario_nombres" placeholder="  Cuéntales a los demás de qué trata tu evento"
+                                                    id="firstname"></p>
+                                                
+                                                <p >Organizadores: <input size="40" type="text" [(ngModel)]="user.usuario_nombres" name="usuario_nombres" placeholder=""
+                                                    id="firstname"></p>
+                                                -->
+                                            </div>
+                                            <!--Footer -->
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                                <button type="button" class="btn btn-primary" id="guardarEv" (click)="guardarEventos()">Guardar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br>
+
+                        <div class="card col-12 mt-2">
+                            <div class="card-header">
+                                <i></i> Eventos que te pueden gustar
+                            </div>
+                            <div class="card-body text-secondary">
+                                <!--<img src="..." class="img-thumbnail">-->
+                            </div>
+
+                            <button class="btn btn-outline-secondary btn-sm btn-block" data-toggle="modal"
+                                    style='width:170px; height:35px'> Buscar Evento </button>
+                            
+                            
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
