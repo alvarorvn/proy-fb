@@ -154,7 +154,7 @@ async function getUsuario(req, res) {
 // obtiene los seguidores de un usuario
 async function getSeguidores(req, res) {
     const { id } = req.params;
-    let query = `SELECT seg.*, usu.usuario_nombres, usu.usuario_apellidos, usu.usuario_sexo, per.perfil_path_foto
+    let query = `SELECT seg.*, usu.usuario_id,usu.usuario_nombres, usu.usuario_apellidos, usu.usuario_sexo, per.perfil_path_foto
                     FROM seguidos as seg, usuario as usu, perfil_usuario as per
                     WHERE seg.usuario_id_sigue=${id} AND seg.usuario_id = usu.usuario_id AND per.usuario_id = seg.usuario_id`;
     let result = await pool.query(query);
@@ -172,7 +172,7 @@ async function getSeguidores(req, res) {
 // obtiene los usuarios que sigue
 async function getSeguidos(req, res) {
     const { id } = req.params;
-    let query = `SELECT seg.*, usu.usuario_nombres, usu.usuario_apellidos, usu.usuario_sexo, per.perfil_path_foto
+    let query = `SELECT seg.*, usu.usuario_id, usu.usuario_nombres, usu.usuario_apellidos, usu.usuario_sexo, per.perfil_path_foto
                     FROM seguidos as seg, usuario as usu, perfil_usuario as per
                     WHERE seg.usuario_id=${id} AND seg.usuario_id_sigue = usu.usuario_id AND per.usuario_id = seg.usuario_id_sigue`;
     let result = await pool.query(query);
@@ -190,7 +190,7 @@ async function getSeguidos(req, res) {
 // obtiene los amigos de un usuario
 async function getAmigos(req, res) {
     const { id } = req.params;
-    let query = `SELECT am.*, usu.usuario_nombres, usu.usuario_apellidos, usu.usuario_sexo, usu.usuario_conectado, per.perfil_path_foto
+    let query = `SELECT am.*, usu.usuario_id, usu.usuario_nombres, usu.usuario_apellidos, usu.usuario_sexo, usu.usuario_conectado, per.perfil_path_foto
                     FROM amigos as am, usuario as usu, perfil_usuario as per
                     WHERE am.usuario_id=${id} AND am.usuario_id_amigo = usu.usuario_id AND per.usuario_id = am.usuario_id_amigo`;
     let result = await pool.query(query);
@@ -294,7 +294,48 @@ module.exports = {
     login,
     register,
     getPersonas, getUsuarios, getUsuario, getSeguidores, getAmigos, getSeguidos,
-    recFacialLogin, getCiudades,
+    recFacialLogin, getCiudades,getEventos,getPaginas,
     updatePerfilPhoto, updatePortadaPhoto, updateUserLogin, updateConectado
 
 };
+
+async function getEventos(req, res) {
+
+    let query = `SELECT eventos.evento_id, eventos.evento_logo, eventos.evento_nombre
+  FROM public.eventos
+  WHERE eventos.evento_nombre ILIKE '%${req.params.usr_busq}%')`;
+    let result = await pool.query(query);
+    if (result.rows == 0) return res.json({
+        message: "No se registraron coincidencias",
+        tipo: 'error', result: []
+    });
+    result.rows.forEach(evento => {
+        if (evento.evento_logo != "") {
+            var base64str = base64_encode(evento.evento_logo);
+            evento.logo = base64str;
+            evento.logo_name = path.basename(evento.evento_logo);
+        }
+    });
+    res.json(result.rows);
+
+}
+async function getPaginas(req, res) {
+
+    let query = `SELECT usuario.usuario_id, 
+                usuario.usuario_nombres, 
+                usuario.usuario_apellidos, 
+                perfil_usuario.perfil_path_foto, 
+                usuario.usuario_sexo
+                FROM usuario, perfil_usuario
+                WHERE usuario.usuario_id = perfil_usuario.usuario_id AND
+                (usuario.usuario_nombres ILIKE '%${req.params.usr_busq}%' 
+                OR usuario.usuario_apellidos 
+                ILIKE '%${req.params.usr_busq}%')`;
+    let result = await pool.query(query);
+    if (result.rows == 0) return res.json({
+        message: "No se registraron coincidencias",
+        tipo: 'error', result: []
+    });
+    res.json(result.rows);
+
+}

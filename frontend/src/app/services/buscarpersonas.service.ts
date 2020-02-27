@@ -12,5 +12,11 @@ export class BuscarpersonasService {
   getPersonas(usr_busq) {
     return this.http.get<any>(`${this.URL}/personas/${usr_busq}`);
   }
+  getEventos(usr_busq) {
+    return this.http.get<any>(`${this.URL}/eventos/${usr_busq}`);
+  }
+  getPaginas(usr_busq) {
+    return this.http.get<any>(`${this.URL}/paginas/${usr_busq}`);
+  }
 
   }

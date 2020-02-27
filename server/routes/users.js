@@ -19,6 +19,9 @@ router.get('/:id/seguidos', validate.verifyToken, user.getSeguidos);
 router.get('/:id/amigos', validate.verifyToken, user.getAmigos);
 //Ruta para obtener personas en una busqueda
 router.get('/personas/:usr_busq', user.getPersonas);
+router.get('/eventos/:usr_busq', user.getEventos);
+router.get('/paginas/:usr_busq', user.getPaginas);
+
 //Ruta para obtener solicitudes de amistad enviadas
 router.get('/:iduser/get-soli-env', biografia.getSoliEnviadas);
 //Ruta para obtener solicitudes de amistad recibidas

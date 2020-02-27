@@ -57,8 +57,9 @@ export class BiografiaComponent implements OnInit {
 
   // Lista de cosas
   ciudades: Array<Object> = [];
-  seguidores: Array<Object> = [];
+  s: Array<Object> = [];
   seguidos: Array<Object> = [];
+  seguidores: Array<Object> = [];
   amigos: Array<Object> = [];
   empleos: Array<Object> = [];
   aptitudes: Array<Object> = [];

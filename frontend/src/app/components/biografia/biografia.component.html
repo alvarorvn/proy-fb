@@ -1186,7 +1186,8 @@
                                                                 <img src="../assets/img/user_pred_mujer.jpg">
                                                             </ng-template>
                                                         </ng-template>
-                                                        <a href="">{{amigo.usuario_nombres}}
+                                                        <a routerLink="/{{userLogin.usuario_id}}/biografia/{{amigo.usuario_id_amigo}}">
+                                                            {{amigo.usuario_nombres}}
                                                             {{amigo.usuario_apellidos}}</a>
                                                         <div class="dropdown">
                                                             <button class="btn btn-outline-secondary dropdown-toggle"
@@ -1226,7 +1227,7 @@
                                                                 <img src="../assets/img/user_pred_mujer.jpg">
                                                             </ng-template>
                                                         </ng-template>
-                                                        <a href="">{{seg.usuario_nombres}}
+                                                        <a routerLink="/{{userLogin.usuario_id}}/biografia/{{seg.usuario_id}}">{{seg.usuario_nombres}}
                                                             {{seg.usuario_apellidos}}</a>
                                                         <!--<button class="btn btn-outline-secondary">
                                                         <i class="fas fa-check"></i> Seguir
@@ -1255,7 +1256,7 @@
                                                                 <img src="../assets/img/user_pred_mujer.jpg">
                                                             </ng-template>
                                                         </ng-template>
-                                                        <a href="">{{seguido.usuario_nombres}}
+                                                        <a routerLink="/{{userLogin.usuario_id}}/biografia/{{seguido.usuario_id}}">{{seguido.usuario_nombres}}
                                                             {{seguido.usuario_apellidos}}</a>
                                                         <!--<button class="btn btn-outline-secondary">
                                                         <i class="fas fa-check"></i> Seguir
