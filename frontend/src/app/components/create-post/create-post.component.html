@@ -4,12 +4,24 @@
             <span>Crear publicación</span>
         </div>
         <div class="line-bottom post-body">
-            <div>
-                <img class="rounded-circle mediana float-left mr-2" src="assets/img/foto.jpg">
-            </div>
+            
+            <ng-container *ngIf="userLogin.image_perfil; else fotoDefault">
+                <img [src]=getSantizeUrl(userLogin.image_perfil) class="rounded-circle mediana float-left mr-2">
+            </ng-container>
+            <ng-template #fotoDefault>
+                <ng-container *ngIf="userLogin.usuario_sexo == 'Hombre'; else fotoDefaultSexo">
+                    <img src="../assets/img/user_pred.jfif" class="rounded-circle mediana float-left mr-2">
+                </ng-container>
+                <ng-template #fotoDefaultSexo>
+                    <img src="../assets/img/user_pred_mujer.jpg" class="rounded-circle mediana float-left mr-2">
+                </ng-template>
+            </ng-template>
+
+
+
             <div id="textarea-pub" class="comment-text-area">
                 <textarea [(ngModel)]="pub_texto" (click)="showModal()" name="pub_texto" class="textinput"
-                    placeholder="¿Qué estás pensando, Juan?"></textarea>
+                    placeholder={{saludo}}></textarea>
             </div>
         </div>
         <!-- <div><button (click)="toPost()" type="submit" class="btn btn-secondary col-12">Publicar</button></div> -->
@@ -23,14 +35,26 @@
                 <span>Crear publicación</span>
                 <button (click)="closeModal()" class="rounded-pill close-modal pl-3 pr-3">X</button>
             </div>
-            <div class="line-bottom post-body">
-                <div>
-                    <img class="rounded-circle mediana float-left mr-2" src="assets/img/foto.jpg">
-                </div>
+            <div class="post-body p-3">
+                <ng-container *ngIf="userLogin.image_perfil; else fotoDefault">
+                    <img [src]=getSantizeUrl(userLogin.image_perfil) class="rounded-circle mediana float-left mr-2">
+                </ng-container>
+                <ng-template #fotoDefault>
+                    <ng-container *ngIf="userLogin.usuario_sexo == 'Hombre'; else fotoDefaultSexo">
+                        <img src="../assets/img/user_pred.jfif" class="rounded-circle mediana float-left mr-2">
+                    </ng-container>
+                    <ng-template #fotoDefaultSexo>
+                        <img src="../assets/img/user_pred_mujer.jpg" class="rounded-circle mediana float-left mr-2">
+                    </ng-template>
+                </ng-template>
                 <div id="textarea-pub" class="comment-text-area">
                     <textarea [(ngModel)]="pub_texto" name="pub_texto" class="textinput"
-                        placeholder="¿Qué estás pensando, Juan?"></textarea>
+                        placeholder={{saludo}}></textarea>
                 </div>
+            </div>
+
+            <div>
+                <img id="image" style="display: none;">
             </div>
 
             <div class="post_options line-bottom">
@@ -68,7 +92,9 @@
     </div>
 </div>
 
-<app-posts *ngFor='let post of posts' [pub_id]='post.pub_id' [pub_texto]='post.pub_texto' [usuario_id]='post.usuario_id'
-    (messageEvent)="receiveMessage($event)"></app-posts>
+<app-posts *ngFor='let post of posts' [pub_id]='post.pub_id' [pub_texto]='post.pub_texto' [usuario_id]='post.usuario_id' 
+[pub_pathMult]='post.pub_pathMult' (messageEvent)="receiveMessage($event)"></app-posts>
+
+
 <!--<ng-container *ngIf="posts.results != 0">
 </ng-container>-->

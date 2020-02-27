@@ -172,3 +172,11 @@ img.mediana {
   border: 1px solid #aaaaaa;
   color: #aaaaaa;
 }
+
+#image {
+  width: 100px;
+  height: 100px;
+  border: 3px dashed #dddddd;
+  margin-left: 15px;
+  margin-bottom: 15px;
+}

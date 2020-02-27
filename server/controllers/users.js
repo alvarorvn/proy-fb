@@ -126,6 +126,8 @@ async function getUsuario(req, res) {
                     WHERE usu.usuario_id=${usuario_id} AND usu.usuario_id = perfil.usuario_id`;
     let result = await pool.query(query);
     if (result.rows == 0) return res.json({ message: "No hay usuarios registrados", tipo: 'error', result: [] });
+    //console.log("USUARIO");
+    //console.log(result.rows[0]);
     result.rows.forEach(usuario => {
         if (usuario.usuario_path_face != "") {
             var base64str = base64_encode(usuario.usuario_path_face);
