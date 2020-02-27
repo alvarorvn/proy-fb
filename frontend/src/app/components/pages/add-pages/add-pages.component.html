@@ -1,79 +1,74 @@
-<div class="container">
-  <div class="card mt-3">
-    <div class="card-header">
-      <h5>Crear nueva página</h5>
-    </div>
-    <div class="card-body">
-      <alert></alert>
-
-      <form action="" #formAddPage="ngForm" (ngSubmit)="addPublication(formAddPage)" enctype="multipart/form-data">
-        <div class="form-row">
-
-          <div class="col-md-6">
-            <div class="form-group">
-              <!--NOMBRE-->
-              <label for="nombre">Nombre de la Página</label>
-              <input type="text"
-                     name="nombre"
-                     #nombre="ngModel"
-                     [(ngModel)]="page.nombre"
-                     id="nombre" class="form-control" required>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="categoria">Categoría</label>
-              <!--CATEGORÍA-->
-              <select class="form-control" name="categoria" id="categoria" [(ngModel)]="page.categoria" #categoria="ngModel" required>
-                <option *ngFor="let c of categorias" value="{{ c }}">{{ c }}</option>
-              </select>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <!-- TELÉFONO -->
-              <label for="telefono">Teléfono</label>
-              <input type="tel" class="form-control"
-                     name="telefono"
-                     [(ngModel)]="page.telefono"
-                     #telefono="ngModel"
-                     id="telefono" required>
-            </div>
-          </div>
+<app-navbar></app-navbar>
+<app-verconectados></app-verconectados>
+<div style="margin-top: 44px;">
+  <div style="margin-left: 13%;">
+    <div class="container">
+      <div class="card mt-3">
+        <div class="card-header">
+          <h5>Crear nueva página</h5>
         </div>
+        <div class="card-body">
+          <alert></alert>
 
-        <div class="form-row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="logo">Logo</label>
-              <!-- LOGO --->
-              <input type="file" class="form-control-file" name="logo" id="logo"
-                     required
-                     (change)="onSelectLogo($event)"
-                     accept=".png, .jpg, .jpeg"
-                     placeholder="Seleccione Logo">
+          <form action="" #formAddPage="ngForm" (ngSubmit)="addPublication(formAddPage)" enctype="multipart/form-data">
+            <div class="form-row">
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <!--NOMBRE-->
+                  <label for="nombre">Nombre de la Página</label>
+                  <input type="text" name="nombre" #nombre="ngModel" [(ngModel)]="page.nombre" id="nombre"
+                    class="form-control" required>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="categoria">Categoría</label>
+                  <!--CATEGORÍA-->
+                  <select class="form-control" name="categoria" id="categoria" [(ngModel)]="page.categoria"
+                    #categoria="ngModel" required>
+                    <option *ngFor="let c of categorias" value="{{ c }}">{{ c }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <!-- TELÉFONO -->
+                  <label for="telefono">Teléfono</label>
+                  <input type="tel" class="form-control" name="telefono" [(ngModel)]="page.telefono" #telefono="ngModel"
+                    id="telefono" required>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="portada">Portada</label>
-              <!-- PORTADA --->
-              <input type="file" class="form-control-file" name="portada" id="portada"
-                     required
-                     (change)="onSelectPortada($event)"
-                     accept=".png, .jpg, .jpeg"
-                     placeholder="Seleccione Portada">
+
+            <div class="form-row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="logo">Logo</label>
+                  <!-- LOGO --->
+                  <input type="file" class="form-control-file" name="logo" id="logo" required
+                    (change)="onSelectLogo($event)" accept=".png, .jpg, .jpeg" placeholder="Seleccione Logo">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="portada">Portada</label>
+                  <!-- PORTADA --->
+                  <input type="file" class="form-control-file" name="portada" id="portada" required
+                    (change)="onSelectPortada($event)" accept=".png, .jpg, .jpeg" placeholder="Seleccione Portada">
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
 
-        <div class="form-row">
-          <div class="col-md-4 offset-4 mt-4">
-            <input type="submit" class="btn btn-block btn-primary" value="Crear" />
-          </div>
-        </div>
+            <div class="form-row">
+              <div class="col-md-4 offset-4 mt-4">
+                <input type="submit" class="btn btn-block btn-primary" value="Crear" />
+              </div>
+            </div>
 
-      </form>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -110,12 +110,13 @@
             aria-haspopup="true" aria-expanded="false" style="cursor: pointer;">
           </ul>
           <div class="dropdown-menu settings-drop dropdown-menu-right" aria-labelledby="navbarDropdown">
-        <li><a class="dropdown-item" href="#">Administrar páginas</a></li>
+        <li><a class="dropdown-item" routerLink="/{{userLogin.usuario_id}}/pages">Administrar páginas</a></li>
+        <li><a class="dropdown-item" routerLink="/{{userLogin.usuario_id}}/eventos">Administrar eventos</a></li>
         <div class="dropdown-divider"></div>
-        <li><a class="dropdown-item" href="#">Tus grupos</a></li>
+        <li><a class="dropdown-item">Tus grupos</a></li>
         <div class="dropdown-divider"></div>
-        <li><a class="dropdown-item" href="#">Registro de actividad</a></li>
-        <li><a class="dropdown-item" href="#">Configuración</a></li>
+        <li><a class="dropdown-item">Registro de actividad</a></li>
+        <li><a class="dropdown-item">Configuración</a></li>
         <div class="dropdown-divider"></div>
         <li><a class="dropdown-item" (click)="salir()" style="cursor: pointer;">Cerrar sesión</a></li>
     </div>

@@ -1,120 +1,133 @@
-<div class="container p-2">
-  <div class="row">
-    <div class="col-md-5 col-lg-4">
+<app-navbar></app-navbar>
+<app-verconectados></app-verconectados>
+<div style="margin-top: 44px;">
+  <div style="margin-left: 13%;">
+    <div class="container p-2">
+      <div class="row">
+        <div class="col-md-5 col-lg-4">
 
-      <!--  Profile Avatar  -->
-      <div class="card" style="position: sticky; top: 0; z-index: 100">
-        <div class="card-body">
-          <div class="text-center">
-            <img *ngIf="page.pagina_logo" src="{{ url }}/page/img/logos/{{ page.pagina_logo }}" [alt]="page.pagina_nombre" height="150px" class="rounded-circle mb-2" width="100%">
+          <!--  Profile Avatar  -->
+          <div class="card" style="position: sticky; top: 0; z-index: 100">
+            <div class="card-body">
+              <div class="text-center">
+                <img *ngIf="page.pagina_logo" src="{{ url }}/page/img/logos/{{ page.pagina_logo }}"
+                  [alt]="page.pagina_nombre" height="150px" class="rounded-circle mb-2" width="100%">
 
-            <div class="mb-4">
-              <h5 class="mb-0">{{ page.pagina_nombre }}</h5>
-              <small *ngIf="page.pagina_nombreusuario">@{{ page.pagina_nombreusuario.split(" ").join("-") }}</small>
+                <div class="mb-4">
+                  <h5 class="mb-0">{{ page.pagina_nombre }}</h5>
+                  <small *ngIf="page.pagina_nombreusuario">@{{ page.pagina_nombreusuario.split(" ").join("-") }}</small>
+                </div>
+
+                <div>
+                  <button class="btn btn-block btn-success mt-1" *ngIf="isFollowed" (click)="followUnfollow()">
+                    Dejar de Seguir
+                  </button>
+                  <button class="btn btn-block btn-secondary" *ngIf="!isFollowed"
+                    (click)="followUnfollow()">Seguir</button>
+
+                </div>
+                <div *ngIf="isAdmin">
+                  <button class="btn btn-block btn-primary" routerLink="/{{ userId}}/pages/{{ pageId }}/edit">Editar
+                    Pagina</button>
+                </div>
+                <a *ngIf="isAdmin" [routerLink]="['/'+userId,'pages', 'roles', pageId]"
+                  class="btn btn-block btn-danger">Administrar Roles</a>
+              </div>
+
+            </div>
+          </div>
+
+          <div>
+
+            <div class="card mt-1" *ngIf="page.pagina_id">
+              <div class="card-body">
+                <table class="table table-borderless table-sm">
+                  <tbody>
+                    <tr>
+                      <td><b>Teléfono</b></td>
+                      <td>{{ page.pagina_telefono }}</td>
+                    </tr>
+                    <tr>
+                      <td><b>Categoría</b></td>
+                      <td>{{ page.pagina_categoria.toUpperCase() }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
 
-            <div>
-              <button class="btn btn-block btn-success mt-1" *ngIf="isFollowed" (click)="followUnfollow()">
-                Dejar de Seguir
-              </button>
-              <button class="btn btn-block btn-secondary" *ngIf="!isFollowed" (click)="followUnfollow()">Seguir</button>
+            <!--  Seguidores  -->
 
+            <div class="card mt-1">
+              <div class="card-body">
+                <div class="card-body-title mb-3">
+                  Seguidores <b>{{ followNum }}</b>
+                </div>
+                <div class="card-body-content" *ngIf="followers && followers.length > 0">
+                  <a href="#" class="follow d-flex py-2 btn" *ngFor="let f of followers">
+                    <span>✔ {{ f.usuario }}</span>
+                  </a>
+                </div>
+                <a href="#" *ngIf="followNum > followers.length" class="btn btn-sm btn-block mt-3 btn-primary">Ver
+                  todo</a>
+                <small *ngIf="followers && followers.length <= 0">Aún es seguido por nadie</small>
+              </div>
             </div>
-            <div *ngIf="isAdmin">
-              <button class="btn btn-block btn-primary" routerLink="/{{ userId}}/pages/{{ pageId }}/edit">Editar Pagina</button>
-            </div>
-            <a *ngIf="isAdmin" [routerLink]="['/'+userId,'pages', 'roles', pageId]" class="btn btn-block btn-danger">Administrar Roles</a>
+
           </div>
 
         </div>
-      </div>
 
-      <div>
-
-      <div class="card mt-1" *ngIf="page.pagina_id">
-        <div class="card-body">
-          <table class="table table-borderless table-sm">
-            <tbody>
-            <tr>
-              <td><b>Teléfono</b></td>
-              <td>{{ page.pagina_telefono }}</td>
-            </tr>
-            <tr>
-              <td><b>Categoría</b></td>
-              <td>{{ page.pagina_categoria.toUpperCase() }}</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!--  Seguidores  -->
-
-      <div class="card mt-1">
-        <div class="card-body">
-          <div class="card-body-title mb-3">
-            Seguidores <b>{{ followNum }}</b>
-          </div>
-          <div class="card-body-content" *ngIf="followers && followers.length > 0">
-            <a href="#" class="follow d-flex py-2 btn" *ngFor="let f of followers">
-              <span>✔ {{ f.usuario }}</span>
+        <div class="col-md-7" *ngIf="page.pagina_id">
+          <div>
+            <a href="{{ url }}/page/img/portada/{{ page.pagina_portada }}">
+              <img src="{{ url }}/page/img/portada/{{ page.pagina_portada }}" alt="" width="100%" height="320px">
             </a>
           </div>
-          <a href="#"
-             *ngIf="followNum > followers.length"
-             class="btn btn-sm btn-block mt-3 btn-primary">Ver todo</a>
-          <small *ngIf="followers && followers.length <= 0">Aún es seguido por nadie</small>
-        </div>
-      </div>
 
-      </div>
+          <!--<app-form-publication *ngIf="auth.id === userId" (publicationEmitter)="addPublication($event)"></app-form-publication>-->
 
-    </div>
-
-    <div class="col-md-7" *ngIf="page.pagina_id">
-      <div>
-        <a href="{{ url }}/page/img/portada/{{ page.pagina_portada }}">
-          <img src="{{ url }}/page/img/portada/{{ page.pagina_portada }}" alt="" width="100%" height="320px">
-        </a>
-      </div>
-
-      <!--<app-form-publication *ngIf="auth.id === userId" (publicationEmitter)="addPublication($event)"></app-form-publication>-->
-
-      <!-- TimeLife -->
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card">
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-              <li class="nav-item">
-                <a class="nav-link active" id="publicaciones-tab" data-toggle="tab" href="#publicaciones" role="tab" aria-controls="publicaciones" aria-selected="true">Publicaciones</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" id="profile-fotos" data-toggle="tab" href="#fotos" role="tab" aria-controls="fotos" aria-selected="false">Fotos</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" id="profile-video" data-toggle="tab" href="#video" role="tab" aria-controls="video" aria-selected="false">Videos</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" id="seguidores-tab" data-toggle="tab" href="#seguidores" role="tab" aria-controls="seguidores" aria-selected="false">Seguidores</a>
-              </li>
-            </ul>
-            <div class="tab-content" id="myTabContent">
-              <div class="tab-pane fade show active" id="publicaciones" role="tabpanel" aria-labelledby="publicaciones-tab">
-                <app-publications-page  [pageId]="pageId" [page]="page" [admin]="canPublish()"></app-publications-page>
-              </div>
-              <div class="tab-pane fade" id="fotos" role="tabpanel" aria-labelledby="fotos-tab">
-                <app-images-page [pageId]="pageId"></app-images-page>
-              </div>
-              <div class="tab-pane fade" id="video" role="tabpanel" aria-labelledby="video-tab">
-                <app-video-page [pageId]="pageId"></app-video-page>
-              </div>
-              <div class="tab-pane fade" id="seguidores" role="tabpanel" aria-labelledby="seguidores-tab">
-                <app-followers-page [pageId]="pageId"></app-followers-page>
+          <!-- TimeLife -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" id="publicaciones-tab" data-toggle="tab" href="#publicaciones" role="tab"
+                      aria-controls="publicaciones" aria-selected="true">Publicaciones</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="profile-fotos" data-toggle="tab" href="#fotos" role="tab"
+                      aria-controls="fotos" aria-selected="false">Fotos</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="profile-video" data-toggle="tab" href="#video" role="tab"
+                      aria-controls="video" aria-selected="false">Videos</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="seguidores-tab" data-toggle="tab" href="#seguidores" role="tab"
+                      aria-controls="seguidores" aria-selected="false">Seguidores</a>
+                  </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                  <div class="tab-pane fade show active" id="publicaciones" role="tabpanel"
+                    aria-labelledby="publicaciones-tab">
+                    <app-publications-page [pageId]="pageId" [page]="page" [admin]="canPublish()">
+                    </app-publications-page>
+                  </div>
+                  <div class="tab-pane fade" id="fotos" role="tabpanel" aria-labelledby="fotos-tab">
+                    <app-images-page [pageId]="pageId"></app-images-page>
+                  </div>
+                  <div class="tab-pane fade" id="video" role="tabpanel" aria-labelledby="video-tab">
+                    <app-video-page [pageId]="pageId"></app-video-page>
+                  </div>
+                  <div class="tab-pane fade" id="seguidores" role="tabpanel" aria-labelledby="seguidores-tab">
+                    <app-followers-page [pageId]="pageId"></app-followers-page>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-        <!--<div class="col-md-12" *ngFor="let p of publicationList">
+            <!--<div class="col-md-12" *ngFor="let p of publicationList">
           <app-card-publication [publication]="p" (deletedPublication)="removePublication(p.id)"></app-card-publication>
         </div>
         <div class="col-md-12" *ngIf="publicationList.length <= 0">
@@ -126,8 +139,10 @@
       <div class="row mt-2">
         <button class="btn btn-block btn-link" (click)="loadPublications()" *ngIf="showMore">Ver más</button>
       </div>-->
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
-
-</div>
 </div>
