@@ -1,0 +1,125 @@
+<div
+  class="modal fade"
+  id="verVentasGuardadas"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="verVentasGuardadasModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="verVentasGuardadasModalLabel">
+          <i class="fas fa-store nav-icons mr-2"></i>Mis artículos guardados
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="!editando">
+        <div class="container-fluid p-3">
+          <div class="row" *ngIf="ventasGuardadas.length > 0">
+            <div
+              class="col d-flex justify-content-around flex-wrap"
+              style="max-height: 400px; overflow: auto;"
+            >
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Imagen</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Detalle</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let venta of ventasGuardadas; let i = index">
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>
+                      <img [src]="venta.venta_url" style="max-width: 100px;" />
+                    </td>
+                    <td>{{ venta.venta_nombre }}</td>
+                    <td>{{ venta.venta_detalle }}</td>
+                    <td>$ {{ venta.venta_precio }}</td>
+                    <td>
+                      <button
+                        class="btn"
+                        data-toggle="tooltip"
+                        data-placement="bottom"
+                        title="Eliminar"
+                        data-toggle="modal"
+                        data-target="#eliminarVentaGuardada"
+                        (click)="eliminar = venta"
+                      >
+                        <i class="fas fa-trash" style="color: tomato;"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="row" *ngIf="ventasGuardadas.length === 0">
+            <div class="col justify-content-center d-flex">
+              <h3>No se han encontrado artículos</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="eliminarVentaGuardada"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="eliminarVentasGuardadasModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content" style="border: solid firebrick;">
+      <div class="modal-header">
+        <h5 class="modal-title" id="eliminarVentasGuardadasModalLabel">
+          Eliminar venta guardada
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ¿Estás seguro que deseas eliminar este artículo?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Cancelar
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="eliminarVentaGuardada()"
+          data-dismiss="modal"
+        >
+          Eliminar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

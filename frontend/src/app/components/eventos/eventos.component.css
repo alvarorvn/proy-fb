@@ -1,0 +1,360 @@
+.lateral_izq {
+    padding-top: 30px; /*alto*/
+    padding-left: 20px; /*lados*/
+}
+
+.lateral_der {
+    padding-top: 30px;
+    padding-left: 20px;
+}
+
+.timeline-nav {
+    width: 100%;
+    position: fixed;
+    z-index: 10;
+    padding:  25px 15px;
+    width: 100px; /*largo */
+    text-align: left;
+    margin: auto;
+    background-color: #000000;
+    color: rgb(136, 25, 25);
+}
+
+.timeline {
+    position: relative;
+    max-width: 400px;
+    margin: 0 auto;
+    width: 100%;
+    position: fixed;
+    padding: 0px 90px;
+}
+  
+.tab-content1 {
+    position: relative;
+    max-width: 4000px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0px 400px;
+ }
+  
+.tab-content2 {
+    position: relative;
+    max-width: 4000px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0px 400px;
+}
+
+.modal-header h5 {
+    font-size: 24px;
+    color: #000000
+}  
+
+.modal-body p {
+    font-size: 14px;
+    color: #000000;
+    text-align: right;
+}  
+
+
+
+
+
+
+
+
+
+
+
+
+
+:host {
+    --color_base: #3B5998;
+    --gris_suave: #90949C;
+    --gris_suave_oscuro: #666666;
+    --azul_supersuave: #9CB4D8;
+}
+
+.signUpInStyle {
+    text-align: center;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+    background: linear-gradient(white, #d3d8e8)
+}
+
+/* PAGINA INICIO FB */
+
+#header_wrapper {
+    width: 100%;
+    min-width: 980px;
+    background-color: var(--color_base)
+}
+
+#header {
+    width: 980px;
+    margin: 0 auto;
+    padding: 0;
+    height: 85px;
+}
+
+#header li {
+    list-style-type: none;
+    float: left;
+    text-align: left;
+    color: #fff
+}
+
+#header #sitename {
+    margin-top: 25px
+}
+
+#header #sitename a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 30px;
+    font-weight: 900
+}
+
+#header form {
+    margin-top: 15px;
+    float: right
+}
+
+#header form li {
+    font-size: 12px;
+    margin-left: 15px
+}
+
+#header form li a {
+    color: var(--azul_supersuave);
+    text-decoration: none
+}
+
+#header form input[type=submit] {
+    height: 25px;
+    margin-top: 20px;
+    background-color: #476bb8;
+    color: #fff;
+    border: 1px solid #2b406e;
+    font-weight: bold;
+    font-size: 12px;
+    cursor: pointer;    
+}
+
+#header form input[type=submit]:hover {
+    background-color: var(--color_base);
+}
+
+
+
+
+/*-CUERPO-*/
+.social{
+    position: fixed;
+    left: o;
+    top: 80px;
+    z-index: 20;
+}
+
+.social ul {
+    list-style: none;
+    float: left;
+    font-family: helvetica, arial, sans-serif
+}
+
+
+.social ul li b {
+    display:  inline-block;
+    color: rgb(0, 0, 0);
+    background: #000;
+    padding:  25px 15px;
+    text-decoration: none;
+}
+
+.social ul li a {
+    display:  inline-block;
+    color: rgb(29, 27, 27);
+    background: #000;
+    padding:  7px 15px;
+    text-decoration: none;
+}
+
+.social ul li .A0 {background: #ffffff;}
+.social ul li .A1 {background: #ffffff;}
+.social ul li .A2 {background: #ffffff;}
+.social ul li .A3 {background: #ffffff;}
+.social ul li .A4 {background: #ffffff;}
+.social ul li .A5 {background: #ffffff;}
+
+/*
+.social ul li .A1 {background: #3b5998;}
+.social ul li .A2 {background: #00abf0;}
+.social ul li .A3 {background: #d95232;}
+.social ul li .A4 {background: #ae181f;}
+.social ul li .A5 {background: #666666;}
+*/
+
+.social ul li a:hover {
+    padding: 7px 20px;
+    background-color: rgb(223, 215, 215);
+}
+
+
+
+#wrapper {
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+    width: 1280px
+}
+
+#wrapper div {
+    float: left;
+    font-family: helvetica, arial, sans-serif
+}
+
+#wrapper #div1 {
+    margin-top: 30px;
+    width: 200px; /*largo */
+    text-align: left
+}
+
+#wrapper #div1 p {
+    font-size: 22px;
+    font-family: arial;
+    font-weight: 500;
+    margin: 0;
+}
+
+#wrapper #div2 {
+    margin-top: 10px;
+    width: 550px;
+    text-align: left
+}
+
+#wrapper #div2 h1 {
+    margin: 0;
+    font-size: 37px;
+    color: #2e2e2e
+}
+
+#wrapper #div2 p {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+#wrapper #div2 hr {
+    width: 500px;
+    margin: 0;
+}
+
+#wrapper #div3 {
+    margin-top: 10px;
+    width: 350px;
+    text-align: left
+}
+
+#wrapper #div3 p {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+
+
+
+.tab{
+    position: fixed;
+    left: o;
+    top: 150px;
+    z-index: 20;
+}
+
+#wrapper #table {
+    width: 50%;
+    margin: 0;
+    text-align: right;
+ }
+ #wrapper #table th, td {
+    width: 25%;
+    text-align: left;
+    vertical-align: top;
+ }
+
+  #wrapper #table tr{
+    background-color: red;
+    display: inline;
+    margin: 10px;
+  }
+
+
+ 
+
+
+
+
+
+
+#footer_wrapper {
+    width: 100%;
+    clear: both;
+    float: left;
+    margin-top: 30px;
+    min-width: 995px;
+    background-color: #fff;
+    text-align: left
+}
+
+#footer1 {
+    width: 980px;
+    margin: 0 auto;
+    padding: 0;
+    border-bottom: 1px solid #e6e6e6;
+    height: 30px;
+    line-height: 30px;
+    font-size: 12px;
+    color: #848484
+}
+
+#footer1 a {
+    color: #365899;
+    display: inline;
+    margin-left: 10px;
+    text-decoration: none
+}
+
+#footer1 a:hover {
+    text-decoration: underline
+}
+
+#footer2 {
+    width: 980px;
+    margin: 0 auto;
+    padding: 0;
+    font-size: 12px;
+    color: #848484
+}
+
+#footer2 a {
+    color: #365899;
+    display: inline-block;
+    margin: 5px;
+    min-width: 80px;
+    text-decoration: none
+}
+
+#footer2 a:hover {
+    text-decoration: underline
+}
+
+/* PAGINA INICIO FB */
+
+/* PERSONALIZDOS */
+
+.two-fields {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+/* PERSONALIZDOS */
