@@ -1,5 +1,5 @@
-<div class="vertical-nav bg-white" id="sidebar">
-    <ul class="nav flex-column bg-white mb-0">
+<div class="vertical-nav " id="sidebar">
+    <ul class="nav flex-column mb-0">
         <div class="row row-cols-1">
             <li *ngFor="let amigo of amigos" class="nav-item">
                 <div class="tarjeta-amigos1">
@@ -15,11 +15,11 @@
                         </ng-template>
                     </ng-template>
                     <ng-container *ngIf="!amigo.usuario_conectado; else conectado">
-                        <a routerLink="#">{{amigo.usuario_nombres}}
+                        <a>{{amigo.usuario_nombres}}
                             {{amigo.usuario_apellidos}}</a>
                     </ng-container>
                     <ng-template #conectado>
-                        <a routerLink="#">{{amigo.usuario_nombres}}
+                        <a>{{amigo.usuario_nombres}}
                             {{amigo.usuario_apellidos}}
                             <i class="fas fa-toggle-on"></i>
                         </a>
