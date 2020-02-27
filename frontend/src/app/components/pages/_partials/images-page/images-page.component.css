@@ -1,0 +1,13 @@
+.img-pub {
+  position: relative;
+  display: block;
+}
+.img-extra-info {
+  position: absolute;
+  left: 1px;
+  bottom: 0;
+  padding: 0px 7px;
+  background: rgba(0, 0, 0, 0.45);
+  color: white;
+  border-radius: 1rem;
+}

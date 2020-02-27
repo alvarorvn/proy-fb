@@ -1,0 +1,50 @@
+<div class="container">
+  <app-frm-publication (publicationEmitter)="resetPublications()" [pageId]="pageId" *ngIf="admin"></app-frm-publication>
+  <div *ngIf="publications && publications.length>0">
+    <div class="box mb-2" *ngFor="let p of publications" >
+      <div class="box-header">
+        <div class="publicaction-user">
+          <!--<img [src]="avatar+publication.user.avatar" class="rounded-circle mr-2" width="40px" height="40px">-->
+          <div>
+            <div class="d-flex">
+              <b>{{ page.pagina_nombre }}</b>
+              <small *ngIf="admin">&nbsp;| publicado por: {{ p.usuario }}</small>
+            </div>
+            <small class="text-muted">{{ p.pub_fechahora | amParseZone  |amTimeAgo  }}</small>
+          </div>
+        </div>
+        <div>
+          <!--<div *ngIf="auth.id == publication.user_id">
+            <button class="btn-init text-init" (click)="removePublication(publication.id)"><i class="fa fa-trash-alt"></i>  </button>
+          </div>-->
+        </div>
+      </div>
+      <div class="box-body publication">
+        <div>{{ p.pub_texto }}</div>
+        <div *ngIf="p.pub_pathMult && !isVideo(p.pub_pathMult)">
+          <div *ngIf="isDefined(p.pub_pathMult)">
+            <img src="{{url}}/page/img/publication/{{ p.pub_pathMult }}" alt="" width="100%">
+          </div>
+        </div>
+
+        <div *ngIf="p.pub_pathMult && isVideo(p.pub_pathMult)" class="mt-2">
+          <video width="100%" height="250" controls>
+            <source src="{{url}}/page/img/publication/{{ p.pub_pathMult }}" type="video/mp4" >
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="publications && publications.length<=0" class="p-4 text-centerf">
+    Aun no hay publicaciones en esta página
+  </div>
+
+  <div class="row mt-2" *ngIf="publications && publications.length > 0">
+    <div class="col-4 offset-4 py-2">
+      <button class="btn btn-block btn-primary" (click)="getPublications(true)" *ngIf="showMore">Ver más</button>
+    </div>
+  </div>
+
+</div>

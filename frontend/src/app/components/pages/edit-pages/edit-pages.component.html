@@ -1,0 +1,91 @@
+<div class="container">
+  <div *ngIf="isAdmin" class="card mt-3">
+    <div class="card-header">
+      <h5>Modificar página</h5>
+    </div>
+    <div class="card-body">
+      <alert></alert>
+
+      <form *ngIf="page" #formAddPage="ngForm" (ngSubmit)="updatePage(formAddPage)" enctype="multipart/form-data">
+        <div class="form-row">
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <!--NOMBRE-->
+              <label for="nombre">Nombre de la Página</label>
+              <input type="text"
+                     name="nombre"
+                     #nombre="ngModel"
+                     [(ngModel)]="page.pagina_nombre"
+                     id="nombre" class="form-control" required>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="categoria">Categoría</label>
+              Actual: <b>{{ page.pagina_categoria.toUpperCase() }}</b>
+              <!--CATEGORÍA-->
+              <select class="form-control" name="categoria" id="categoria" [(ngModel)]="page.categoria" #categoria="ngModel" required>
+                <option *ngFor="let c of categorias" value="{{ c }}" [selected]="c.toLowerCase() === page.pagina_categoria">{{ c }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <!-- TELÉFONO -->
+              <label for="telefono">Teléfono</label>
+              <input type="tel" class="form-control"
+                     name="telefono"
+                     [(ngModel)]="page.pagina_telefono"
+                     #telefono="ngModel"
+                     id="telefono" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="col-md-6">
+            <img *ngIf="page.pagina_logo" src="{{ url }}/page/img/logos/{{ page.pagina_logo }}" height="150px">
+            <div class="form-group">
+              <label for="logo">Logo</label>
+              <!-- LOGO --->
+              <input type="file" class="form-control-file" name="logo" id="logo"
+                     required
+                     (change)="onSelectLogo($event)"
+                     accept=".png, .jpg, .jpeg"
+                     placeholder="Seleccione Logo">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <img *ngIf="page.pagina_portada" src="{{ url }}/page/img/portada/{{ page.pagina_portada }}" height="150px">
+            <div class="form-group">
+              <label for="portada">Portada</label>
+              <!-- PORTADA --->
+              <input type="file" class="form-control-file" name="portada" id="portada"
+                     required
+                     (change)="onSelectPortada($event)"
+                     accept=".png, .jpg, .jpeg"
+                     placeholder="Seleccione Portada">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row mt-3">
+          <div class="col-md-3 offset-1">
+            <input type="submit" class="btn btn-block btn-primary" value="Actualizar" />
+          </div>
+          <div class="col-md-3">
+            <a [routerLink]="['/'+userId, 'pages']" class="btn btn-block btn-danger">Ver Todas</a>
+          </div>
+
+          <div class="col-md-3">
+            <a [routerLink]="['/'+userId, 'page', pageId]" class="btn btn-block btn-success">Ver Página</a>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+</div>
+
