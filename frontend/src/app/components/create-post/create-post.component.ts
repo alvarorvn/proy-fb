@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { AuthService } from "../../services/auth.service";
 import { CreatePostService } from '../../services/create-post.service';
 import { Post } from 'src/app/Post';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -19,13 +19,13 @@ export class CreatePostComponent implements OnInit {//PADRE
   userLogin = {usuario_apellidos:""};
   posts: Post[];
   saludo: string;
-  userId = this.authService.getId();
+  userId = window.location.pathname.split('/')[1];
   fileUpload;
   formData;
   changeImg: boolean = false;
   
 
-  constructor(private authService: AuthService, private createPostService: CreatePostService, private router: Router,private sanitizer: DomSanitizer) {
+  constructor(private authService: AuthService, private createPostService: CreatePostService, private router: Router,private sanitizer: DomSanitizer, private activatedRoute: ActivatedRoute) {
     this.getUserLogin();
     //this.formData = new FormData;
     
@@ -44,6 +44,7 @@ export class CreatePostComponent implements OnInit {//PADRE
       console.log(this.posts['result']);
     }, 1000);*/
     //this.formData = new FormData;
+    this.getIdURL();
   }
 
   receiveMessage($event){
@@ -153,8 +154,18 @@ export class CreatePostComponent implements OnInit {//PADRE
     return this.sanitizer.bypassSecurityTrustResourceUrl(`data:image/png;charset=utf-8;base64, ${url}`);
   }
 
-  generateFormData(){
-    return new FormData;
+  getIdURL(){
+    /*this.activatedRoute.queryParams.subscribe(params => {
+      const data: any = params['usuario_id'] || null;
+      console.log("Angulkar id: ");
+      console.log(data);
+      // Código...
+    });*/
+    console.log("Angulkar id: ");
+    const u = window.location.pathname.split('/')[1];
+    console.log(u);
   }
+
+  
 
 }//end class
