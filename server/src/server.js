@@ -9,6 +9,7 @@ const posts_routes = require("../routes/posts");
 const biografia_routes = require("../routes/biografia");
 const markeplace_routes = require("../routes/marketplace");
 const eventos_routes = require('../routes/eventos');
+const page_routes = require('../routes/page.js');
 
 app.set("port", 3000 || process.env.PORT);
 
@@ -22,7 +23,6 @@ const storage = multer.diskStorage({
   }
 });
 
-app.use(multer({ storage: storage, dest: path.join(__dirname, '../faces') }).array('file'));
 
 //comunicar con otro servidor
 app.use(cors());
@@ -31,14 +31,22 @@ app.use(express.json());
 // servidor capaz de entender datos enviados desde un formulario, true para indicar que permite todo tipo de datos
 app.use(express.urlencoded({ extended: true }));
 
+// para subir archivos
+app.use(multer({ storage: storage, dest: path.join(__dirname, '../faces') }).any()); // se cambio a any para aceptar campos con otros nombres, no solo 'file'
+
 // Routes
+app.use('/', posts_routes);
+app.use('/:iduser/biografia', biografia_routes);
 app.use("/", user_routes);
 app.use("/", posts_routes);
 app.use("/:iduser/biografia", biografia_routes);
 app.use("/marketplace", markeplace_routes);
 
 app.use('/:iduser/eventos', eventos_routes);
+app.use('/page',page_routes);
 
+// Routes
+app.use('/',user_routes);
 
 // Start server
 app.listen(app.get("port"), () => {
