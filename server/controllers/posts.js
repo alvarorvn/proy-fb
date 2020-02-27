@@ -31,12 +31,12 @@ async function getPostsUser(req, res) {
 // INSERT - Registra una publicacion 
 async function savepost(req, res) {
   let perfil_path_foto = "";
-  ( req.file == undefined ) ? perfil_path_foto = "" : perfil_path_foto = `faces/${req.file.originalname}`;
+  ( req.files[0] == undefined ) ? perfil_path_foto = "" : perfil_path_foto = `faces/${req.files[0].originalname}`;
 
   const pub_texto = req.body.pub_texto;
   const usuario_id = req.body.usuario_id;
   console.log("Savepost...");
-  console.log(pub_texto, usuario_id);
+  console.log(pub_texto, usuario_id, req.files[0]);
   console.log("End savepost");
 
   /**
