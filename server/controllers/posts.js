@@ -35,7 +35,9 @@ async function savepost(req, res) {
 
   const pub_texto = req.body.pub_texto;
   const usuario_id = req.body.usuario_id;
+  console.log("Savepost...");
   console.log(pub_texto, usuario_id);
+  console.log("End savepost");
 
   /**
    * pub_pathMult, pub_tipo, pub_duracion, pub_estado, usuario_id, perfilusu_id
