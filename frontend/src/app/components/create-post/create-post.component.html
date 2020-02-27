@@ -35,7 +35,7 @@
                 <span>Crear publicación</span>
                 <button (click)="closeModal()" class="rounded-pill close-modal pl-3 pr-3">X</button>
             </div>
-            <div class="line-bottom post-body">
+            <div class="post-body p-3">
                 <ng-container *ngIf="userLogin.image_perfil; else fotoDefault">
                     <img [src]=getSantizeUrl(userLogin.image_perfil) class="rounded-circle mediana float-left mr-2">
                 </ng-container>
@@ -51,6 +51,10 @@
                     <textarea [(ngModel)]="pub_texto" name="pub_texto" class="textinput"
                         placeholder={{saludo}}></textarea>
                 </div>
+            </div>
+
+            <div>
+                <img id="image" style="display: none;">
             </div>
 
             <div class="post_options line-bottom">

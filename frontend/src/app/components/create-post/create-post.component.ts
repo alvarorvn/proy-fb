@@ -5,8 +5,6 @@ import { Post } from 'src/app/Post';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 
-import { PostsComponent } from '../../components/posts/posts.component';
-
 @Component({
   selector: 'app-create-post',
   templateUrl: './create-post.component.html',
@@ -23,9 +21,14 @@ export class CreatePostComponent implements OnInit {//PADRE
   saludo: string;
   userId = this.authService.getId();
   fileUpload;
+  formData;
+  changeImg: boolean = false;
+  
 
   constructor(private authService: AuthService, private createPostService: CreatePostService, private router: Router,private sanitizer: DomSanitizer) {
     this.getUserLogin();
+    //this.formData = new FormData;
+    
     this.saludo = `¿Qué estás pensando ${this.userLogin.usuario_apellidos}?`;
     createPostService.getPostsUser(this.userId).subscribe(res => {
       if (res['message']) {
@@ -40,41 +43,58 @@ export class CreatePostComponent implements OnInit {//PADRE
     /*setTimeout(() => {
       console.log(this.posts['result']);
     }, 1000);*/
-    
+    //this.formData = new FormData;
   }
 
   receiveMessage($event){
     this.test = $event;
   }
 
+  renderImage(formDataImg) {
+    const file = formDataImg.get('file');
+    const image = URL.createObjectURL(file);
+    const tagImg = document.getElementById('image');
+    tagImg.setAttribute('src', image);
+    tagImg.style.display='block';
+    //this.formData = null;
+  }
+
   // Add post
   toPost() {
+    
     console.log(this.pub_texto, this.userId);
-    const formData = new FormData();
-    formData.append('file', this.fileUpload);
+    const formData = new FormData;
+    if(this.changeImg != false){
+      formData.append('file', this.fileUpload); //<-
     formData.append('pub_texto', this.pub_texto);
     formData.append('usuario_id', this.userId);
-    //debugger
-    //console.log(formData);
-
-    //{ "pub_texto": this.pub_texto, "usuario_id": this.userId },
+    }else{
+      
+    formData.append('pub_texto', this.pub_texto);
+    formData.append('usuario_id', this.userId);
+    }
+    
+    
     this.createPostService.savepost(formData).subscribe(res => {
       
       this.posts.push(res);
-      //console.log(res);
       this.closeModal();
       this.pub_texto = '';
+      const tagImg = document.getElementById('image');
+      tagImg.style.display='none';
+      tagImg.removeAttribute('src');
+      //this.formData.set('file', null);
+      
     });
   }
 
   // Subida de archivos
   onFileChange(e) {
+    const formDataImg = new FormData;
     this.fileUpload = e.target.files[0];
-    console.log(this.fileUpload);
-    const formData = new FormData;
-    formData.append('file', this.fileUpload);
-    console.log(formData);
-    //this.uploadImage();
+    this.changeImg = true;
+    formDataImg.append('file', this.fileUpload);
+    this.renderImage(formDataImg);
   }
 
   // Delete post
@@ -107,6 +127,9 @@ export class CreatePostComponent implements OnInit {//PADRE
 
   showModal() {
     var modali = document.getElementById('modal');
+    const tagImg = document.getElementById('image');
+    tagImg.style.display='none';
+    this.changeImg = false;
     modali.style.display = 'block';
     modali.addEventListener('click', e => {
       if (e.target === modali) {
@@ -120,23 +143,6 @@ export class CreatePostComponent implements OnInit {//PADRE
     modali.style.display = 'none';
   }
 
-  
-
-  /*uploadImage() {
-    const formData = new FormData();
-    formData.append('file', this.fileUpload);
-    this.createPostService.updatePerfilPhoto(formData).subscribe(res => {
-      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-      //this.router.onSameUrlNavigation = 'reload';
-      //this.router.navigate([`${this.authService.getId()}/biografia`]);
-    })
-  }*/
-
-  hijole() {
-    console.log("Dentro de hijole");
-    this.createPostService.deletePost(51);
-    //this.postsComponent.deletePost();
-  }
 
   updatePost(){
     let p = {"pub_id": 56, "pub_texto": "Actualizado!", "usuario_id": 2};
@@ -145,6 +151,10 @@ export class CreatePostComponent implements OnInit {//PADRE
 
   public getSantizeUrl(url: string) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(`data:image/png;charset=utf-8;base64, ${url}`);
+  }
+
+  generateFormData(){
+    return new FormData;
   }
 
 }//end class
