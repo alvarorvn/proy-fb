@@ -16,7 +16,8 @@ export class PostsComponent implements OnInit {//hijo
   @Input() usuario_id;
 
   userLogin = {};
-  userId = this.authService.getId();
+  //userId = this.authService.getId();
+  userId = window.location.pathname.split('/')[1];
   //@Output() messageEvent = new EventEmitter<string>();
 
   //test2: string = 'Desde hijo test';

@@ -6,7 +6,7 @@ const pool = new Pool({
     port: '5432',
     database: 'proyecto_redsocial',
     user: 'postgres',
-    password: 'root'
+    password: 'admin123'
 })
 
 
