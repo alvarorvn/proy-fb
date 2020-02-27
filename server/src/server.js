@@ -8,6 +8,7 @@ const user_routes = require("../routes/users");
 const posts_routes = require("../routes/posts");
 const biografia_routes = require("../routes/biografia");
 const markeplace_routes = require("../routes/marketplace");
+const eventos_routes = require('../routes/eventos');
 
 app.set("port", 3000 || process.env.PORT);
 
@@ -21,11 +22,7 @@ const storage = multer.diskStorage({
   }
 });
 
-app.use(
-  multer({ storage: storage, dest: path.join(__dirname, "../faces") }).single(
-    "file"
-  )
-);
+app.use(multer({ storage: storage, dest: path.join(__dirname, '../faces') }).array('file'));
 
 //comunicar con otro servidor
 app.use(cors());
@@ -39,6 +36,9 @@ app.use("/", user_routes);
 app.use("/", posts_routes);
 app.use("/:iduser/biografia", biografia_routes);
 app.use("/marketplace", markeplace_routes);
+
+app.use('/:iduser/eventos', eventos_routes);
+
 
 // Start server
 app.listen(app.get("port"), () => {

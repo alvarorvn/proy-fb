@@ -1,15 +1,6 @@
-const { Pool } = require('pg');
+const pool = require('../database/conexion');
 
 const marketplace = {};
-
-// Conexion a postgres
-const pool = new Pool({
-  host: 'localhost',
-  user: 'postgres',
-  password: '1234',
-  database: 'proyecto_redsocial',
-  port: '5432'
-});
 
 // Función para obtener las todas ventas guaardadas
 marketplace.listarGuardadas = async (req, res) => {

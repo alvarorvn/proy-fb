@@ -1,24 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { AuthService } from "../../services/auth.service";
 import { CreatePostService } from '../../services/create-post.service';
 import { Post } from 'src/app/Post';
+import { Router } from '@angular/router';
 
-var helpers = require('../../../assets/helpers.js');
+import { PostsComponent } from '../../components/posts/posts.component';
 
 @Component({
   selector: 'app-create-post',
   templateUrl: './create-post.component.html',
   styleUrls: ['./create-post.component.css']
 })
-export class CreatePostComponent implements OnInit {
+export class CreatePostComponent implements OnInit {//PADRE
+
+  //@ViewChild(PostsComponent, {static: false}) postsComponent: PostsComponent;
 
   private pub_texto: string;
-
+  test: string = 'Prueba de delete'; //<---
   userLogin = {};
   posts: Post[];
   userId = this.authService.getId();
+  fileUpload;
 
-  constructor(private authService: AuthService, private createPostService: CreatePostService) {
+  constructor(private authService: AuthService, private createPostService: CreatePostService, private router: Router) {
     createPostService.getPostsUser(this.userId).subscribe(res => {
       if (res['message']) {
         this.posts = res['result'];
@@ -34,11 +38,16 @@ export class CreatePostComponent implements OnInit {
     }, 1000);*/
   }
 
+  receiveMessage($event){
+    this.test = $event;
+  }
+
   // Add post
   toPost() {
     console.log(this.pub_texto, this.userId);
     this.createPostService.savepost({ "pub_texto": this.pub_texto, "usuario_id": this.userId }).subscribe(res => {
       this.posts.push(res);
+      console.log(res);
       this.closeModal();
       this.pub_texto = '';
     });
@@ -87,6 +96,31 @@ export class CreatePostComponent implements OnInit {
     modali.style.display = 'none';
   }
 
+  // Subida de archivos
+  /*onFileChange(e) {
+    this.fileUpload = e.target.files[0];
+    this.uploadImage();
+  }
 
+  uploadImage() {
+    const formData = new FormData();
+    formData.append('file', this.fileUpload);
+    this.createPostService.updatePerfilPhoto(formData).subscribe(res => {
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+      //this.router.onSameUrlNavigation = 'reload';
+      //this.router.navigate([`${this.authService.getId()}/biografia`]);
+    })
+  }*/
+
+  hijole() {
+    console.log("Dentro de hijole");
+    this.createPostService.deletePost(51);
+    //this.postsComponent.deletePost();
+  }
+
+  updatePost(){
+    let p = {"pub_id": 56, "pub_texto": "Actualizado!", "usuario_id": 2};
+    this.createPostService.updatePost(p);
+  }
 
 }//end class

@@ -25,6 +25,8 @@ import { PerfilAmigoComponent } from "./components/perfil-amigo/perfil-amigo.com
 import { MarketplaceComponent } from "./components/marketplace/marketplace.component";
 import { VerVentasComponent } from './components/ver-ventas/ver-ventas.component';
 import { VerGuardadosComponent } from './components/ver-guardados/ver-guardados.component';
+import { VerconectadosComponent } from './components/verconectados/verconectados.component';
+import { EventosComponent } from './components/eventos/eventos.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { VerGuardadosComponent } from './components/ver-guardados/ver-guardados.
     PerfilAmigoComponent,
     MarketplaceComponent,
     VerVentasComponent,
-    VerGuardadosComponent
+    VerGuardadosComponent,
+    VerconectadosComponent,
+    EventosComponent
   ],
   imports: [
     BrowserModule,

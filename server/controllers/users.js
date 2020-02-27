@@ -8,7 +8,7 @@ const validar = require('../src/validaciones');
 // Funcion de registro de usuario - sin validar
 async function register(req, res) {
     const { usuario_nombres, usuario_apellidos, usuario_email, usuario_password, usuario_fechanac, usuario_sexo } = req.body;
-    let usuario_path_face = `faces/${req.file.originalname}`;
+    let usuario_path_face = `faces/${req.files[0].originalname}`;
     let usuario_acc_verify, usuario_activo, usuario_conectado;
     let salt = bcrypt.genSaltSync(10);
     let hash = bcrypt.hashSync(usuario_password, salt);
@@ -154,7 +154,7 @@ async function getSeguidores(req, res) {
     const { id } = req.params;
     let query = `SELECT seg.*, usu.usuario_nombres, usu.usuario_apellidos, usu.usuario_sexo, per.perfil_path_foto
                     FROM seguidos as seg, usuario as usu, perfil_usuario as per
-                    WHERE seg.usuario_id=${id} AND seg.usuario_id_sigue = usu.usuario_id AND per.usuario_id = seg.usuario_id_sigue`;
+                    WHERE seg.usuario_id_sigue=${id} AND seg.usuario_id = usu.usuario_id AND per.usuario_id = seg.usuario_id`;
     let result = await pool.query(query);
     if (result.rows == 0) return res.json({ message: "No hay usuarios registrados", tipo: 'error', result: [] });
     result.rows.forEach(seguidor => {
@@ -172,7 +172,7 @@ async function getSeguidos(req, res) {
     const { id } = req.params;
     let query = `SELECT seg.*, usu.usuario_nombres, usu.usuario_apellidos, usu.usuario_sexo, per.perfil_path_foto
                     FROM seguidos as seg, usuario as usu, perfil_usuario as per
-                    WHERE seg.usuario_id_sigue=${id} AND seg.usuario_id = usu.usuario_id AND per.usuario_id = seg.usuario_id`;
+                    WHERE seg.usuario_id=${id} AND seg.usuario_id_sigue = usu.usuario_id AND per.usuario_id = seg.usuario_id_sigue`;
     let result = await pool.query(query);
     if (result.rows == 0) return res.json({ message: "No sigues a otros usuarios", tipo: 'error', result: [] });
     result.rows.forEach(seguido => {
@@ -188,7 +188,7 @@ async function getSeguidos(req, res) {
 // obtiene los amigos de un usuario
 async function getAmigos(req, res) {
     const { id } = req.params;
-    let query = `SELECT am.*, usu.usuario_nombres, usu.usuario_apellidos, usu.usuario_sexo, per.perfil_path_foto
+    let query = `SELECT am.*, usu.usuario_nombres, usu.usuario_apellidos, usu.usuario_sexo, usu.usuario_conectado, per.perfil_path_foto
                     FROM amigos as am, usuario as usu, perfil_usuario as per
                     WHERE am.usuario_id=${id} AND am.usuario_id_amigo = usu.usuario_id AND per.usuario_id = am.usuario_id_amigo`;
     let result = await pool.query(query);
@@ -206,7 +206,7 @@ async function getAmigos(req, res) {
 // actualiza foto de perfil
 async function updatePerfilPhoto(req, res) {
     const { id } = req.params;
-    let perfil_path_foto = `faces/${req.file.originalname}`
+    let perfil_path_foto = `faces/${req.files[0].originalname}`
 
     try {
         let query = `SELECT * FROM usuario WHERE usuario_id = ${id}`;
@@ -225,7 +225,7 @@ async function updatePerfilPhoto(req, res) {
 // actualiza portada
 async function updatePortadaPhoto(req, res) {
     const { id } = req.params;
-    let perfil_path_portada = `faces/${req.file.originalname}`
+    let perfil_path_portada = `faces/${req.files[0].originalname}`
 
     try {
         let query = `SELECT * FROM usuario WHERE usuario_id = ${id}`;
@@ -261,6 +261,25 @@ async function updateUserLogin(req, res) {
     }
 }
 
+// Actualiza estado de conexion
+async function updateConectado(req, res) {
+    const { usuario_conectado } = req.body;
+    /*if (validar.campoVacio(usuario_fechanac) || validar.campoVacio(usuario_sexo))
+        return res.json({ message: "Llene el formulario por favor", tipo: 'error' });*/
+
+    try {
+        let sql = `SELECT * FROM usuario where usuario_id = '${req.params.iduser}'`;
+        let result = await pool.query(sql);
+        if (result.rowCount == 0) return res.json({ message: "No existe usuario registrado a editar", tipo: "error" });
+        sql = `UPDATE usuario SET
+            usuario_conectado = '${usuario_conectado}' WHERE usuario_id = '${req.params.iduser}'`;
+        result = await pool.query(sql);
+        if (result.rowCount == 1) return res.json({ message: "Estado actualizado con exito", tipo: "exito" });
+    } catch (error) {
+        return res.json({ message: "Error al actualizar estado", tipo: "error" });
+    }
+}
+
 // Obtener ciudades
 async function getCiudades(req, res) {
     let query = `SELECT * FROM ciudad`;
@@ -274,6 +293,6 @@ module.exports = {
     register,
     getPersonas, getUsuarios, getUsuario, getSeguidores, getAmigos, getSeguidos,
     recFacialLogin, getCiudades,
-    updatePerfilPhoto, updatePortadaPhoto, updateUserLogin
+    updatePerfilPhoto, updatePortadaPhoto, updateUserLogin, updateConectado
 
 };

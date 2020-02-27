@@ -1,1 +1,755 @@
-<p>perfil-amigo works!</p>
+<app-navbar></app-navbar>
+<div style="margin-top: 44px; margin-bottom: 10px;">
+    <ng-container *ngIf="perfil_amigo.image_portada; else portadaDefault">
+        <div class="jumbotron">
+            <img [src]=getSantizeUrl(perfil_amigo.image_portada) class="jb-img">
+            <div class="container-fluid">
+                <div class="dp">
+                    <ng-container *ngIf="perfil_amigo.image_perfil; else fotoDefault">
+                        <img [src]=getSantizeUrl(perfil_amigo.image_perfil) class="dp-img">
+                    </ng-container>
+                    <ng-template #fotoDefault>
+                        <ng-container *ngIf="perfil_amigo.usuario_sexo == 'Hombre'; else fotoDefaultSexo">
+                            <img src="../assets/img/user_pred.jfif" class="dp-img">
+                        </ng-container>
+                        <ng-template #fotoDefaultSexo>
+                            <img src="../assets/img/user_pred_mujer.jpg" class="dp-img">
+                        </ng-template>
+                    </ng-template>
+                    <a routerLink="/{{authService.getId()}}/biografia/{{perfil_amigo.usuario_id}}"
+                        class="dp-profile-name">{{perfil_amigo.usuario_nombres}}</a>
+                </div>
+                <div class="f-buttons btn-group">
+                    <ng-container *ngIf="esAmigo() == true; else addAmigo">
+                        <div class="dropdown">
+                            <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                style="border-radius: 0%;">
+                                <i class="fas fa-check"></i> Amigos
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="font-size: 14px;">
+                                <a class="dropdown-item" href="#">Eliminar</a>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-template #addAmigo>
+                        <ng-container *ngIf="tieneSolicitud() == true; else noSoli">
+                            <div class="dropdown">
+                                <button class="btn btn-light btn-sm dropdown-toggle" type="button"
+                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false" style="border-radius: 0%;">
+                                    <i class="fas fa-user-clock"></i> Solictud de amistad enviada
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                    style="font-size: 14px;">
+                                    <a class="dropdown-item" (click)="cancelarSolicitud()"
+                                        style="cursor: pointer;">Cancelar solicitud</a>
+                                </div>
+                            </div>
+                        </ng-container>
+                        <ng-template #noSoli>
+                            <ng-container *ngIf="tieneSolicituRecibida() == true; else agregaAmigo">
+                                <div class="dropdown">
+                                    <button class="btn btn-light btn-sm dropdown-toggle" type="button"
+                                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false" style="border-radius: 0%;">
+                                        <i class="fas fa-user-clock"></i> Responder a la solicitud de amistad
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                        style="font-size: 14px;">
+                                        <a class="dropdown-item" (click)="aceptarSoli()"
+                                            style="cursor: pointer;">Confirmar solicitud</a>
+                                        <a class="dropdown-item" (click)="cancelarSolicitudDesdeMiPerfil()"
+                                            style="cursor: pointer;">Eliminar solicitud</a>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-template #agregaAmigo>
+                                <button class="btn btn-light btn-sm" (click)="enviarSolicitud()">
+                                    <i class="fas fa-user-plus"></i> Agregar
+                                </button>
+                            </ng-template>
+                        </ng-template>
+                    </ng-template>
+
+                    <ng-container *ngIf="siguiendo() == true; else seguir">
+                        <div class="dropdown" style="border-right: 1.5px solid #888;">
+                            <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                style="border-radius: 0%; margin-left: 5px;">
+                                <i class="fas fa-check"></i> Siguiendo
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton"
+                                style="font-size: 14px;">
+                                <a class="dropdown-item" (click)="dejarSeguir()" style="cursor: pointer;">Dejar de
+                                    seguir</a>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-template #seguir>
+                        <button class="btn btn-light btn-sm"
+                            style="margin-left: 5px; border-radius: 0%; border-right: 1.5px solid #888;"
+                            (click)="follow()">
+                            <i class="fas fa-check-double"></i> Seguir
+                        </button>
+                    </ng-template>
+
+                    <button class="btn btn-light btn-sm" style="border-radius: 0%; border-right: 1px solid #888;">
+                        <i class="fab fa-facebook-messenger"></i> Mensaje
+                    </button>
+                    <div class="dropdown">
+                        <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                            style="border-radius: 0%;">
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton"
+                            style="font-size: 14px;">
+                            <a class="dropdown-item" href="#">Bloquear</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <ng-template #portadaDefault>
+        <div class="jumbotron">
+            <img src="../../../assets/img/portada_default.jpg" class="jb-img">
+            <div class="container-fluid">
+                <div class="dp">
+                    <ng-container *ngIf="perfil_amigo.image_perfil; else fotoDefault">
+                        <img [src]=getSantizeUrl(perfil_amigo.image_perfil) class="dp-img">
+                    </ng-container>
+                    <ng-template #fotoDefault>
+                        <ng-container *ngIf="perfil_amigo.usuario_sexo == 'Hombre'; else fotoDefaultSexo">
+                            <img src="../assets/img/user_pred.jfif" class="dp-img">
+                        </ng-container>
+                        <ng-template #fotoDefaultSexo>
+                            <img src="../assets/img/user_pred_mujer.jpg" class="dp-img">
+                        </ng-template>
+                    </ng-template>
+                    <a routerLink="/{{authService.getId()}}/biografia/{{perfil_amigo.usuario_id}"
+                        class="dp-profile-name">{{perfil_amigo.usuario_nombres}}
+                    </a>
+                </div>
+                <div class=" f-buttons btn-group">
+                        <ng-container *ngIf="esAmigo() == true; else addAmigo">
+                            <div class="dropdown">
+                                <button class="btn btn-light btn-sm dropdown-toggle" type="button"
+                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false" style="border-radius: 0%;">
+                                    <i class="fas fa-check"></i> Amigos
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                    style="font-size: 14px;">
+                                    <a class="dropdown-item" href="#">Eliminar</a>
+                                </div>
+                            </div>
+                        </ng-container>
+                        <ng-template #addAmigo>
+                            <ng-container *ngIf="tieneSolicitud() == true; else noSoli">
+                                <div class="dropdown">
+                                    <button class="btn btn-light btn-sm dropdown-toggle" type="button"
+                                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false" style="border-radius: 0%;">
+                                        <i class="fas fa-user-clock"></i> Solictud de amistad enviada
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                        style="font-size: 14px;">
+                                        <a class="dropdown-item" (click)="cancelarSolicitud()"
+                                            style="cursor: pointer;">Cancelar solicitud</a>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-template #noSoli>
+                                <ng-container *ngIf="tieneSolicituRecibida() == true; else agregaAmigo">
+                                    <div class="dropdown">
+                                        <button class="btn btn-light btn-sm dropdown-toggle" type="button"
+                                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false" style="border-radius: 0%;">
+                                            <i class="fas fa-user-clock"></i> Responder a la solicitud de amistad
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                            style="font-size: 14px;">
+                                            <a class="dropdown-item" (click)="aceptarSoli()"
+                                                style=" cursor: pointer;">Confirmar solicitud</a>
+                                            <a class="dropdown-item" (click)="cancelarSolicitudDesdeMiPerfil()"
+                                                style="cursor: pointer;">Eliminar solicitud</a>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <ng-template #agregaAmigo>
+                                    <button class="btn btn-light btn-sm" (click)="enviarSolicitud()">
+                                        <i class="fas fa-user-plus"></i> Agregar
+                                    </button>
+                                </ng-template>
+                            </ng-template>
+                        </ng-template>
+
+                        <ng-container *ngIf="siguiendo() == true; else seguir">
+                            <div class="dropdown" style="border-right: 1.5px solid #888;">
+                                <button class="btn btn-light btn-sm dropdown-toggle" type="button"
+                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false" style="border-radius: 0%; margin-left: 5px;">
+                                    <i class="fas fa-check"></i> Siguiendo
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton"
+                                    style="font-size: 14px;">
+                                    <a class="dropdown-item" (click)="dejarSeguir()" style="cursor: pointer;">Dejar de
+                                        seguir</a>
+                                </div>
+                            </div>
+                        </ng-container>
+                        <ng-template #seguir>
+                            <button class="btn btn-light btn-sm" style="margin-left: 5px; border-radius: 0%;"
+                                (click)="follow()">
+                                <i class="fas fa-check-double"></i> Seguir
+                            </button>
+                        </ng-template>
+
+                        <button class="btn btn-light btn-sm" style="border-radius: 0%; border-right: 1px solid #888;">
+                            <i class="fab fa-facebook-messenger"></i> Mensaje
+                        </button>
+                        <div class="dropdown">
+                            <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                style="border-radius: 0%;">
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton"
+                                style="font-size: 14px;">
+                                <a class="dropdown-item" href="#">Bloquear</a>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+        <!--FINAL JUMBOTRON -->
+    </ng-template>
+
+    <div class="timeline-nav">
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link active" role="tab" data-toggle="tab" href="#biografia" id="nvbio">Biografía</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" role="tab" data-toggle="tab" href="#informacion" id="nvinfo">Información</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" role="tab" data-toggle="tab" href="#amigos" id="nvamigos">Amigos
+                    <ng-container *ngIf="amigos.length > 0; else amigosCero">
+                        <span class="label label-primary">{{amigos.length}}</span>
+                    </ng-container>
+                    <ng-template #amigosCero>
+                        <span class="label label-primary">0</span>
+                    </ng-template>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" role="tab" data-toggle="tab" href="#fotos" id="nvfotos">Fotos</a>
+            </li>
+        </ul>
+    </div> <!-- FINALIZA EL TIMELINE -->
+
+    <div class="container-fluid">
+        <div class="tab-content">
+            <!-- BIOGRAFIA -->
+            <div role="tabpanel" class="tab-pane active" id="biografia" style="margin-top: 45px;">
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+
+                        <div class="lateral_izq">
+                            <div class="card col-12">
+                                <div class="card-header">
+                                    <i class="fas fa-globe-americas"></i> Detalles
+                                </div>
+                                <div class="card-body text-secondary">
+                                    <ng-container *ngIf="perfil_amigo.perfil_informacion != ''">
+                                        <p class="card-text">{{perfil_amigo.perfil_informacion}}</p>
+                                    </ng-container>
+                                    <div class="dropdown-divider"></div>
+                                    <ng-container *ngIf="direcciones.length > 0">
+                                        <i class="fas fa-home" style="margin-right: 3px;"></i> Vive en
+                                        {{direcciones[0].ciud_nombre}}
+                                        <br>
+                                    </ng-container>
+                                    <ng-container *ngIf="seguidores.length > 0; else seguidoresCero">
+                                        <i class="fas fa-user-check" style="margin-right: 3px;"></i>
+                                        <a href="#amigos" role="tab" data-toggle="tab" id="enlamigos">
+                                            {{seguidores.length}} seguidores</a>
+                                    </ng-container>
+                                    <ng-template #seguidoresCero>
+                                        <i class="fas fa-user-check" style="margin-right: 3px;"></i>
+                                        <a href="#amigos" role="tab" data-toggle="tab" id="enlamigos">
+                                            0 seguidores</a>
+                                    </ng-template>
+                                    <br>
+                                    <ng-container *ngIf="perfil_amigo.usuario_sexo == 'Hombre'; else sexoFemenino">
+                                        <i class="fas fa-male" style="margin-right: 15px;"></i> Hombre
+                                    </ng-container>
+                                    <ng-template #sexoFemenino>
+                                        <i class="fas fa-female" style="margin-right: 15px;"></i> Mujer
+                                    </ng-template>
+                                </div>
+                            </div>
+
+                            <div class="card col-12 mt-2">
+                                <div class="card-header">
+                                    <i class="fas fa-images"></i> Fotos
+                                </div>
+                                <div class="card-body text-secondary">
+                                    <!--<img src="..." class="img-thumbnail">-->
+                                </div>
+                            </div>
+
+                            <div class="card col-12 mt-2">
+                                <div class="card-header">
+                                    <i class="fas fa-users"></i> Amigos
+                                </div>
+                                <div class="card-body text-secondary">
+                                    <div class="row row-cols-3 row-cols-md-4 row-cols-lg-2 row-cols-xl-3"
+                                        style="margin-right: 0; margin-left: 0;">
+                                        <div class="card">
+                                            <a href="" class="card-text friend-card-text">
+                                                <!--<img src="..." class="card-img-top">
+                                                    Username-->
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- PUBLICACION -->
+                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                        <app-create-post></app-create-post>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- INFORMACION -->
+            <div role="tabpanel" class="tab-pane" id="informacion" style="margin-top: 15px;">
+                <div class="row">
+                    <div class="col-lg-1 col-md-12 col-12 col-sm-12"> </div>
+
+                    <div class="col-lg-10 col-md-12 col-12 col-sm-12">
+                        <div class="container-fluid">
+                            <div class="card border-secondary">
+                                <div class="card-header">
+                                    <i class="fas fa-user"></i> Información
+                                </div>
+                                <div class="card-body text-secondary">
+                                    <div class="row">
+
+                                        <!-- BARRA DE NAVEGACION DE INFORMACION -->
+                                        <div class="col-4">
+                                            <ul class="nav flex-column nav-pills" aria-orientation="vertical">
+                                                <li class="nav-item">
+                                                    <a class="nav-link active" role="tab" data-toggle="tab"
+                                                        href="#formacion">Formación y empleo
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" role="tab" data-toggle="tab"
+                                                        href="#infobasica">Información básica y de contacto</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" role="tab" data-toggle="tab" href="#familia">
+                                                        Familia y relaciones
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" role="tab" data-toggle="tab" href="#sobreti">
+                                                        Información sobre ti
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <!-- CONTENIDOS DE TABS DE INFORMACION -->
+                                        <div class="col-8">
+                                            <div class="tab-content">
+
+                                                <!-- FORMACION Y EMPLEO -->
+                                                <div role="tabpanel" class="tab-pane active" id="formacion">
+                                                    <div class="container-fluid" style="padding: 0em 1em !important;">
+                                                        <div class="container-fluid">
+
+                                                            <!-- EMPLEO -->
+                                                            <div>
+                                                                <h4 style="font-weight: bold;">Empleo</h4>
+                                                                <hr>
+                                                                <div style="margin-top: 20px;">
+                                                                    <ng-container *ngIf="empleos.length > 0">
+                                                                        <div *ngFor="let emp of empleos"
+                                                                            style="font-size: 14px;">
+                                                                            <div class="row">
+                                                                                <div class="col-10">
+                                                                                    {{emp.empleo_empresa}} <br>
+                                                                                    {{emp.empleo_puesto}} - De
+                                                                                    {{emp.empleo_fechainicioM}}
+                                                                                    a {{emp.empleo_fechafinM}}
+                                                                                    <br>
+                                                                                    {{emp.empleo_detalle}}
+                                                                                </div>
+                                                                            </div>
+                                                                            <hr>
+                                                                        </div>
+                                                                    </ng-container>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- APTITUDES -->
+                                                            <div>
+                                                                <h4 style="font-weight: bold;">Aptitudes</h4>
+                                                                <hr>
+
+                                                                <div style="margin-top: 20px;">
+                                                                    <ng-container *ngIf="aptitudes.length > 0">
+                                                                        <div *ngFor="let apt of aptitudes"
+                                                                            style="font-size: 18px;">
+                                                                            <div class="row">
+                                                                                <div class="col-10">
+                                                                                    {{apt.habprof_aptitud}}
+                                                                                </div>
+                                                                            </div>
+                                                                            <hr>
+                                                                        </div>
+                                                                    </ng-container>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- ESTUDIOS -->
+                                                            <div>
+                                                                <h4 style="font-weight: bold;">Estudios</h4>
+                                                                <hr>
+
+                                                                <div style="margin-top: 20px;">
+                                                                    <ng-container *ngIf="estudios.length > 0">
+                                                                        <div *ngFor="let est of estudios"
+                                                                            style="font-size: 15px;">
+                                                                            <div class="row">
+                                                                                <div class="col-10">
+                                                                                    {{est.univ_centroeduc}} <br>
+                                                                                    <ng-container
+                                                                                        *ngIf="est.univ_finalizada == true; else aunEstudiando">
+                                                                                        Promoción {{est.promocion}} -
+                                                                                        {{est.univ_especialidad}} <br>
+                                                                                        {{est.univ_detalle}}
+                                                                                    </ng-container>
+                                                                                    <ng-template #aunEstudiando>
+                                                                                        De {{est.univ_fechainicioM}} al
+                                                                                        {{est.univ_fechafinM}} -
+                                                                                        {{est.univ_especialidad}} <br>
+                                                                                        {{est.univ_detalle}}
+                                                                                    </ng-template>
+                                                                                </div>
+                                                                            </div>
+                                                                            <hr>
+                                                                        </div>
+                                                                    </ng-container>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- CONTENEDOR DE INFORMACION BASICA -->
+                                                <div role="tabpanel" class="tab-pane" id="infobasica">
+                                                    <div class="container-fluid" style="padding: 0em 1em !important;">
+                                                        <div class="container-fluid">
+
+                                                            <!-- TELEFONO -->
+                                                            <div>
+                                                                <h4 style="font-weight: bold;">Información de contacto
+                                                                </h4>
+                                                                <hr>
+
+                                                                <div style="margin-top: 20px;">
+                                                                    <ng-container *ngIf="telefonos.length > 0">
+                                                                        <div *ngFor="let telf of telefonos"
+                                                                            style="font-size: 14px;">
+                                                                            <div class="row">
+                                                                                <div class="col-2">
+                                                                                    <h6>Telefono</h6>
+                                                                                </div>
+                                                                                <div class="col-8">
+                                                                                    {{telf.telf_numero}}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </ng-container>
+                                                                </div>
+                                                                <hr>
+
+                                                                <!-- DIRECCION -->
+                                                                <div>
+                                                                    <ng-container *ngIf="direcciones.length > 0">
+                                                                        <div *ngFor="let dir of direcciones"
+                                                                            style="font-size: 14px;">
+                                                                            <div class="row">
+                                                                                <div class="col-2">
+                                                                                    <h6>Dirección</h6>
+                                                                                </div>
+                                                                                <div class="col-8">
+                                                                                    {{dir.dir_detalle}},
+                                                                                    {{dir.ciud_nombre}}
+                                                                                    <br>
+                                                                                    {{dir.dir_codigopostal}}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </ng-container>
+                                                                </div>
+
+                                                                <!-- INFORMACION BASICA -->
+                                                                <br>
+                                                                <h4 style="font-weight: bold;">Información básica</h4>
+                                                                <hr>
+                                                                <div style="margin-top: 20px;">
+                                                                    <div style="font-size: 14px;">
+                                                                        <div class="row">
+                                                                            <div class="col-3">
+                                                                                <h6>Fecha de nacimiento</h6>
+                                                                                <h6>Sexo</h6>
+                                                                                <ng-container
+                                                                                    *ngIf="perfil_amigo.perfil_religion">
+                                                                                    <h6>Religion</h6>
+                                                                                </ng-container>
+                                                                                <ng-container
+                                                                                    *ngIf="perfil_amigo.perfil_interes">
+                                                                                    <h6>Interes</h6>
+                                                                                </ng-container>
+                                                                            </div>
+                                                                            <div class="col-7">
+                                                                                <h6>{{perfil_amigo.usuario_fechanacM}}
+                                                                                </h6>
+                                                                                <h6>{{perfil_amigo.usuario_sexo}}</h6>
+                                                                                <ng-container
+                                                                                    *ngIf="perfil_amigo.perfil_religion">
+                                                                                    <h6>{{perfil_amigo.perfil_religion}}
+                                                                                    </h6>
+                                                                                </ng-container>
+                                                                                <ng-container
+                                                                                    *ngIf="perfil_amigo.perfil_interes">
+                                                                                    <h6>{{perfil_amigo.perfil_interes}}
+                                                                                    </h6>
+                                                                                </ng-container>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div role="tabpanel" class="tab-pane" id="familia">
+
+                                                </div>
+
+                                                <div role="tabpanel" class="tab-pane" id="sobreti">
+                                                    <div class="container-fluid" style="padding: 0em 1em !important;">
+                                                        <div class="container-fluid">
+
+                                                            <!-- INFORMACION SOBRE TI -->
+                                                            <div>
+                                                                <h4 style="font-weight: bold;">Información sobre ti</h4>
+                                                                <hr>
+                                                                <div style="margin-top: 20px;">
+                                                                    <ng-container
+                                                                        *ngIf="perfil_amigo.perfil_informacion">
+                                                                        <div style="font-size: 14px;">
+                                                                            <div class="row">
+                                                                                <div class="col-10">
+                                                                                    {{perfil_amigo.perfil_informacion}}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </ng-container>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- APODOS -->
+                                                            <br>
+                                                            <div>
+                                                                <h4 style="font-weight: bold;">APODOS</h4>
+                                                                <hr>
+                                                                <div style="margin-top: 20px;">
+                                                                    <ng-container *ngIf="apodos.length > 0">
+                                                                        <div *ngFor="let apo of apodos"
+                                                                            style="font-size: 14px;">
+                                                                            <div class="row">
+                                                                                <div class="col-10">
+                                                                                    {{apo.apodo_nombre}}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </ng-container>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-1 col-md-12 col-12 col-sm-12"> </div>
+                </div>
+            </div>
+
+            <!-- AMIGOS -->
+            <div role="tabpanel" class="tab-pane" id="amigos" style="margin-top: 15px;">
+                <div class="row">
+                    <div class="col-lg-1 col-md-12 col-12 col-sm-12"> </div>
+
+                    <div class="col-lg-10 col-md-12 col-12 col-sm-12">
+                        <div class="container-fluid">
+                            <div class="card border-secondary">
+                                <div class="card-header">
+                                    <i class="fas fa-users"></i> Amigos
+                                    <input type="text" name="" class="float-right"
+                                        style="margin-left: 5px; padding-left: 5px;" placeholder="Buscar...">
+                                    <button class="btn btn-sm btn-outline-secondary float-right">Solicitudes de
+                                        amistad</button>
+                                    <ul class="nav nav-pills" style="margin-top: 10px; margin-bottom: -13px;">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" role="tab" data-toggle="tab" href="#allamigos"
+                                                id="nvallamigos">Amigos {{amigos.length}}</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" role="tab" data-toggle="tab" href="#seguidores"
+                                                id="nvseguidores">Seguidores
+                                                {{seguidores.length}}</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" role="tab" data-toggle="tab" href="#seguidos">Seguidos
+                                                {{seguidos.length}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="card-body text-secondary">
+
+                                    <!-- TABS DE AMIGOS -->
+                                    <div class="tab-content">
+
+                                        <!-- CONTENEDOR DE TODOS LOS AMIGOS -->
+                                        <div role="tabpanel" class="tab-pane active" id="allamigos">
+                                            <div class="container-fluid" style="padding: 0em 1em !important;">
+                                                <div
+                                                    class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-3">
+                                                    <div *ngFor="let amigo of amigos" class="tarjeta-amigos">
+                                                        <ng-container *ngIf="amigo.image_perfil; else fotoAmigoDefault">
+                                                            <img [src]=getSantizeUrl(amigo.image_perfil)>
+                                                        </ng-container>
+                                                        <ng-template #fotoAmigoDefault>
+                                                            <ng-container
+                                                                *ngIf="amigo.usuario_sexo == 'Hombre'; else fotoDefaultSexoAmigo">
+                                                                <img src="../assets/img/user_pred.jfif">
+                                                            </ng-container>
+                                                            <ng-template #fotoDefaultSexoAmigo>
+                                                                <img src="../assets/img/user_pred_mujer.jpg">
+                                                            </ng-template>
+                                                        </ng-template>
+                                                        <a href="">{{amigo.usuario_nombres}}
+                                                            {{amigo.usuario_apellidos}}</a>
+                                                        <div class="dropdown">
+                                                            <button class="btn btn-outline-secondary dropdown-toggle"
+                                                                type="button" id="dropdownMenuButton"
+                                                                data-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                                <i class="fas fa-check"></i>
+                                                                Amigos
+                                                            </button>
+                                                            <div class="dropdown-menu"
+                                                                aria-labelledby="dropdownMenuButton">
+                                                                <a class="dropdown-item" href="#">Eliminar
+                                                                    amigo</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- CONTENEDOR DE SEGUDORES -->
+                                        <div role="tabpanel" class="tab-pane" id="seguidores">
+                                            <div class="container-fluid" style="padding: 0em 1em !important;">
+                                                <div
+                                                    class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-3">
+                                                    <div *ngFor="let seg of seguidores" class="tarjeta-seguidores">
+                                                        <ng-container
+                                                            *ngIf="seg.image_perfil; else fotoSeguidorDefault">
+                                                            <img [src]=getSantizeUrl(seg.image_perfil)>
+                                                        </ng-container>
+                                                        <ng-template #fotoSeguidorDefault>
+                                                            <ng-container
+                                                                *ngIf="seg.usuario_sexo == 'Hombre'; else fotoDefaultSexo">
+                                                                <img src="../assets/img/user_pred.jfif">
+                                                            </ng-container>
+                                                            <ng-template #fotoDefaultSexo>
+                                                                <img src="../assets/img/user_pred_mujer.jpg">
+                                                            </ng-template>
+                                                        </ng-template>
+                                                        <a href="">{{seg.usuario_nombres}}
+                                                            {{seg.usuario_apellidos}}</a>
+                                                        <!--<button class="btn btn-outline-secondary">
+                                                            <i class="fas fa-check"></i> Seguir
+                                                        </button>-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- CONTENEDOR DE SEGUIDOS -->
+                                        <div role="tabpanel" class="tab-pane" id="seguidos">
+                                            <div class="container-fluid" style="padding: 0em 1em !important;">
+                                                <div
+                                                    class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-3">
+                                                    <div *ngFor="let seguido of seguidos" class="tarjeta-seguidores">
+                                                        <ng-container
+                                                            *ngIf="seguido.image_perfil; else fotoSeguidoDefault">
+                                                            <img [src]=getSantizeUrl(seguido.image_perfil)>
+                                                        </ng-container>
+                                                        <ng-template #fotoSeguidoDefault>
+                                                            <ng-container
+                                                                *ngIf="seguido.usuario_sexo == 'Hombre'; else fotoDefaultSexo">
+                                                                <img src="../assets/img/user_pred.jfif">
+                                                            </ng-container>
+                                                            <ng-template #fotoDefaultSexo>
+                                                                <img src="../assets/img/user_pred_mujer.jpg">
+                                                            </ng-template>
+                                                        </ng-template>
+                                                        <a href="">{{seguido.usuario_nombres}}
+                                                            {{seguido.usuario_apellidos}}</a>
+                                                        <!--<button class="btn btn-outline-secondary">
+                                                            <i class="fas fa-check"></i> Seguir
+                                                        </button>-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-1 col-md-12 col-12 col-sm-12"> </div>
+                </div>
+            </div>
+
+            <!-- FOTOS -->
+            <div role="tabpanel" class="tab-pane" id="fotos">
+                <div class="row">
+                    fotos
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -465,6 +465,131 @@ async function updateApodo(req, res) {
     }
 }
 
+// Registra seguidor
+async function addSeguidor(req, res) {
+    const { seguido_tipo, pagina_id, usuario_id_sigue, usuario_id } = req.body;
+    /*if (validar.campoVacio(dir_detalle) || validar.campoVacio(perfilusu_id) || validar.campoVacio(ciud_id))
+        return res.json({ message: "Llene el formulario por favor", tipo: 'error' });*/
+
+    try {
+        /*let query = `SELECT * FROM usuario WHERE usuario_email = '${usuario_email}'`;
+        let result = await pool.query(query);
+
+        if (result.rowCount > 0) return res.json({ message: "Ya existe un usuario registrado con este correo", tipo: 'error' });*/
+
+        query = `INSERT INTO seguidos
+                    (seguido_tipo, pagina_id, usuario_id_sigue, usuario_id) 
+                    VALUES ('${seguido_tipo}',${pagina_id},'${usuario_id_sigue}','${usuario_id}')`;
+        result = await pool.query(query);
+        if (result.rowCount == 1) return res.json({ message: "Ahora sigues a este usuario", tipo: "exito" });
+    } catch (error) {
+        console.log(error);
+        return res.json({ message: "Error al seguir a este usuario", tipo: 'error' });
+    }
+}
+
+// Elimina seguidor
+async function deleteSeguidor(req, res) {
+    const { usuario_id_sigue, usuario_id } = req.body;
+    try {
+        let sql = `DELETE FROM seguidos WHERE usuario_id_sigue = ${usuario_id_sigue} AND usuario_id = ${usuario_id}`;
+        let result = await pool.query(sql);
+        if (result.rowCount == 0) return res.json({ message: "No estas siguiendo a este usuario", tipo: "error" });
+        return res.json({ message: "Dejaste de seguir a este usuario", tipo: "exito" });
+    } catch (err) {
+        console.log(err);
+        return res.json({ message: "Error al dejar de seguir a este usuario", tipo: "error" });
+    }
+}
+
+// Registra solictud de amistad
+async function addSoli(req, res) {
+    const { solic_estado, usuario_id_recepta, usuario_id_envia } = req.body;
+    /*if (validar.campoVacio(dir_detalle) || validar.campoVacio(perfilusu_id) || validar.campoVacio(ciud_id))
+        return res.json({ message: "Llene el formulario por favor", tipo: 'error' });*/
+
+    try {
+        /*let query = `SELECT * FROM usuario WHERE usuario_email = '${usuario_email}'`;
+        let result = await pool.query(query);
+
+        if (result.rowCount > 0) return res.json({ message: "Ya existe un usuario registrado con este correo", tipo: 'error' });*/
+
+        query = `INSERT INTO solic_amistad
+                    (solic_estado, usuario_id_recepta, usuario_id_envia) 
+                    VALUES ('${solic_estado}',${usuario_id_recepta},'${usuario_id_envia}')`;
+        result = await pool.query(query);
+        if (result.rowCount == 1) return res.json({ message: "Solicitud de amistad enviada", tipo: "exito" });
+    } catch (error) {
+        console.log(error);
+        return res.json({ message: "Error al enviar solicitud de amistad", tipo: 'error' });
+    }
+}
+
+// Obtener solicitudes de amistad enviadas de un usuario
+async function getSoliEnviadas(req, res) {
+    let query = `SELECT * FROM solic_amistad WHERE usuario_id_envia = ${req.params.iduser}`;
+    let result = await pool.query(query);
+    if (result.rows == 0) return res.json({ message: "No hay solicitudes enviadas", result: [], tipo: 'error' });
+    res.json(result.rows);
+}
+
+// Elimina solicitud de amistad
+async function deleteSolicitud(req, res) {
+    const { usuario_id_recepta, usuario_id_envia } = req.body;
+    try {
+        let sql = `DELETE FROM solic_amistad WHERE usuario_id_recepta = ${usuario_id_recepta} AND usuario_id_envia = ${usuario_id_envia}`;
+        let result = await pool.query(sql);
+        if (result.rowCount == 0) return res.json({ message: "No has enviado solicitud de amistad para este usuario", tipo: "error" });
+        return res.json({ message: "Solicitud de amistad cancelada", tipo: "exito" });
+    } catch (err) {
+        console.log(err);
+        return res.json({ message: "Error al dejar de seguir a este usuario", tipo: "error" });
+    }
+}
+
+// Obtener solicitudes de amistad recibidas de un usuario
+async function getSoliRecibidas(req, res) {
+    let query = `SELECT * FROM solic_amistad as s, usuario as u, perfil_usuario as p
+                    WHERE s.usuario_id_recepta = ${req.params.iduser} AND s.usuario_id_envia = u.usuario_id
+                    AND p.usuario_id = s.usuario_id_envia`;
+    let result = await pool.query(query);
+    if (result.rows == 0) return res.json({ message: "No hay solicitudes recibidas", result: [], tipo: 'error' });
+    result.rows.forEach(usuario => {
+        if (usuario.perfil_path_foto != "") {
+            var base64str = base64_encode(usuario.perfil_path_foto);
+            usuario.image_perfil = base64str;
+        }
+    });
+    res.json(result.rows);
+}
+
+// Registra solictud de amistad
+async function addAmigo(req, res) {
+    const { amig_fecha, usuario_id, usuario_id_amigo } = req.body;
+    /*if (validar.campoVacio(dir_detalle) || validar.campoVacio(perfilusu_id) || validar.campoVacio(ciud_id))
+        return res.json({ message: "Llene el formulario por favor", tipo: 'error' });*/
+
+    try {
+        /*let query = `SELECT * FROM usuario WHERE usuario_email = '${usuario_email}'`;
+        let result = await pool.query(query);
+
+        if (result.rowCount > 0) return res.json({ message: "Ya existe un usuario registrado con este correo", tipo: 'error' });*/
+
+        query = `INSERT INTO amigos
+                    (amig_fecha, usuario_id, usuario_id_amigo) 
+                    VALUES ('${amig_fecha}',${usuario_id},${usuario_id_amigo})`;
+        result = await pool.query(query);
+        query = `INSERT INTO amigos
+                    (amig_fecha, usuario_id, usuario_id_amigo) 
+                    VALUES ('${amig_fecha}',${usuario_id_amigo},${usuario_id})`;
+        result = await pool.query(query);
+        if (result.rowCount == 1) return res.json({ message: "Amigo agregado con exito", tipo: "exito" });
+    } catch (error) {
+        console.log(error);
+        return res.json({ message: "Error al agregar amigo", tipo: 'error' });
+    }
+}
+
 module.exports = {
     addEmpleo, getEmpleos, deteleEmpleo, updateEmpleo,
     addAptitud, getAptitudes, deteleAptitud, updateAptitud,
@@ -472,5 +597,8 @@ module.exports = {
     addTelefono, getTelefonos, deleteTelefono, updateTelefono,
     addDireccion, getDirecciones, deleteDireccion, updateDireccion,
     updateReligion, updateInteres, updateInformacion,
-    addApodo, getApodos, deleteApodo, updateApodo
+    addApodo, getApodos, deleteApodo, updateApodo,
+    addSeguidor, deleteSeguidor,
+    addSoli, getSoliEnviadas, deleteSolicitud, getSoliRecibidas,
+    addAmigo
 };

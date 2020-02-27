@@ -1,127 +1,126 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
   <div class="container">
-    <a class="navbar-brand" routerLink="/{{ userLogin.usuario_id }}">
-      <img
-        src="../assets/img/logo.png"
-        class="fb-logo"
-        width="30px"
-        style="padding-bottom: 2px;"
-      />
+    <a class="navbar-brand" routerLink="/{{userLogin.usuario_id}}">
+      <img src="../assets/img/logo.png" class="fb-logo" width="30px" style="padding-bottom: 2px;">
     </a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-toggle="collapse"
-      data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <form class="form-inline my-2 my-lg-0">
-          <input
-            (input)="onSearchChange($event.target.value)"
-            name="value-search"
-            [(ngModel)]="persona.usr_busq"
-            class="form-control mr-sm-2 input-search"
-            type="text"
-            placeholder="Search"
-            aria-label="Search"
-          />
+          <input (input)="onSearchChange($event.target.value)" name="value-search" [(ngModel)]="persona.usr_busq"
+            class="form-control mr-sm-2 input-search" type="text" placeholder="Search" aria-label="Search">
 
-          <a
-            class="btn btn-light btn-search btn-sm"
-            href="/buscarpersonas/{{ persona.usr_busq }}"
-          >
-            <i class="fas fa-search"></i>
+          <a class="btn btn-light btn-search btn-sm" routerLink="/buscarpersonas/{{persona.usr_busq}}">
+            <i class="fas fa-search" style="color: #888;"></i>
           </a>
+
         </form>
       </ul>
       <ul class="nav navbar-nav">
         <li>
-          <a
-            class="nav-link dp-name"
-            routerLink="/{{ userLogin.usuario_id }}/biografia"
-          >
+          <a class="nav-link dp-name" routerLink="/{{userLogin.usuario_id}}/biografia">
             <ng-container *ngIf="userLogin.image_perfil; else fotoDefault">
-              <img
-                [src]="getSantizeUrl(userLogin.image_perfil)"
-                class="nav-dp"
-              />
+              <img [src]=getSantizeUrl(userLogin.image_perfil) class="nav-dp">
             </ng-container>
             <ng-template #fotoDefault>
-              <ng-container
-                *ngIf="userLogin.usuario_sexo == 'Hombre'; else fotoDefaultSexo"
-              >
-                <img src="../assets/img/user_pred.jfif" class="nav-dp" />
+              <ng-container *ngIf="userLogin.usuario_sexo == 'Hombre'; else fotoDefaultSexo">
+                <img src="../assets/img/user_pred.jfif" class="nav-dp">
               </ng-container>
               <ng-template #fotoDefaultSexo>
-                <img src="../assets/img/user_pred_mujer.jpg" class="nav-dp" />
+                <img src="../assets/img/user_pred_mujer.jpg" class="nav-dp">
               </ng-template>
             </ng-template>
-            <span>{{ userLogin.usuario_nombres }}</span>
+            <span>{{userLogin.usuario_nombres}}</span>
           </a>
         </li>
+
         <li>
-          <a
-            class="nav-link"
-            routerLink="/{{ userLogin.usuario_id }}/marketplace"
-          >
+          <a class="nav-link" routerLink="/{{ userLogin.usuario_id }}/marketplace" style="margin-top: 3px;">
             <i class="fas fa-store nav-icons"></i>
           </a>
         </li>
         <li>
-          <a class="nav-link" href="#">
-            <i class="fas fa-user-friends nav-icons"></i>
-          </a>
+          <div class="dropdown" id="soliAmi">
+            <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+              style="border-radius: 0%; background: transparent; border: 0px; margin: 4px 0px 0px 0px; font-size: 20px; color: white;">
+              <i class="fas fa-user-friends nav-icons"></i>
+              <div style="position: absolute; top: 2.5em; left: 0em; ; font-size: 10px; background-color: red; 
+                              width: 15px; height: 10px; padding-bottom: 15px; border-radius: 50%;">
+                {{soliRecibidas.length}}
+              </div>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton"
+              style="font-size: 14px;">
+              <ng-container *ngIf="soliRecibidas.length > 0">
+                <div *ngFor="let soli of soliRecibidas">
+                  <div style="border-top: 1px solid #999; border-bottom: 1px solid #999; padding: 0px;">
+                    <div class="container-fluid" style="width: 400px; height: 70px; padding: 0px;">
+                      <div class="col-2">
+                        <ng-container *ngIf="soli.image_perfil; else fotoDefault">
+                          <img [src]=getSantizeUrl(soli.image_perfil)
+                            style="width: 50px; height: 50px; object-fit: contain; border-radius: 50%;">
+                        </ng-container>
+                        <ng-template #fotoDefault>
+                          <ng-container *ngIf="soli.usuario_sexo == 'Hombre'; else fotoDefaultSexo">
+                            <img src="../assets/img/user_pred.jfif"
+                              style="width: 50px; height: 50px; object-fit: contain; border-radius: 50%;">
+                          </ng-container>
+                          <ng-template #fotoDefaultSexo>
+                            <img src="../assets/img/user_pred_mujer.jpg"
+                              style="width: 50px; height: 50px; object-fit: contain; border-radius: 50%;">
+                          </ng-template>
+                        </ng-template>
+                      </div>
+                      <div class="col-5" style="font-size: 13px;">
+                        <a routerLink="/{{userLogin.usuario_id}}/biografia/{{soli.usuario_id}}"
+                          (click)="toUser(soli.usuario_id)"
+                          style="color: #3B5998 !important; font-weight: bold;">{{soli.usuario_nombres}}
+                          {{soli.usuario_apellidos}}</a>
+                      </div>
+                      <div class="col-5">
+                        <button class="btn btn-outline-primary btn-sm" style="font-size: 13px;"
+                          (click)="aceptarSoli(soli.usuario_id)">Aceptar</button>
+                        <button class="btn btn-outline-secondary btn-sm" style="margin-left: 5px; font-size: 13px;"
+                          (click)="cancelarSolicitudDesdeMiPerfil(soli.usuario_id)">Rechazar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
         </li>
         <li>
-          <a class="nav-link" routerLink="/{{ userLogin.usuario_id }}/verchats">
+          <a class="nav-link" routerLink="/{{userLogin.usuario_id}}/verchats" style="font-size: 20px;">
             <i class="fab fa-facebook-messenger nav-icons"></i>
           </a>
         </li>
         <li>
-          <a class="nav-link" href="#">
+          <a class="nav-link" style="cursor: pointerx; font-size: 20px;">
             <i class="fas fa-bell nav-icons"></i>
           </a>
         </li>
         <li class="nav-item dropdown">
-          <ul
-            class="nav-link dropdown-toggle"
-            href="#"
-            id="navbarDropdown"
-            role="button"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-            style="cursor: pointer;"
-          ></ul>
-          <div
-            class="dropdown-menu settings-drop"
-            aria-labelledby="navbarDropdown"
-          >
-            <li><a class="dropdown-item" href="#">Administrar páginas</a></li>
-            <div class="dropdown-divider"></div>
-            <li><a class="dropdown-item" href="#">Tus grupos</a></li>
-            <div class="dropdown-divider"></div>
-            <li><a class="dropdown-item" href="#">Registro de actividad</a></li>
-            <li><a class="dropdown-item" href="#">Configuración</a></li>
-            <div class="dropdown-divider"></div>
-            <li>
-              <a
-                class="dropdown-item"
-                (click)="salir()"
-                style="cursor: pointer;"
-                >Cerrar sesión</a
-              >
-            </li>
-          </div>
-        </li>
-      </ul>
+          <ul class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false" style="cursor: pointer;">
+          </ul>
+          <div class="dropdown-menu settings-drop dropdown-menu-right" aria-labelledby="navbarDropdown">
+        <li><a class="dropdown-item" href="#">Administrar páginas</a></li>
+        <div class="dropdown-divider"></div>
+        <li><a class="dropdown-item" href="#">Tus grupos</a></li>
+        <div class="dropdown-divider"></div>
+        <li><a class="dropdown-item" href="#">Registro de actividad</a></li>
+        <li><a class="dropdown-item" href="#">Configuración</a></li>
+        <div class="dropdown-divider"></div>
+        <li><a class="dropdown-item" (click)="salir()" style="cursor: pointer;">Cerrar sesión</a></li>
     </div>
+    </li>
+    </ul>
+  </div>
   </div>
 </nav>

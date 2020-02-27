@@ -5,6 +5,17 @@
   --color_base: #3b5998;
 }
 
+.dropdown-menu {
+    padding: 4px !important;
+    /*margin: 0px !important;
+    border: 0.5px solid rgba(0,0,0,.15) !important;*/
+    border-radius: 0% !important;
+}
+
+#soliAmi .dropdown-toggle::after {
+    display: none;
+}
+
 /* TOAST */
 
 /* based on angular-toastr css https://github.com/Foxandxss/angular-toastr/blob/cb508fe6801d6b288d3afc525bb40fee1b101650/dist/angular-toastr.css */

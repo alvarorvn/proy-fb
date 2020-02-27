@@ -170,4 +170,12 @@ export class BiografiaService {
     return this.http.delete<any>(`${this.URL}/${this.authService.getId()}/biografia/${perfil_id}/delete-apodo/${apodo_id}`);
   }
   // FIN APODOS
+
+  // AMIGOS
+
+  addAmigo(amigo) {
+    return this.http.post<any>(`${this.URL}/${this.authService.getId()}/biografia/add-amigo`, amigo);
+  }
+
+  //FIN AMIGOS
 }
